@@ -3,6 +3,11 @@ const Sequelize = require('sequelize');
 module.exports = class User extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
+            id: {
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+                primaryKey: true
+            },
             nickname: {
                 type: Sequelize.STRING(40),
                 allowNull: false,

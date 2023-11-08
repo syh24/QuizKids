@@ -1,32 +1,31 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const User = require('../models/user');
 
 // Get all users
 router.get('/', async (req, res) => {
   try {
-    console.log("hello");
-    //const users = await User.find();
-    // res.json(users);
-    // console.log(users);
+    const users = await User.findAll();
+    console.log(users);
+    res.json(users);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// // Create user
-// router.post('/', async (req, res) => {
-//   const user = new User(req.body);
-//   console.log(req);
-//   try {
-//     await user.save();
-//     res.status(201).json(user);
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// });
+// Create user
+router.post('/', async (req, res) => {
+  console.log(req.body);
+  const user = new User(req.body);
+  try {
+    await user.save();
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
-// // Update user
+// Update user
 // router.put('/:id', async (req, res) => {
 //   const { id } = req.params;
 //   try {
