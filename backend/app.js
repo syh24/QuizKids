@@ -3,6 +3,8 @@ var mysql = require('mysql');
 const path = require('path');
 const dotenv = require('dotenv');
 const userRouter = require('./routes/user');
+const quizRouter = require('./routes/quiz');
+const videoRouter = require('./routes/video');
 const { sequelize } = require('./models');
 
 dotenv.config();
@@ -23,5 +25,7 @@ app.use(cors())
 app.use(express.json());
 
 app.use('/api/users', userRouter);
+app.use('/api/quiz', quizRouter);
+app.use('/api/videos', videoRouter);
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));
