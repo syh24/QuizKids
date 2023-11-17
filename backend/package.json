@@ -14,6 +14,8 @@
         "mysql": "^2.18.1",
         "mysql2": "^3.6.3",
         "path": "^0.12.7",
-        "sequelize": "^6.34.0"
+        "sequelize": "^6.34.0",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.0"
     }
 }
