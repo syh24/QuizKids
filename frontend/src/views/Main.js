@@ -8,11 +8,9 @@ import Account from './Account';
 import Button from '@enact/sandstone/Button';
 import Item from '@enact/sandstone/Item';
 import Icon from '@enact/sandstone/Icon';
-import Profile from './Profile';
 import MediaOverlay from '@enact/sandstone/MediaOverlay';
 import ImageItem from '@enact/ui/ImageItem';
 import { VirtualGridList } from '@enact/sandstone/VirtualList';
-import css from './Profile.module.less';
 
 // hover 상태에 따라 video를 제어하는 Component
 const HoverVideoOverlay = ({src, ...rest}) => {
@@ -45,15 +43,10 @@ const HoverVideoOverlay = ({src, ...rest}) => {
 };
 
 const Main = props => {
-	const onClick = () => {
-		console.log("hello");
-	};
-
 	return (
-
 		<Panel>	
 			<Header title="Quiz App" closeButtonBackgroundOpacity="transparent">
-				<Button size="small" icon="profile" slot="slotAfter" onClick={onClick}/>
+				<Button size="small" icon="profile" slot="slotAfter" />
 			</Header>
 			<TabLayout
 				onSelect={function noRefCheck() {}}
@@ -66,10 +59,6 @@ const Main = props => {
 				</Tab>
 				<Tab icon="gear" title="Settings">
 					<Button icon="demosync">Button 1</Button>
-					<Button icon="demosync">Button 2</Button>
-					<Button icon="demosync">Button 3</Button>
-					<Button icon="demosync">Button 4</Button>
-					<Button icon="demosync">Button 5</Button>
 				</Tab>
 				<Tab icon="list" title="History">
 					<Item slotBefore={<Icon>playcircle</Icon>}>Single Item</Item>

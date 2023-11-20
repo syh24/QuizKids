@@ -30,7 +30,7 @@ const Detail = (props) => {
 				margin: '0 auto',
 			}}
 		>
-            <div>{isPaused ? <Button icon="plus" size="small" /> : null}</div>
+            <div>{isPaused ? <Button icon="plus" size="small">AddQuiz!</Button> : null}</div>
             <VideoPlayer				
                 autoCloseTimeout={7000}
                 backButtonAriaLabel="go to previous"
