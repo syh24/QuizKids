@@ -56,8 +56,10 @@ const options = {
     },
     apis: [
         "./swagger/user.js",
+        "./swagger/quiz.js",
+        "./swagger/video.js",
     ],
-  };
+};
   
 const specs = swaggerJsdoc(options);
   app.use("/api-docs",

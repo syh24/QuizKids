@@ -3,6 +3,15 @@ const Sequelize = require('sequelize');
 module.exports = class Video extends Sequelize.Model {
     static init(sequelize) {
         return super.init({
+            id: {
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+                primaryKey: true
+            },
+            user_id: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+            },
             name: {
                 type: Sequelize.STRING(50),
                 allowNull: true,
@@ -14,7 +23,7 @@ module.exports = class Video extends Sequelize.Model {
             url_link: {
               type: Sequelize.STRING(255),
               allowNull: false,
-          },
+            },
         }, {
             sequelize,
             timestamps: true,
