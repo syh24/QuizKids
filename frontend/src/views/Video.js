@@ -1,22 +1,24 @@
 import VideoPlayer from '@enact/sandstone/VideoPlayer';
 import {MediaControls} from '@enact/sandstone/MediaPlayer';
 import Button from '@enact/sandstone/Button';
+import { View, Text } from 'react';
+import styles from "./Video.module.css";
+import {VirtualGridList, VirtualList} from '@enact/sandstone/VirtualList';
 
 const Video = (prop) => {
 	return (
 		<div
 			style={{
 				height: '70vh',
-				transform: 'scale(1)',
+				transform: 'scale()',
 				transformOrigin: 'top',
 				width: '70vw',
 				display: 'flex',
-				justifyContent: 'center',
-				margin: '0 auto'
+				justifyContent: 'flex-start',
+				margin: '0 auto',
 			}}
 		>
-			<div>Sample code</div>
-			<VideoPlayer
+			<VideoPlayer				
 				autoCloseTimeout={7000}
 				backButtonAriaLabel="go to previous"
 				feedbackHideDelay={3000}
