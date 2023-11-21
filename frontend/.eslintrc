@@ -1,6 +1,0 @@
-{
-	"extends": ["enact-proxy/strict"],
-	"rules": {
-		"indent": "off"
-	}
-}
