@@ -554,10 +554,6 @@ video {
   z-index: 50;
 }
 
-.m-10 {
-  margin: 2.5rem;
-}
-
 .m-2 {
   margin: 0.5rem;
 }
@@ -580,10 +576,6 @@ video {
   margin-left: 0.5rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
-}
-
 .flex {
   display: flex;
 }
@@ -598,10 +590,6 @@ video {
 
 .w-\[70vw\] {
   width: 70vw;
-}
-
-.w-full {
-  width: 100%;
 }
 
 .origin-top {
