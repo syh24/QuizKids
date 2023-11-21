@@ -1,11 +1,36 @@
-const mongoose = require('mongoose');
+const Sequelize = require('sequelize');
 
-const UserSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  age: Number
-});
+module.exports = class User extends Sequelize.Model {
+    static init(sequelize) {
+        return super.init({
+            id: {
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+                primaryKey: true
+            },
+            nickname: {
+                type: Sequelize.STRING(40),
+                allowNull: false,
+                unique: true,
+            },
+            age: {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+            },
+            sex: {
+              type: Sequelize.STRING(5),
+              allowNull: false,
+          },
 
-const User = mongoose.model('User', UserSchema);
-
-module.exports = User;
+        }, {
+            sequelize,
+            timestamps: true,
+            underscored: false,
+            modelName: 'User',
+            tableName: 'users',
+            paranoid: true,
+            charset: 'utf8',
+            collate: 'utf8_general_ci',
+        });
+    }
+};
