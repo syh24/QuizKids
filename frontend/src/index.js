@@ -2,6 +2,7 @@ import {createRoot} from 'react-dom/client';
 
 import App from './App/App';
 import {isBrowser} from './libs/utils';
+import './tailwind.css';
 
 let appElement = <App highContrast />;
 

@@ -8,7 +8,7 @@ const Media = ({onClick, idx, src}) => {
 			onMouseEnter={() => setIsHovering(true)}
 			onMouseLeave={() => setIsHovering(false)}
 			className="rounded-2xl overflow-hidden"
-			onClick = {onClick} // added for detailed video
+			onClick={onClick} // added for detailed video
 			id={idx}
 		>
 			<MediaOverlay
