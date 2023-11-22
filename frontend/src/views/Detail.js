@@ -60,8 +60,8 @@ const Detail = props => {
 					Very exciting stuff.
 				</infoComponents>
 				<MediaControls
-					jumpBackwardIcon="jumpbackward"
-					jumpForwardIcon="jumpforward"
+					// jumpBackwardIcon="jumpbackward"
+					// jumpForwardIcon="jumpforward"
 					pauseIcon="pause"
 					playIcon="play"
 				></MediaControls>
@@ -72,6 +72,7 @@ const Detail = props => {
 				<QuizCreationOverlay
 					onClose={() => setShowQuizOverlay(false)}
 					timestamp={currentTimestamp}
+					src={props.src}
 				/>
 			)}
 		</div>

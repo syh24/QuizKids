@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import Button from '@enact/sandstone/Button';
 import Input from '@enact/sandstone/Input';
-import CheckboxItem from '@enact/sandstone/CheckboxItem';
 import Checkbox from '@enact/sandstone/Checkbox';
 import Popup from '@enact/sandstone/Popup';
 import Scroller from '@enact/sandstone/Scroller';
-import Icon from '@enact/ui/Icon';
 
-const QuizCreationOverlay = ({onClose, timestamp}) => {
-	const [showPopup, setShowPopup] = useState(false);
+const QuizCreationOverlay = ({onClose, timestamp, src}) => {
 	const [question, setQuestion] = useState('');
 	const [options, setOptions] = useState(['', '']);
+	const [correctAnswer, setCorrectAnswer] = useState(null);
 
 	const handleAddOption = () => {
 		setOptions([...options, '']);
@@ -27,35 +25,37 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 			(_, optionIndex) => optionIndex !== index
 		);
 		setOptions(newOptions);
+		if (correctAnswer === index) {
+			setCorrectAnswer(null); // Reset correct answer if it was deleted
+		}
 	};
 
-	const [checkedOptions, setCheckedOptions] = useState([]);
-
 	const handleToggleOption = index => {
-		setCheckedOptions(current => {
-			const newChecked = new Set(current);
-			if (newChecked.has(index)) {
-				newChecked.delete(index);
-			} else {
-				newChecked.add(index);
-			}
-			return Array.from(newChecked);
-		});
+		if (correctAnswer === index) {
+			// If the same checkbox is clicked again, uncheck it
+			setCorrectAnswer(null);
+		} else {
+			// Otherwise, set this checkbox as the correct answer
+			setCorrectAnswer(index);
+		}
 	};
 
 	const handleSaveQuestion = async () => {
-		// Example data structure, modify according to your frontend
-		console.log('Question:', question, 'Options:', options);
+		const problemText = options
+			.map((option, index) => `${index + 1}. ${option}`)
+			.join('\n');
 		const quizData = {
-			userId: 'user',
-			videoId: '1',
-			problem: question,
-			answer: checkedOptions,
-			quizJson: JSON.stringify({options}) // Convert options array to JSON string
+			user_id: 3, // Replace with actual user ID
+			video_id: src, // Ensure 'src' is the video ID
+			problem: {
+				title: question,
+				problem: problemText
+			},
+			answer: correctAnswer + 1 // Adjust for 0-based index
 		};
-		console.log(quizData);
+
 		try {
-			const response = await fetch('/addQuiz', {
+			const response = await fetch('http://localhost:4000/api/quiz', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -65,8 +65,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 
 			if (response.ok) {
 				console.log('Quiz added successfully');
-				console.log(quizData);
-				setShowPopup(false);
+				onClose(); // Close the popup
 			} else {
 				console.error('Failed to add quiz');
 			}
@@ -88,9 +87,8 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 					<div key={index} className="flex items-center my-2">
 						<Checkbox
 							onToggle={() => handleToggleOption(index)}
-							checked={checkedOptions.includes(index)}
+							checked={correctAnswer === index}
 						/>
-						{/* Implement toggle logic if necessary */}
 						<Input
 							className="ml-2"
 							value={option}
@@ -107,7 +105,6 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 					</div>
 				))}
 			</Scroller>
-
 			<Button icon="plus" onClick={handleAddOption}>
 				Add Option
 			</Button>
