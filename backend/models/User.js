@@ -33,4 +33,18 @@ module.exports = class User extends Sequelize.Model {
             collate: 'utf8_general_ci',
         });
     }
+    
+    static associate(models) {
+        User.hasMany(models.Video, {
+            foreignKey: 'user_id',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+        });
+
+        User.hasMany(models.Quiz, {
+            foreignKey: 'user_id',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+        });
+    }
 };

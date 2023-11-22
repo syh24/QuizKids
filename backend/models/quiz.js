@@ -50,4 +50,18 @@ module.exports = class Quiz extends Sequelize.Model {
             collate: 'utf8_general_ci',
         });
     }
+
+    static associate(models) {
+        Quiz.belongsTo(models.User, {
+            foreignKey: 'user_id',
+            targetKey: 'id',
+            onDelete: 'CASCADE',
+        });
+
+        Quiz.belongsTo(models.Video, {
+            foreignKey: 'video_id',
+            targetKey: 'id',
+            onDelete: 'CASCADE',
+        });
+    }
 };

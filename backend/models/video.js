@@ -40,4 +40,18 @@ module.exports = class Video extends Sequelize.Model {
             collate: 'utf8_general_ci',
         });
     }
+
+    static associate(models) {
+        Video.belongsTo(models.User, {
+            foreignKey: 'user_id',
+            targetKey: 'id',
+            onDelete: 'CASCADE',
+        });
+
+        Video.hasMany(models.Quiz, {
+            foreignKey: 'video_id',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+        })
+    }
 };
