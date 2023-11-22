@@ -24,6 +24,11 @@ module.exports = class Video extends Sequelize.Model {
               type: Sequelize.STRING(255),
               allowNull: false,
             },
+            hit: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0,
+            },
         }, {
             sequelize,
             timestamps: true,
