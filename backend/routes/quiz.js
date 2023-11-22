@@ -1,18 +1,22 @@
 const express = require('express');
+const { Video, User } = require('../models');
 const router = express.Router();
 const Quiz = require('../models/quiz');
 
-// Get all users
 router.get('/', async (req, res) => {
   try {
-    const quiz = await Quiz.findAll();
+    const { quiz_id } = req.query;
+    const quiz = await Quiz.findAll({
+      where: {
+        ...(quiz_id ? { id: quiz_id } : {}),
+      },
+    })
     res.json(quiz);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Create user
 router.post('/', async (req, res) => {
   const quiz = new Quiz(req.body);
   try {
