@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const { Op } = require('sequelize');
 const Video = require('../models/video');
 
 // Get all users
 router.get('/', async (req, res) => {
   try {
-    const video = await Video.findAll();
+    const { name } = req.query;
+    const video = await Video.findAll({
+      where: name ? { name: { [Op.like]: `%${name}%` } } : {},
+    });
     res.json(video);
   } catch (err) {
     res.status(500).json({ message: err.message });

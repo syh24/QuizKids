@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
+const { Op } = require('sequelize');
 const User = require('../models/user');
 
 // Get all users
 router.get('/', async (req, res) => {
   try {
-    const users = await User.findAll();
-    console.log(users);
+    const { name } = req.query;
+    const users = await User.findAll({
+      where: name ? { nickname: { [Op.like]: `%${name}%` } } : {},
+    });
+
+
     res.json(users);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -15,7 +20,6 @@ router.get('/', async (req, res) => {
 
 // Create user
 router.post('/', async (req, res) => {
-  console.log(req.body);
   const user = new User(req.body);
   try {
     await user.save();
