@@ -66,8 +66,13 @@
  *   get:
  *     tags: [Quiz]
  *     summary: get all users
- *     requestBody:
- *       required: false
+ *     parameters:
+ *       - in: path
+ *         name: quiz_id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 퀴즈 id
  *     responses:
  *       200:
  *         description: get quiz.

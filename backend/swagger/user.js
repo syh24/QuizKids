@@ -50,8 +50,19 @@
  *   get:
  *     tags: [Users]
  *     summary: get all users
- *     requestBody:
- *       required: false
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 유저 id
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: 유저명
  *     responses:
  *       200:
  *         description: get all users.

@@ -54,8 +54,19 @@
  *   get:
  *     tags: [Videos]
  *     summary: get all videos
- *     requestBody:
- *       required: false
+ *     parameters:
+ *       - in: path
+ *         name: video_id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 비디오 id
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: 비디오명
  *     responses:
  *       200:
  *         description: get all videos.
