@@ -34,7 +34,15 @@
  *         createdAt:
  *           type: string
  *           format: date
- *           description: user가 생성된 시간
+ *           description: 퀴즈가 생성된 시간
+ *         updatedAt:
+ *           type: string
+ *           format: date
+ *           description: 퀴즈가 수정된 시간
+ *         deletedAt:
+ *           type: string
+ *           format: date
+ *           description: 퀴즈가 삭제된 시간
  *       example:
  *         id: 1
  *         user_id: 3
@@ -45,6 +53,8 @@
  *         answer_count: 150
  *         wrong_count: 50
  *         createdAt: 2023-11-15T04:05:06.157Z
+ *         updatedAt: 2023-11-15T04:05:06.157Z
+ *         deletedAt: 2023-11-15T04:05:06.157Z
  */
 
 /**
@@ -56,11 +66,16 @@
  *   get:
  *     tags: [Quiz]
  *     summary: get all users
- *     requestBody:
- *       required: false
+ *     parameters:
+ *       - in: path
+ *         name: quiz_id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 퀴즈 id
  *     responses:
  *       200:
- *         description: get all users.
+ *         description: get quiz.
  *         content:
  *           application/json:
  *             schema:
@@ -69,13 +84,17 @@
  *         description: Some server error
  *   post:
  *     tags: [Quiz]
- *     summary: create user
+ *     summary: create quiz
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Quiz'
+ *             example:
+ *               user_id: 3
+ *               video_id: 5
+ *               problem: {"title": "quiz?", "problem": "1. answer1\n2. answer2\n3. answer3\n4. answer4"}
+ *               answer: 4
  *     responses:
  *       200:
  *         description: The created user.

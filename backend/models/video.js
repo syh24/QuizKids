@@ -24,6 +24,11 @@ module.exports = class Video extends Sequelize.Model {
               type: Sequelize.STRING(255),
               allowNull: false,
             },
+            hit: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                defaultValue: 0,
+            },
         }, {
             sequelize,
             timestamps: true,
@@ -34,5 +39,19 @@ module.exports = class Video extends Sequelize.Model {
             charset: 'utf8',
             collate: 'utf8_general_ci',
         });
+    }
+
+    static associate(models) {
+        Video.belongsTo(models.User, {
+            foreignKey: 'user_id',
+            targetKey: 'id',
+            onDelete: 'CASCADE',
+        });
+
+        Video.hasMany(models.Quiz, {
+            foreignKey: 'video_id',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+        })
     }
 };

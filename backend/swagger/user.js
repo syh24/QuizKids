@@ -18,17 +18,27 @@
  *           description: 나이
  *         sex:
  *           type: string
- *           description: 성별 M=남자 F=여자
+ *           description: 성별 M=남자, F=여자
  *         createdAt:
  *           type: string
  *           format: date
  *           description: user가 생성된 시간
+ *         updatedAt:
+ *           type: string
+ *           format: date
+ *           description: user가 수정된 시간
+ *         deletedAt:
+ *           type: string
+ *           format: date
+ *           description: user가 삭제된 시간
  *       example:
  *         id: 1
  *         nickname: test_nick
  *         age: 20
  *         sex: M
  *         createdAt: 2023-11-15T04:05:06.157Z
+ *         updatedAt: 2023-11-15T04:05:06.157Z
+ *         deletedAt: 2023-11-15T04:05:06.157Z
  */
 
 /**
@@ -40,8 +50,19 @@
  *   get:
  *     tags: [Users]
  *     summary: get all users
- *     requestBody:
- *       required: false
+ *     parameters:
+ *       - in: path
+ *         name: user_id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 유저 id
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: 유저명
  *     responses:
  *       200:
  *         description: get all users.
@@ -59,7 +80,10 @@
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/User'
+ *             example:
+ *               nickname: test_nick
+ *               age: 20
+ *               sex: M
  *     responses:
  *       200:
  *         description: The created user.

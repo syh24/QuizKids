@@ -27,18 +27,17 @@ module.exports = class Quiz extends Sequelize.Model {
             hit: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
+                defaultValue: 0,
             },
             answer_count: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
+                defaultValue: 0,
             },
             wrong_count: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
-            },
-            quiz_json: {
-                type: Sequelize.STRING(255),
-                allowNull: true,
+                defaultValue: 0,
             },
         }, {
             sequelize,
@@ -49,6 +48,20 @@ module.exports = class Quiz extends Sequelize.Model {
             paranoid: true,
             charset: 'utf8',
             collate: 'utf8_general_ci',
+        });
+    }
+
+    static associate(models) {
+        Quiz.belongsTo(models.User, {
+            foreignKey: 'user_id',
+            targetKey: 'id',
+            onDelete: 'CASCADE',
+        });
+
+        Quiz.belongsTo(models.Video, {
+            foreignKey: 'video_id',
+            targetKey: 'id',
+            onDelete: 'CASCADE',
         });
     }
 };

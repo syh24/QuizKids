@@ -15,7 +15,7 @@ module.exports = class User extends Sequelize.Model {
             },
             age: {
                 type: Sequelize.INTEGER,
-                allowNull: true,
+                allowNull: false,
             },
             sex: {
               type: Sequelize.STRING(5),
@@ -31,6 +31,20 @@ module.exports = class User extends Sequelize.Model {
             paranoid: true,
             charset: 'utf8',
             collate: 'utf8_general_ci',
+        });
+    }
+    
+    static associate(models) {
+        User.hasMany(models.Video, {
+            foreignKey: 'user_id',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+        });
+
+        User.hasMany(models.Quiz, {
+            foreignKey: 'user_id',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
         });
     }
 };

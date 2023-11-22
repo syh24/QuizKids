@@ -19,5 +19,8 @@ User.init(sequelize);
 Video.init(sequelize);
 Quiz.init(sequelize);
 
+User.associate(db);
+Video.associate(db);
+Quiz.associate(db);
 
 module.exports = db;
