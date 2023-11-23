@@ -14,11 +14,21 @@ router.get('/', async (req, res) => {
         ...(name ? { name: { [Op.like]: `%${name}%` } } : {}),
       },
     });
+
+    //조회수 증가
+    if (video_id && video.length > 0) {
+      const selectedVideo = video[0];
+      selectedVideo.hit++;
+      await selectedVideo.save();
+    }
+
     res.json(video);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
+
 
 router.post('/', async (req, res) => {
   const video = new Video(req.body);
