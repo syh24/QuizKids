@@ -20,6 +20,10 @@ module.exports = class Quiz extends Sequelize.Model {
                 type: Sequelize.STRING(255),
                 allowNull: false,
             },
+            quiz_time: {
+                type: Sequelize.STRING(255),
+                allowNull: false,
+            },
             answer: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
