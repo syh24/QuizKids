@@ -7,6 +7,7 @@ const session = require('express-session');
 const userRouter = require('./routes/user');
 const quizRouter = require('./routes/quiz');
 const videoRouter = require('./routes/video');
+const videoHistoryRouter = require('./routes/videoHistory');
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 
@@ -85,6 +86,7 @@ const specs = swaggerJsdoc(options);
 app.use('/api/users', userRouter);
 app.use('/api/quiz', quizRouter);
 app.use('/api/videos', videoRouter);
+app.use('/api/videoHistories', videoHistoryRouter);
 
 //swagger
 app.use("/api-docs",
