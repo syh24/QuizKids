@@ -4,6 +4,7 @@ import Panels from '@enact/sandstone/Panels';
 import Main from '../views/Main';
 import {useBackHandler, useCloseHandler, useDocumentEvent} from './AppState';
 import {isDevServe} from '../libs/utils';
+import Skinnable from '@enact/sandstone/Skinnable';
 
 /* istanbul ignore next*/
 if (isDevServe()) {
@@ -29,8 +30,10 @@ const App = props => {
 			skinVariants={skinVariants}
 			onBack={handleBack}
 			onClose={handleClose}
+			// className="bg-white text-black"
+			skin="light"
 		>
-			<Main />
+			<Main skin="light" />
 		</Panels>
 	);
 };
