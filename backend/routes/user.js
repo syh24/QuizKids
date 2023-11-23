@@ -50,7 +50,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
   }
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
       if (authError) {
           console.error(authError);
@@ -75,10 +75,18 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/logout', isLoggedIn, (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.status(200);
+router.get('/logout', isLoggedIn, (req, res, next) => {
+  req.logOut(err => {
+    if (err) {
+      return next(err);
+    } else {
+      req.session.destroy();
+      res.json({
+        "result": "success",
+        "message": "로그아웃 되었습니다",
+      });
+    }
+  });
 });
 
 
@@ -95,7 +103,7 @@ router.put('/:id', async (req, res) => {
 
     res.json({
       "result": "success",
-      "message": "수정되었습니다."
+      "message": "수정되었습니다"
     })
 
   } catch (err) {

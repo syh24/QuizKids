@@ -50,18 +50,13 @@ const options = {
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "Quiz App API",
+        title: "Quizkids API",
         version: "0.1.0",
         description:
-          "This is a simple CRUD API application made with Express and documented with Swagger",
-        license: {
-          name: "MIT",
-          url: "https://spdx.org/licenses/MIT.html",
-        },
+          "Quiz app",
         contact: {
-          name: "test",
-          url: "https://test.com",
-          email: "info@email.com",
+          name: "서윤혁",
+          email: "dbsgur6896@naver.com",
         },
       },
       servers: [
@@ -74,6 +69,7 @@ const options = {
         "./swagger/user.js",
         "./swagger/quiz.js",
         "./swagger/video.js",
+        "./swagger/videoHistory.js",
     ],
 };
   

@@ -9,7 +9,7 @@
  *       properties:
  *         id:
  *           type: string
- *           description: The auto-generated id of the user
+ *           description: The auto-generated id of the quiz
  *         user_id:
  *           type: integer
  *           description: user id
@@ -61,11 +61,11 @@
  * @swagger
  * tags:
  *   name: Quiz
- *   description: The users managing API
+ *   description: The quiz managing API
  * /api/quiz:
  *   get:
  *     tags: [Quiz]
- *     summary: get all users
+ *     summary: get all quizes
  *     parameters:
  *       - in: path
  *         name: quiz_id
@@ -97,7 +97,7 @@
  *               answer: 4
  *     responses:
  *       200:
- *         description: The created user.
+ *         description: The created quiz.
  *       500:
  *         description: Some server error
  *
