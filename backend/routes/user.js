@@ -83,31 +83,24 @@ router.get('/logout', isLoggedIn, (req, res) => {
 
 
 // Update user
-// router.put('/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const user = await User.findByIdAndUpdate(id, req.body, { new: true });
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-//     res.json(user);
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// });
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await User.update(req.body, {
+      where: {
+        id: id
+      },
+      returning: true, // 업데이트 후의 결과 반환
+    });
 
-// // Delete user
-// router.delete('/:id', async (req, res) => {
-//   const { id } = req.params;
-//   try {
-//     const user = await User.findByIdAndDelete(id);
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-//     res.sendStatus(204);
-//   } catch (err) {
-//     res.status(400).json({ message: err.message });
-//   }
-// });
+    res.json({
+      "result": "success",
+      "message": "수정되었습니다."
+    })
+
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
 
 module.exports = router;
