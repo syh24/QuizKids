@@ -2,16 +2,20 @@ const express = require('express');
 var mysql = require('mysql');
 const path = require('path');
 const dotenv = require('dotenv');
+const passport = require('passport');
+const session = require('express-session');
 const userRouter = require('./routes/user');
 const quizRouter = require('./routes/quiz');
 const videoRouter = require('./routes/video');
 const { sequelize } = require('./models');
+const passportConfig = require('./passport');
 
 //swagger docs
 var bodyParser = require("body-parser");
 var swaggerJsdoc = require("swagger-jsdoc");
 var swaggerUi = require("swagger-ui-express");
 
+passportConfig();
 dotenv.config();
 
 const app = express();
@@ -25,9 +29,20 @@ sequelize.sync({ force: false })
         console.error(err);
     });
 
-const cors = require('cors');
-app.use(cors())
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: "vadvxcvcxvadsvasd",
+  cookie: {
+      httpOnly: true,
+      secure: false,
+  },
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //swagger
 const options = {

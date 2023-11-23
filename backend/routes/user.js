@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { Op } = require('sequelize');
+const passport = require('passport');
+const bcrypt = require('bcrypt');
+const {isLoggedIn, isNotLoggedIn} = require('./middleware');
 const User = require('../models/user');
 const Video = require('../models/video');
 
@@ -21,16 +24,63 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Create user
-router.post('/', async (req, res) => {
-  const user = new User(req.body);
+router.post('/join', isNotLoggedIn, async (req, res, next) => {
+  const { nickname, password, age, sex } = req.body;
   try {
-    await user.save();
-    res.status(201).json(user);
+      const exUser = await User.findOne({ where: { nickname } });
+      if (exUser) {
+          return res.json({
+            "result": "fail",
+            "message": "이미 존재하는 회원입니다."
+          })
+      }
+      const hash = await bcrypt.hash(password, 12);
+      await User.create({
+          nickname: nickname,
+          password: hash,
+          age: age,
+          sex: sex,
+      });
+      return res.json({
+        "result": "success",
+      })
   } catch (err) {
-    res.status(400).json({ message: err.message });
+      console.error(err);
+      return next(err);
   }
 });
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (authError, user, info) => {
+      if (authError) {
+          console.error(authError);
+          return next(authError);
+      }
+      if (!user) {
+          return res.json({
+            "result": "fail",
+            "message": info.message,
+          });
+      }
+      return req.login(user, (loginError) => {
+          if (loginError) {
+              console.error(loginError);
+              return next(loginError);
+          }
+          return res.json({
+            "result": "success",
+            "message": "로그인 성공",
+          });
+      });
+  })(req, res, next);
+});
+
+router.get('/logout', isLoggedIn, (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.status(200);
+});
+
 
 // Update user
 // router.put('/:id', async (req, res) => {
