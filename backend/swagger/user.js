@@ -72,11 +72,11 @@
  *               $ref: '#/components/schemas/User'
  *       500:
  *         description: Some server error
- *   post:
+ *   put:
  *     tags: [Users]
- *     summary: create user
+ *     summary: update user
  *     requestBody:
- *       required: true
+ *       required: false
  *       content:
  *         application/json:
  *           schema:
@@ -86,8 +86,66 @@
  *               sex: M
  *     responses:
  *       200:
- *         description: The created user.
- *       500:
- *         description: Some server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 result: success
+ *                 message: 수정되었습니다 
+ * /api/users/join:
+ *   post:
+ *     tags: [Auth]
+ *     summary: user join
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             example:
+ *               nickname: test_nick
+ *               age: 20
+ *               sex: M
+ *               password: 1234
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 result: success
+ * /api/users/login:
+ *   post:
+ *     tags: [Auth]
+ *     summary: user login
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             example:
+ *               nickname: test_nick
+ *               password: 1234
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 result: success
+ *                 message: 로그인 성공
+ * /api/users/logout:
+ *   get:
+ *     tags: [Auth]
+ *     summary: user logout
+ *     requestBody:
+ *       required: false
+ *     responses:
+ *       200:
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 result: success
+ *                 message: 로그아웃 되었습니다
  *
  */

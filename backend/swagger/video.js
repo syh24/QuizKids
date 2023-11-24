@@ -9,7 +9,7 @@
  *       properties:
  *         id:
  *           type: string
- *           description: The auto-generated id of the user
+ *           description: The auto-generated id of the video
  *         user_id:
  *           type: string
  *           description: 유저 id

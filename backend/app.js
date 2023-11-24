@@ -2,16 +2,21 @@ const express = require('express');
 var mysql = require('mysql');
 const path = require('path');
 const dotenv = require('dotenv');
+const passport = require('passport');
+const session = require('express-session');
 const userRouter = require('./routes/user');
 const quizRouter = require('./routes/quiz');
 const videoRouter = require('./routes/video');
+const videoHistoryRouter = require('./routes/videoHistory');
 const { sequelize } = require('./models');
+const passportConfig = require('./passport');
 
 //swagger docs
 var bodyParser = require("body-parser");
 var swaggerJsdoc = require("swagger-jsdoc");
 var swaggerUi = require("swagger-ui-express");
 
+passportConfig();
 dotenv.config();
 
 const app = express();
@@ -25,27 +30,33 @@ sequelize.sync({ force: false })
         console.error(err);
     });
 
-const cors = require('cors');
-app.use(cors())
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: "vadvxcvcxvadsvasd",
+  cookie: {
+      httpOnly: true,
+      secure: false,
+  },
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //swagger
 const options = {
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "Quiz App API",
+        title: "Quizkids API",
         version: "0.1.0",
         description:
-          "This is a simple CRUD API application made with Express and documented with Swagger",
-        license: {
-          name: "MIT",
-          url: "https://spdx.org/licenses/MIT.html",
-        },
+          "Quiz app",
         contact: {
-          name: "test",
-          url: "https://test.com",
-          email: "info@email.com",
+          name: "서윤혁",
+          email: "dbsgur6896@naver.com",
         },
       },
       servers: [
@@ -58,6 +69,7 @@ const options = {
         "./swagger/user.js",
         "./swagger/quiz.js",
         "./swagger/video.js",
+        "./swagger/videoHistory.js",
     ],
 };
   
@@ -70,6 +82,7 @@ const specs = swaggerJsdoc(options);
 app.use('/api/users', userRouter);
 app.use('/api/quiz', quizRouter);
 app.use('/api/videos', videoRouter);
+app.use('/api/videoHistories', videoHistoryRouter);
 
 //swagger
 app.use("/api-docs",
