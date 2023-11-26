@@ -6,12 +6,14 @@ import {InputField} from '@enact/sandstone/Input';
 import Checkbox from '@enact/sandstone/Checkbox';
 import Popup from '@enact/sandstone/Popup';
 import Scroller from '@enact/sandstone/Scroller';
+import BodyText from '@enact/ui/BodyText';
 
 const QuizCreationOverlay = ({onClose}) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [question, setQuestion] = useState('');
 	const [options, setOptions] = useState(['', '', '', '']); // Assuming 4 options
 	const [questionType, setQuestionType] = useState('');
+	const [selectedAnswer, setSelectedAnswer] = useState(null);
 	const totalSteps = 4; // Total number of steps
 
 	const nextStep = () => {
@@ -22,6 +24,25 @@ const QuizCreationOverlay = ({onClose}) => {
 		if (currentStep > 0) {
 			setCurrentStep(currentStep - 1);
 		}
+	};
+
+	const setQuestionTypeAndAdvance = type => {
+		setQuestionType(type);
+		// 'O X 문제'를 선택했을 경우 바로 3단계로 넘어가기
+		if (type === 'O X 문제') {
+			setCurrentStep(2);
+		} else {
+			nextStep();
+		}
+	};
+
+	const handleSubmit = () => {
+		// 여기에 정답 제출 로직 추가
+		console.log('Selected Answer:', selectedAnswer);
+	};
+
+	const handleAnswerSelect = answer => {
+		setSelectedAnswer(answer);
 	};
 
 	const StepIndicator = ({currentStep, totalSteps}) => {
@@ -56,16 +77,25 @@ const QuizCreationOverlay = ({onClose}) => {
 			case 0:
 				return (
 					<>
-						<header>문제의 종류를 선택하세요. </header>
-						<div className="flex">
+						<BodyText className="bg-primary rounded-md p-2">
+							문제의 종류를 선택하세요.
+						</BodyText>
+						<div className="flex flex-auto justify-center">
 							{[
 								'4개 중 맞는 문장 고르기',
 								'O X 문제',
 								'4개 중 맞는 숫자 고르기'
 							].map(type => (
-								<Button key={type} onClick={() => setQuestionType(type)}>
+								<button
+									key={type}
+									onClick={() => setQuestionTypeAndAdvance(type)} // 수정된 함수 호출
+									skin="light"
+									className="bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+									focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
+									flex-grow"
+								>
 									{type}
-								</Button>
+								</button>
 							))}
 						</div>
 					</>
@@ -73,28 +103,82 @@ const QuizCreationOverlay = ({onClose}) => {
 			case 1:
 				return (
 					<>
-						<header>문제를 입력하세요. </header>
-						<InputField
-							placeholder="문제를 입력하세요. (최대 50자)"
-							value={question}
-							onChange={e => setQuestion(e.value)}
-						/>
+						<BodyText className="bg-primary rounded-md p-2">
+							문제를 입력하세요.
+						</BodyText>
+						<div className="flex">
+							<input
+								tabIndex={0}
+								placeholder="문제를 입력하세요. (최대 50자)"
+								value={question}
+								onChange={e => setQuestion(e.value)}
+								className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
+							/>
+						</div>
 					</>
 				);
 			case 2:
-				return options.map((option, index) => (
-					<InputField
-						key={index}
-						value={option}
-						onChange={e =>
-							setOptions(
-								options.map((o, i) => (i === index ? e.target.value : o))
-							)
-						}
-					/>
-				));
+				return (
+					<>
+						<BodyText className="bg-primary rounded-md p-2">
+							문제를 입력하세요.
+						</BodyText>
+						<div className="flex">
+							{options.map((option, index) => (
+								<input
+									key={index}
+									value={option}
+									className="spottable text-sm rounded-md h-8 shadow-inner
+								p-2 m-2 transition duration-300 ease-in-out flex-grow
+									focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105"
+									placeholder={`선택지 ${index + 1}`}
+									onChange={e =>
+										setOptions(
+											options.map((o, i) => (i === index ? e.target.value : o))
+										)
+									}
+								/>
+							))}
+						</div>
+					</>
+				);
 			case 3:
-				return <div>{/* Answer selection logic */}</div>;
+				return (
+					<div>
+						<BodyText className="bg-primary rounded-md p-2">
+							정답을 선택하세요.
+						</BodyText>
+						<div
+							className={`flex ${
+								questionType !== 'O X 문제' ? 'flex-col' : ''
+							} justify-center`}
+						>
+							{questionType === 'O X 문제'
+								? ['O', 'X'].map((option, index) => (
+										<button
+											key={index}
+											onClick={() => handleAnswerSelect(option)}
+											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+                focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
+                flex-grow ${selectedAnswer === option ? 'bg-orange-500' : ''}`}
+										>
+											{option}
+										</button>
+								  ))
+								: options.map((option, index) => (
+										<button
+											key={index}
+											onClick={() => handleAnswerSelect(option)}
+											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+                focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
+                flex-grow ${selectedAnswer === option ? 'bg-orange-500' : ''}`}
+										>
+											{option}
+										</button>
+								  ))}
+						</div>
+					</div>
+				);
 			default:
 				return null;
 		}
@@ -105,14 +189,17 @@ const QuizCreationOverlay = ({onClose}) => {
 			open={true}
 			onClose={onClose}
 			title="Create New Quiz Question"
-			className="backdrop-blur-md rounded-xl h-[80vh] w-[93vw]"
+			scrimType="transparent"
+			className="backdrop-blur-md rounded-xl h-[80vh] w-[93vw]  bg-white"
 		>
 			<StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
-			{renderStep()}
-			<div>
-				{currentStep > 0 && <Button onClick={prevStep}>Back</Button>}
-				{currentStep < 3 && <Button onClick={nextStep}>Next</Button>}
-				{currentStep === 3 && <Button onClick={onClose}>Finish</Button>}
+			<div className="h-[60vh]">{renderStep()}</div>
+			<div className="flex justify-between">
+				{currentStep > 0 && <Button onClick={prevStep}>이전</Button>}
+				{0 < currentStep && currentStep < 3 && (
+					<Button onClick={nextStep}>다음</Button>
+				)}
+				{currentStep === 3 && <Button onClick={handleSubmit}>제출</Button>}
 			</div>
 		</Popup>
 	);

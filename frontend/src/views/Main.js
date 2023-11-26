@@ -50,7 +50,7 @@ const Main = props => {
 	};
 
 	return (
-		<Panel>
+		<Panel className="bg-white">
 			{/* <Header title="Quiz App" closeButtonBackgroundOpacity="transparent">
 				<Button
 					size="small"

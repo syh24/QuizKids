@@ -52,6 +52,7 @@ const Detail = props => {
 				onBack={props.onBack} // when click back button, will back to the home screen
 				onPause={onPause}
 				onPlay={onPlay}
+				spotlightDisabled={showQuizOverlay}
 			>
 				<source src={props.src} type="video/mp4" />
 				<infoComponents>
@@ -73,6 +74,7 @@ const Detail = props => {
 					onClose={() => setShowQuizOverlay(false)}
 					timestamp={currentTimestamp}
 					src={props.src}
+					className="z-50"
 				/>
 			)}
 		</div>

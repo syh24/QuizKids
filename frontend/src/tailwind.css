@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	input[type='text']::placeholder {
+		@apply font-thin text-sm;
+	}
+}
