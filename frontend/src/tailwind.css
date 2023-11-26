@@ -6,4 +6,8 @@
 	input[type='text']::placeholder {
 		@apply font-thin text-sm;
 	}
+
+	.enact_sandstone_Popup_Popup_popup.light {
+		@apply bg-white bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[80vh] w-[85vw] ml-28;
+	}
 }
