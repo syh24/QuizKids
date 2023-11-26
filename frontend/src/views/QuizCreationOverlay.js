@@ -14,26 +14,32 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 	const [options, setOptions] = useState(['', '', '', '']); // Assuming 4 options
 	const [questionType, setQuestionType] = useState('');
 	const [selectedAnswer, setSelectedAnswer] = useState(null);
+	const [isOXSelected, setIsOXSelected] = useState(false);
+
 	const totalSteps = 4; // Total number of steps
 
 	const nextStep = () => {
-		setCurrentStep(currentStep + 1);
+		if (isOXSelected && currentStep === 1) {
+			setCurrentStep(currentStep + 2); // 1단계에서 바로 3단계로 넘어가기
+		} else {
+			setCurrentStep(currentStep + 1);
+		}
 	};
 
 	const prevStep = () => {
-		if (currentStep > 0) {
+		if (isOXSelected && currentStep === 3) {
+			setCurrentStep(1); // 3단계에서 바로 1단계로 이동
+		} else if (currentStep > 0) {
 			setCurrentStep(currentStep - 1);
 		}
 	};
 
 	const setQuestionTypeAndAdvance = type => {
 		setQuestionType(type);
-		// 'O X 문제'를 선택했을 경우 바로 3단계로 넘어가기
 		if (type === 'O X 문제') {
-			setCurrentStep(2);
-		} else {
-			nextStep();
+			setIsOXSelected(true);
 		}
+		nextStep();
 	};
 
 	const handleSubmit = async () => {
@@ -66,6 +72,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 		} catch (error) {
 			console.error('Failed to submit quiz:', error);
 		}
+		setIsOXSelected(false); // 제출 후 상태 초기화
 	};
 
 	const handleAnswerSelect = index => {
@@ -139,7 +146,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 								tabIndex={0}
 								placeholder="문제를 입력하세요. (최대 50자)"
 								value={question}
-								onChange={e => setQuestion(e.value)}
+								onChange={e => setQuestion(e.target.value)}
 								className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
 							/>
 						</div>
@@ -188,7 +195,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 											onClick={() => handleAnswerSelect(index)}
 											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
                   focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
-                  flex-grow ${selectedAnswer == index ? 'bg-orange-500' : ''}`}
+                  flex-grow ${selectedAnswer == index ? 'bg-black' : ''}`}
 										>
 											{option}
 										</button>
