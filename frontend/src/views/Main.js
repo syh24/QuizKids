@@ -51,14 +51,14 @@ const Main = props => {
 
 	return (
 		<Panel>
-			<Header title="Quiz App" closeButtonBackgroundOpacity="transparent">
+			{/* <Header title="Quiz App" closeButtonBackgroundOpacity="transparent">
 				<Button
 					size="small"
 					icon="profile"
 					slot="slotAfter"
 					onClick={onClick}
 				/>
-			</Header>
+			</Header> */}
 			<TabLayout
 				onSelect={function noRefCheck() {}}
 				onTabAnimationEnd={function noRefCheck() {}}

@@ -1,0 +1,15 @@
+video {
+	border-radius: 20px;
+	height: 4rem;
+}
+.enact_ui_Image_Image_image {
+	border: 2px solid blue;
+	border-radius: 20px;
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
+}
+
+.mediaOverlay {
+	width: 100%; /* 컨테이너의 너비를 최대로 설정 */
+	height: 100%; /* 컨테이너의 높이를 최대로 설정 */
+	object-fit: cover; /* 비디오가 컨테이너를 꽉 채우도록 설정 */
+}

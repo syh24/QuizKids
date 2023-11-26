@@ -29,7 +29,7 @@ const Detail = props => {
 	};
 
 	return (
-		<div className="relative h-[70vh] scale-100 origin-top w-[70vw] flex justify-start mx-auto">
+		<div className="">
 			<div className={`absolute top-0 right-0 ${isPaused ? '' : 'hidden'}`}>
 				<Button
 					icon="plus"
