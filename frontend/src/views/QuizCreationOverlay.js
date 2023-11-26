@@ -8,7 +8,7 @@ import Popup from '@enact/sandstone/Popup';
 import Scroller from '@enact/sandstone/Scroller';
 import BodyText from '@enact/ui/BodyText';
 
-const QuizCreationOverlay = ({onClose}) => {
+const QuizCreationOverlay = ({onClose, timestamp}) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [question, setQuestion] = useState('');
 	const [options, setOptions] = useState(['', '', '', '']); // Assuming 4 options
@@ -36,13 +36,41 @@ const QuizCreationOverlay = ({onClose}) => {
 		}
 	};
 
-	const handleSubmit = () => {
-		// 여기에 정답 제출 로직 추가
-		console.log('Selected Answer:', selectedAnswer);
+	const handleSubmit = async () => {
+		const quizData = {
+			user_id: 1,
+			video_id: 1,
+			problem: options
+				.map((option, index) => `${index + 1}. ${option}`)
+				.join('\n'),
+			quiz_time: timestamp.toString(),
+			answer: selectedAnswer
+		};
+
+		try {
+			const response = await fetch('http://localhost:4000/api/quiz', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(quizData)
+			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			// 여기서 추가 처리 가능 (예: 응답 데이터 처리, 상태 업데이트 등)
+			console.log('Quiz submitted successfully');
+			console.log(quizData);
+		} catch (error) {
+			console.error('Failed to submit quiz:', error);
+		}
 	};
 
-	const handleAnswerSelect = answer => {
-		setSelectedAnswer(answer);
+	const handleAnswerSelect = index => {
+		setSelectedAnswer(index);
+		console.log('Selected answer index:', index); // 로그 출력으로 확인
 	};
 
 	const StepIndicator = ({currentStep, totalSteps}) => {
@@ -78,7 +106,7 @@ const QuizCreationOverlay = ({onClose}) => {
 				return (
 					<>
 						<BodyText className="bg-primary rounded-md p-2">
-							문제의 종류를 선택하세요.
+							문제의 종류를 선택하세요. {timestamp}
 						</BodyText>
 						<div className="flex flex-auto justify-center">
 							{[
@@ -121,7 +149,7 @@ const QuizCreationOverlay = ({onClose}) => {
 				return (
 					<>
 						<BodyText className="bg-primary rounded-md p-2">
-							문제를 입력하세요.
+							선택지를 입력하세요.
 						</BodyText>
 						<div className="flex">
 							{options.map((option, index) => (
@@ -157,10 +185,10 @@ const QuizCreationOverlay = ({onClose}) => {
 								? ['O', 'X'].map((option, index) => (
 										<button
 											key={index}
-											onClick={() => handleAnswerSelect(option)}
+											onClick={() => handleAnswerSelect(index)}
 											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
-                focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
-                flex-grow ${selectedAnswer === option ? 'bg-orange-500' : ''}`}
+                  focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
+                  flex-grow ${selectedAnswer == index ? 'bg-orange-500' : ''}`}
 										>
 											{option}
 										</button>
@@ -168,10 +196,12 @@ const QuizCreationOverlay = ({onClose}) => {
 								: options.map((option, index) => (
 										<button
 											key={index}
-											onClick={() => handleAnswerSelect(option)}
+											onClick={() => handleAnswerSelect(index)}
 											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
-                focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
-                flex-grow ${selectedAnswer === option ? 'bg-orange-500' : ''}`}
+                  focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
+                  flex-grow ${
+										selectedAnswer === index ? 'bg-black font-black' : ''
+									}`}
 										>
 											{option}
 										</button>
