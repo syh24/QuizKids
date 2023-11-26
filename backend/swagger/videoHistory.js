@@ -79,7 +79,13 @@
  *               video_id: 1
  *     responses:
  *       200:
- *         description: The created video history.
+ *         description: add quiz.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 result: success
+ *                 message: 생성되었습니다
  *       500:
  *         description: Some server error
  *

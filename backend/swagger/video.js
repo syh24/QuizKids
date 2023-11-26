@@ -43,6 +43,14 @@
  *         createdAt: 2023-11-15T04:05:06.157Z
  *         updatedAt: 2023-11-15T04:05:06.157Z
  *         deletedAt: 2023-11-15T04:05:06.157Z
+ *         User:
+ *           id: 1
+ *           nickname: test_nick
+ *           age: 20
+ *           sex: M
+ *           createdAt: 2023-11-15T04:05:06.157Z
+ *           updatedAt: 2023-11-15T04:05:06.157Z
+ *           deletedAt: 2023-11-15T04:05:06.157Z
  */
 
 /**
@@ -61,6 +69,12 @@
  *           type: integer
  *         required: false
  *         description: 비디오 id
+ *       - in: path
+ *         name: user_id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 유저 id
  *       - in: path
  *         name: name
  *         schema:
@@ -91,7 +105,13 @@
  *               url_link: http://test.img
  *     responses:
  *       200:
- *         description: The created videos.
+ *         description: add quiz.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 result: success
+ *                 message: 생성되었습니다
  *       500:
  *         description: Some server error
  *

@@ -68,11 +68,11 @@
  *     summary: get all quizes
  *     parameters:
  *       - in: path
- *         name: quiz_id
+ *         name: count
  *         schema:
  *           type: integer
  *         required: false
- *         description: 퀴즈 id
+ *         description: 가져올 퀴즈 개수
  *     responses:
  *       200:
  *         description: get quiz.
@@ -97,7 +97,35 @@
  *               answer: 4
  *     responses:
  *       200:
- *         description: The created quiz.
+ *         description: add quiz.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 result: success
+ *                 message: 생성되었습니다
+ *       500:
+ *         description: Some server error
+ * /api/quiz/{quiz_id}/answer:
+ *   post:
+ *     tags: [Quiz]
+ *     summary: check answer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             example:
+ *               answer: 4
+ *     responses:
+ *       200:
+ *         description: check answer
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 result: success
+ *                 message: 정답입니다
  *       500:
  *         description: Some server error
  *

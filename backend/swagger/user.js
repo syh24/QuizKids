@@ -72,6 +72,7 @@
  *               $ref: '#/components/schemas/User'
  *       500:
  *         description: Some server error
+ * /api/users/{user_id}:
  *   put:
  *     tags: [Users]
  *     summary: update user
@@ -105,7 +106,7 @@
  *               nickname: test_nick
  *               age: 20
  *               sex: M
- *               password: 1234
+ *               password: 1234abc
  *     responses:
  *       200:
  *         content:
@@ -113,6 +114,7 @@
  *             schema:
  *               example:
  *                 result: success
+ *                 message: 회원가입 되었습니다
  * /api/users/login:
  *   post:
  *     tags: [Auth]
@@ -124,7 +126,7 @@
  *           schema:
  *             example:
  *               nickname: test_nick
- *               password: 1234
+ *               password: 1234abc
  *     responses:
  *       200:
  *         content:

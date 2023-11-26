@@ -36,7 +36,10 @@ router.post('/', async (req, res) => {
   const quiz = new Quiz(req.body);
   try {
     await quiz.save();
-    res.status(201).json(quiz);
+    res.status(201).json({
+      "result": "success",
+      "message": "생성되었습니다"
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

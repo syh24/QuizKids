@@ -25,7 +25,10 @@ router.post('/', async (req, res) => {
   const videoHistories = new VideoHistory(req.body);
   try {
     await videoHistories.save();
-    res.status(201).json(videoHistories);
+    res.status(201).json({
+        "result": "success",
+        "message": "생성되었습니다"
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
