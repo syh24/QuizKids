@@ -25,7 +25,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
-  const { nickname, password, age, sex } = req.body;
+  const { nickname, password, age, sex, img_idx } = req.body;
   try {
       const exUser = await User.findOne({ where: { nickname } });
       if (exUser) {
@@ -40,9 +40,11 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
           password: hash,
           age: age,
           sex: sex,
+          img_idx: img_idx,
       });
       return res.json({
         "result": "success",
+        "message": "회원가입 되었습니다"
       })
   } catch (err) {
       console.error(err);

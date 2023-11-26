@@ -48,6 +48,7 @@
  *           nickname: test_nick
  *           age: 20
  *           sex: M
+ *           img_idx: 3
  *           createdAt: 2023-11-15T04:05:06.157Z
  *           updatedAt: 2023-11-15T04:05:06.157Z
  *           deletedAt: 2023-11-15T04:05:06.157Z

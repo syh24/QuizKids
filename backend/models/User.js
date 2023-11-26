@@ -24,8 +24,11 @@ module.exports = class User extends Sequelize.Model {
             sex: {
               type: Sequelize.STRING(5),
               allowNull: false,
-          },
-
+            },
+            img_idx: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
         }, {
             sequelize,
             timestamps: true,
