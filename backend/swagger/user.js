@@ -19,6 +19,9 @@
  *         sex:
  *           type: string
  *           description: 성별 M=남자, F=여자
+ *         img_idx:
+ *           type: integer
+ *           description: image index
  *         createdAt:
  *           type: string
  *           format: date
