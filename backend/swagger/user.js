@@ -19,6 +19,9 @@
  *         sex:
  *           type: string
  *           description: 성별 M=남자, F=여자
+ *         img_idx:
+ *           type: integer
+ *           description: image index
  *         createdAt:
  *           type: string
  *           format: date
@@ -36,6 +39,7 @@
  *         nickname: test_nick
  *         age: 20
  *         sex: M
+ *         img_idx: 3
  *         createdAt: 2023-11-15T04:05:06.157Z
  *         updatedAt: 2023-11-15T04:05:06.157Z
  *         deletedAt: 2023-11-15T04:05:06.157Z
@@ -72,6 +76,7 @@
  *               $ref: '#/components/schemas/User'
  *       500:
  *         description: Some server error
+ * /api/users/{user_id}:
  *   put:
  *     tags: [Users]
  *     summary: update user
@@ -84,6 +89,7 @@
  *               nickname: test_nick
  *               age: 20
  *               sex: M
+ *               img_idx: 2
  *     responses:
  *       200:
  *         content:
@@ -91,7 +97,7 @@
  *             schema:
  *               example:
  *                 result: success
- *                 message: 수정되었습니다 
+ *                 message: 수정되었습니다
  * /api/users/join:
  *   post:
  *     tags: [Auth]
@@ -105,7 +111,8 @@
  *               nickname: test_nick
  *               age: 20
  *               sex: M
- *               password: 1234
+ *               img_idx: 3
+ *               password: 1234abc
  *     responses:
  *       200:
  *         content:
@@ -113,6 +120,7 @@
  *             schema:
  *               example:
  *                 result: success
+ *                 message: 회원가입 되었습니다
  * /api/users/login:
  *   post:
  *     tags: [Auth]
@@ -124,7 +132,7 @@
  *           schema:
  *             example:
  *               nickname: test_nick
- *               password: 1234
+ *               password: 1234abc
  *     responses:
  *       200:
  *         content:

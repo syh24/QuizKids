@@ -9,9 +9,6 @@ const quizRouter = require('./routes/quiz');
 const videoRouter = require('./routes/video');
 const videoHistoryRouter = require('./routes/videoHistory');
 const { sequelize } = require('./models');
-const passportConfig = require('./passport');
-
-const cors = require('cors'); // cors 가져오기
 
 //swagger docs
 var bodyParser = require('body-parser');
@@ -37,32 +34,24 @@ sequelize
 	});
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(
-	session({
-		resave: false,
-		saveUninitialized: false,
-		secret: 'vadvxcvcxvadsvasd',
-		cookie: {
-			httpOnly: true,
-			secure: false,
-		},
-	}),
-);
-app.use(passport.initialize());
-app.use(passport.session());
 
 //swagger
 const options = {
 	definition: {
 		openapi: '3.0.0',
 		info: {
-			title: 'Quizkids API',
+			title: 'Quiz App API',
 			version: '0.1.0',
-			description: 'Quiz app',
+			description:
+				'This is a simple CRUD API application made with Express and documented with Swagger',
+			license: {
+				name: 'MIT',
+				url: 'https://spdx.org/licenses/MIT.html',
+			},
 			contact: {
-				name: '서윤혁',
-				email: 'dbsgur6896@naver.com',
+				name: 'test',
+				url: 'https://test.com',
+				email: 'info@email.com',
 			},
 		},
 		servers: [
@@ -71,12 +60,7 @@ const options = {
 			},
 		],
 	},
-	apis: [
-		'./swagger/user.js',
-		'./swagger/quiz.js',
-		'./swagger/video.js',
-		'./swagger/videoHistory.js',
-	],
+	apis: ['./swagger/user.js', './swagger/quiz.js', './swagger/video.js'],
 };
 
 const specs = swaggerJsdoc(options);
