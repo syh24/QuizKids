@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import ThemeDecorator from '@enact/sandstone/ThemeDecorator';
 import Panels from '@enact/sandstone/Panels';
 import Main from '../views/Main';
@@ -25,7 +25,6 @@ const App = props => {
 	const handleBack = useBackHandler();
 	const handleClose = useCloseHandler();
 	useDocumentEvent(setSkinVariants);
-
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 	const handleLogin = () => {
@@ -36,6 +35,7 @@ const App = props => {
 	const handleRegister = () => {
 		// 회원가입 로직 구현
 	};
+
 
 	return (
 		<div>
@@ -51,7 +51,7 @@ const App = props => {
 					// className="bg-white text-black"
 					skin="light"
 				>
-					<Main skin="light" />
+					<Main skin="light" user_id={5}/>
 				</Panels>
 			)}
 		</div>

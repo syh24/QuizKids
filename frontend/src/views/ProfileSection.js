@@ -7,7 +7,7 @@ import imgsrc_3 from './dog.png';
 import imgsrc_4 from './dog_1.png';
 import { imagePaths } from './Main';
 
-const ProfileSelection = ({onClose, setProfile}) => {
+const ProfileSelection = ({onClose, setIdx}) => {
     
     const onClick = (event) => {
         const urlString = event.target.lastElementChild.currentSrc;
@@ -18,7 +18,7 @@ const ProfileSelection = ({onClose, setProfile}) => {
         srcValue = srcValue.replace(/^\//, '');
         console.log(srcValue);
         const index = imagePaths.indexOf(srcValue);
-        setProfile(index)
+        setIdx(index)
         onClose();
     };
 
