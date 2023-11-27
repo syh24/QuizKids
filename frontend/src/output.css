@@ -447,11 +447,11 @@ input[type='text']::placeholder {
 }
 
 .enact_sandstone_Popup_Popup_popup.light {
-  margin-left: 7rem;
-  height: 80vh;
-  width: 85vw;
+  margin-left: 330px;
+  height: 87vh;
+  width: 80vw;
   border-radius: 0.75rem;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.75;
   --tw-backdrop-blur: blur(24px);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
@@ -651,10 +651,6 @@ input[type='text']::placeholder {
   width: 100vw;
 }
 
-.w-24 {
-  width: 6rem;
-}
-
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -751,9 +747,9 @@ input[type='text']::placeholder {
   background-color: rgb(242 178 15 / var(--tw-bg-opacity));
 }
 
-.bg-orange-500 {
+.bg-gray-200 {
   --tw-bg-opacity: 1;
-  background-color: rgb(249 115 22 / var(--tw-bg-opacity));
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .bg-primary {
@@ -764,11 +760,6 @@ input[type='text']::placeholder {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-75 {
@@ -784,12 +775,12 @@ input[type='text']::placeholder {
   padding: 0px;
 }
 
-.p-2 {
-  padding: 0.5rem;
-}
-
 .p-1 {
   padding: 0.25rem;
+}
+
+.p-2 {
+  padding: 0.5rem;
 }
 
 .text-sm {

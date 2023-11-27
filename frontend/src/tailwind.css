@@ -8,6 +8,6 @@
 	}
 
 	.enact_sandstone_Popup_Popup_popup.light {
-		@apply bg-white bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[80vh] w-[85vw] ml-28;
+		@apply bg-gray-300 bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[87vh] w-[80vw] ml-[330px];
 	}
 }
