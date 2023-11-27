@@ -61,8 +61,15 @@ const Main = props => {
 	}
 
 	return (
-		<Panel>
-			<Header title="QuizApp" />
+		<Panel className="bg-white">
+			{/* <Header title="Quiz App" closeButtonBackgroundOpacity="transparent">
+				<Button
+					size="small"
+					icon="profile"
+					slot="slotAfter"
+					onClick={onClick}
+				/>
+			</Header> */}
 			<TabLayout
 				onSelect={function noRefCheck() {}}
 				onTabAnimationEnd={function noRefCheck() {}}

@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	input[type='text']::placeholder {
+		@apply font-thin text-sm;
+	}
+
+	.enact_sandstone_Popup_Popup_popup.light {
+		@apply bg-gray-300 bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[87vh] w-[80vw] ml-[330px];
+	}
+}

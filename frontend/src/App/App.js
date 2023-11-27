@@ -6,6 +6,8 @@ import {useBackHandler, useCloseHandler, useDocumentEvent} from './AppState';
 import {isDevServe} from '../libs/utils';
 import Skinnable from '@enact/sandstone/Skinnable';
 
+import FullScreenLogin from '../views/FullScreenLogin';
+
 /* istanbul ignore next*/
 if (isDevServe()) {
 	window.webOSSystem = {
@@ -24,17 +26,35 @@ const App = props => {
 	const handleClose = useCloseHandler();
 	useDocumentEvent(setSkinVariants);
 
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+	const handleLogin = () => {
+		// 로그인 로직 구현
+		setIsLoggedIn(true);
+	};
+
+	const handleRegister = () => {
+		// 회원가입 로직 구현
+	};
+
 	return (
-		<Panels
-			{...props}
-			skinVariants={skinVariants}
-			onBack={handleBack}
-			onClose={handleClose}
-			// className="bg-white text-black"
-			skin="light"
-		>
-			<Main skin="light" />
-		</Panels>
+		<div>
+			{!isLoggedIn && (
+				<FullScreenLogin onLogin={handleLogin} onRegister={handleRegister} />
+			)}
+			{isLoggedIn && (
+				<Panels
+					{...props}
+					skinVariants={skinVariants}
+					onBack={handleBack}
+					onClose={handleClose}
+					// className="bg-white text-black"
+					skin="light"
+				>
+					<Main skin="light" />
+				</Panels>
+			)}
+		</div>
 	);
 };
 

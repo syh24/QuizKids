@@ -29,7 +29,7 @@ const Detail = props => {
 	};
 
 	return (
-		<div className="relative h-[70vh] scale-100 origin-top w-[70vw] flex justify-start mx-auto">
+		<div className="">
 			<div className={`absolute top-0 right-0 ${isPaused ? '' : 'hidden'}`}>
 				<Button
 					icon="plus"
@@ -52,6 +52,7 @@ const Detail = props => {
 				onBack={props.onBack} // when click back button, will back to the home screen
 				onPause={onPause}
 				onPlay={onPlay}
+				spotlightDisabled={showQuizOverlay}
 			>
 				<source src={props.src} type="video/mp4" />
 				<infoComponents>
@@ -73,6 +74,7 @@ const Detail = props => {
 					onClose={() => setShowQuizOverlay(false)}
 					timestamp={currentTimestamp}
 					src={props.src}
+					className="z-50"
 				/>
 			)}
 		</div>

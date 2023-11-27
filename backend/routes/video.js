@@ -6,11 +6,12 @@ const Video = require('../models/video');
 
 router.get('/', async (req, res) => {
   try {
-    const { video_id, name } = req.query;
+    const { video_id, name, user_id } = req.query;
     const video = await Video.findAll({
       include: User,
       where: {
         ...(video_id ? { id: video_id } : {}),
+        ...(user_id ? { user_id: user_id } : {}),
         ...(name ? { name: { [Op.like]: `%${name}%` } } : {}),
       },
     });
@@ -34,7 +35,10 @@ router.post('/', async (req, res) => {
   const video = new Video(req.body);
   try {
     await video.save();
-    res.status(201).json(video);
+    res.status(201).json({
+      "result": "success",
+      "message": "생성되었습니다"
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
