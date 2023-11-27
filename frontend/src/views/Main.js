@@ -8,11 +8,16 @@ import Home from './Home';
 import Button from '@enact/sandstone/Button';
 import Item from '@enact/sandstone/Item';
 import Icon from '@enact/sandstone/Icon';
-// import Profile from './Profile';
+import imgsrc_ from './cat_1.png';
+import imgsrc__ from './cat_2.png';
+import imgsrc___ from './penguin.png';
+import imgsrc____ from './dog.png';
+import imgsrc_____ from './dog_1.png';
+import Account from './Account';
+import Profile from './Profile';
 import MediaOverlay from '@enact/sandstone/MediaOverlay';
-import ImageItem from '@enact/ui/ImageItem';
-import {VirtualGridList} from '@enact/sandstone/VirtualList';
-// import css from './Profile.module.less';
+
+const imagePaths = ['src/views/dog.png', 'src/views/dog_1.png', 'src/views/cat_1.png', 'src/views/cat_2.png', 'src/views/penguin.png'];
 
 // hover 상태에 따라 video를 제어하는 Component
 const HoverVideoOverlay = ({src, ...rest}) => {
@@ -45,9 +50,15 @@ const HoverVideoOverlay = ({src, ...rest}) => {
 };
 
 const Main = props => {
+	const [imgIdx, setImgIdx] = useState(0);
+	
 	const onClick = () => {
 		console.log('hello');
 	};
+
+	const setProfile = (idx) => {
+		setImgIdx(idx);
+	}
 
 	return (
 		<Panel className="bg-white">
@@ -65,6 +76,10 @@ const Main = props => {
 				orientation="vertical"
 				tabSize={null}
 			>
+
+				<Tab title="Profile" icon={imagePaths[imgIdx]}>
+					<Profile imgSrc={imagePaths[imgIdx]} nickName="nickName" sex="M" userAge="0" setProfile={setProfile}/>
+				</Tab>
 				<Tab title={$L('Home')} icon="home">
 					<Home />
 				</Tab>
@@ -78,8 +93,13 @@ const Main = props => {
 				<Tab icon="list" title="History">
 					<Item slotBefore={<Icon>playcircle</Icon>}>Single Item</Item>
 				</Tab>
+				<Tab icon="profile" title="login"> 
+					<Account />
+				</Tab>
 			</TabLayout>
 		</Panel>
 	);
 };
+
 export default Main;
+export {imagePaths};
