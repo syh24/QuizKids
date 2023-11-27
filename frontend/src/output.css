@@ -587,12 +587,41 @@ input[type='text']::placeholder {
   margin-right: 0px;
 }
 
+.mx-11 {
+  margin-left: 2.75rem;
+  margin-right: 2.75rem;
+}
+
 .mb-5 {
   margin-bottom: 1.25rem;
 }
 
+.ml-10 {
+  margin-left: 2.5rem;
+}
+
+.ml-11 {
+  margin-left: 2.75rem;
+}
+
+.ml-24 {
+  margin-left: 6rem;
+}
+
+.ml-32 {
+  margin-left: 8rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
+}
+
+.mt-16 {
+  margin-top: 4rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
 }
 
 .flex {
@@ -633,6 +662,10 @@ input[type='text']::placeholder {
 
 .w-16 {
   width: 4rem;
+}
+
+.w-44 {
+  width: 11rem;
 }
 
 .w-48 {

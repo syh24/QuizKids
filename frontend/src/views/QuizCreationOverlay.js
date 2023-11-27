@@ -142,11 +142,11 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 							문제를 입력하세요.
 						</BodyText>
 						<div className="flex">
-							<input
+							<InputField
 								tabIndex={0}
 								placeholder="문제를 입력하세요. (최대 50자)"
 								value={question}
-								onChange={e => setQuestion(e.target.value)}
+								onChange={e => setQuestion(e.value)}
 								className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
 							/>
 						</div>
@@ -160,7 +160,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 						</BodyText>
 						<div className="flex">
 							{options.map((option, index) => (
-								<input
+								<InputField
 									key={index}
 									value={option}
 									className="spottable text-sm rounded-md h-8 shadow-inner
@@ -169,7 +169,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 									placeholder={`선택지 ${index + 1}`}
 									onChange={e =>
 										setOptions(
-											options.map((o, i) => (i === index ? e.target.value : o))
+											options.map((o, i) => (i === index ? e.value : o))
 										)
 									}
 								/>
