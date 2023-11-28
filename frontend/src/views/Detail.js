@@ -30,13 +30,20 @@ const Detail = props => {
 
 	return (
 		<div className="">
-			<div className={`absolute top-0 right-0 ${isPaused ? '' : 'hidden'}`}>
+			<div
+				className={`absolute top-10 right-0 ${
+					isPaused && !showQuizOverlay ? '' : 'hidden'
+				}`}
+			>
 				<Button
 					icon="plus"
 					size="small"
-					className="m-2.5 z-50"
+					className="m-4 z-50"
 					onClick={() => setShowQuizOverlay(true)}
-				/>
+					tabIndex={0}
+				>
+					퀴즈 추가하기
+				</Button>
 			</div>
 			<VideoPlayer
 				autoCloseTimeout={7000}

@@ -87,7 +87,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 					<React.Fragment key={step}>
 						{/* Circle */}
 						<div
-							className={`w-8 h-8 rounded-full flex items-center justify-center
+							className={`w-10 h-10 rounded-full flex items-center justify-center text-sm
                                     ${
 																			currentStep === step
 																				? 'bg-bold text-white border-8 border-white'
@@ -99,7 +99,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 
 						{/* Dotted Line Connector */}
 						{index < totalSteps - 1 && (
-							<div className="border-b-8 border-dotted border-bold w-16"></div>
+							<div className="border-b-8 border-dashed border-bold w-16"></div>
 						)}
 					</React.Fragment>
 				))}
@@ -112,7 +112,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 			case 0:
 				return (
 					<>
-						<BodyText className="bg-primary rounded-md p-2">
+						<BodyText className="bg-secondary px-1 py-3 text-2xl">
 							문제의 종류를 선택하세요. {timestamp}
 						</BodyText>
 						<div className="flex flex-auto justify-center">
@@ -143,11 +143,12 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 						</BodyText>
 						<div className="flex">
 							<InputField
-								tabIndex={0}
 								placeholder="문제를 입력하세요. (최대 50자)"
 								value={question}
 								onChange={e => setQuestion(e.value)}
-								className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
+								autoFocus={true}
+								dismissOnEnter={true}
+								className="spottable flex-1 text-sm rounded-md h-8 shadow-xl m-2"
 							/>
 						</div>
 					</>
@@ -162,11 +163,17 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 							{options.map((option, index) => (
 								<InputField
 									key={index}
+									tabIndex={index}
 									value={option}
-									className="spottable text-sm rounded-md h-8 shadow-inner
-								p-2 m-2 transition duration-300 ease-in-out flex-grow
-									focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105"
+									className="spottable text-sm rounded-md h-8 shadow-inner m-2 w-32"
 									placeholder={`선택지 ${index + 1}`}
+									autoFocus={true}
+									dismissOnEnter={true}
+									type={
+										questionType === '4개 중 맞는 숫자 고르기'
+											? 'number'
+											: 'text'
+									}
 									onChange={e =>
 										setOptions(
 											options.map((o, i) => (i === index ? e.value : o))
@@ -230,7 +237,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 			className="backdrop-blur-md rounded-xl h-[80vh] w-[93vw]  bg-white"
 		>
 			<StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
-			<div className="h-[60vh]">{renderStep()}</div>
+			<div className="h-[60vh] px-8">{renderStep()}</div>
 			<div className="flex justify-between">
 				{currentStep > 0 && <Button onClick={prevStep}>이전</Button>}
 				{0 < currentStep && currentStep < 3 && (

@@ -447,16 +447,107 @@ input[type='text']::placeholder {
 }
 
 .enact_sandstone_Popup_Popup_popup.light {
-  margin-left: 330px;
+  margin-left: auto;
+  margin-right: auto;
   height: 87vh;
   width: 80vw;
   border-radius: 0.75rem;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-bg-opacity: 0.75;
   --tw-backdrop-blur: blur(24px);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
           backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
+
+.enact_sandstone_VideoPlayer_VideoPlayer_videoPlayer.light
+		.enact_sandstone_VideoPlayer_VideoPlayer_overlay.enact_sandstone_VideoPlayer_VideoPlayer_scrim::after {
+  background-image: none;
+}
+
+#c_1-viewport > article > section {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.light ::-moz-selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 227 163 / var(--tw-bg-opacity));
+}
+
+.light ::selection {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 227 163 / var(--tw-bg-opacity));
+}
+
+#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_sandstone_TabLayout_TabLayout_tabsExpanded.enact_ui_Layout_Layout_size
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.light.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_iconBefore.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large.enact_sandstone_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 227 163 / var(--tw-bg-opacity));
+}
+
+#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.collapsed.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_iconOnly.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_bg.enact_sandstone_Button_Button_bg.enact_sandstone_TabLayout_TabGroup_bg.enact_sandstone_TabLayout_TabGroup_bg.enact_sandstone_TabLayout_TabLayout_bg {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 227 163 / var(--tw-bg-opacity));
+}
+
+#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.collapsed.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_iconOnly.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Icon_Icon_icon.enact_sandstone_Icon_Icon_icon.light.enact_ui_Button_Button_icon.enact_sandstone_Button_Button_icon.enact_sandstone_Icon_Icon_large.enact_ui_Icon_Icon_large.enact_sandstone_Icon_Icon_large {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_sandstone_TabLayout_TabLayout_tabsExpanded.enact_ui_Layout_Layout_size
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_iconBefore.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Icon_Icon_icon.enact_sandstone_Icon_Icon_icon.light.enact_ui_Button_Button_icon.enact_sandstone_Button_Button_icon.enact_sandstone_Icon_Icon_large.enact_ui_Icon_Icon_large.enact_sandstone_Icon_Icon_large {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+/* #c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_sandstone_TabLayout_TabLayout_tabsExpanded.enact_ui_Layout_Layout_size
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_iconBefore.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Marquee_Marquee_marquee.enact_sandstone_Button_Button_marquee {
+		@apply text-black;
+	}
+	#c_1-viewport > article > section > div > div.enact_ui_Layout_Layout_shrink {
+		@apply bg-black;
+	} */
 
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
@@ -570,6 +661,10 @@ input[type='text']::placeholder {
   top: 0px;
 }
 
+.top-10 {
+  top: 2.5rem;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -582,6 +677,10 @@ input[type='text']::placeholder {
   margin: 0.625rem;
 }
 
+.m-4 {
+  margin: 1rem;
+}
+
 .mx-0 {
   margin-left: 0px;
   margin-right: 0px;
@@ -590,6 +689,16 @@ input[type='text']::placeholder {
 .mx-11 {
   margin-left: 2.75rem;
   margin-right: 2.75rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .mb-5 {
@@ -632,6 +741,10 @@ input[type='text']::placeholder {
   display: none;
 }
 
+.h-10 {
+  height: 2.5rem;
+}
+
 .h-24 {
   height: 6rem;
 }
@@ -660,8 +773,16 @@ input[type='text']::placeholder {
   height: 100vh;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
 .w-16 {
   width: 4rem;
+}
+
+.w-32 {
+  width: 8rem;
 }
 
 .w-44 {
@@ -672,16 +793,16 @@ input[type='text']::placeholder {
   width: 12rem;
 }
 
-.w-8 {
-  width: 2rem;
-}
-
 .w-\[93vw\] {
   width: 93vw;
 }
 
 .w-screen {
   width: 100vw;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .flex-1 {
@@ -724,10 +845,6 @@ input[type='text']::placeholder {
   overflow-x: auto;
 }
 
-.overflow-y-hidden {
-  overflow-y: hidden;
-}
-
 .whitespace-nowrap {
   white-space: nowrap;
 }
@@ -756,8 +873,8 @@ input[type='text']::placeholder {
   border-bottom-width: 8px;
 }
 
-.border-dotted {
-  border-style: dotted;
+.border-dashed {
+  border-style: dashed;
 }
 
 .border-bold {
@@ -790,6 +907,11 @@ input[type='text']::placeholder {
   background-color: rgb(255 227 163 / var(--tw-bg-opacity));
 }
 
+.bg-secondary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 246 225 / var(--tw-bg-opacity));
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -814,6 +936,26 @@ input[type='text']::placeholder {
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.px-1 {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .text-sm {
@@ -848,6 +990,12 @@ input[type='text']::placeholder {
 .shadow-xl {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.shadow-md {
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -890,6 +1038,21 @@ input[type='text']::placeholder {
 
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .focus\:scale-105:focus {

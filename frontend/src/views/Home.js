@@ -48,7 +48,7 @@ const Home = () => {
 				<>
 					<div className="h-56">
 						<BodyText># 최신_영상 🔥</BodyText>
-						<div className="flex overflow-x-auto  whitespace-nowrap h-full">
+						<div className="flex overflow-x-auto  whitespace-nowrap h-full no-scrollbar">
 							{videoSources.map((src, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
@@ -64,10 +64,7 @@ const Home = () => {
 
 					<div className="h-56">
 						<BodyText>@헤이지니 Hey Jini님의 최신 영상</BodyText>
-						<div
-							className="flex overflow-x-auto overflow-y-hidden whitespace-nowrap"
-							style={{overflow: 'hidden'}}
-						>
+						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
 							{videoSources.map((src, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
@@ -82,10 +79,7 @@ const Home = () => {
 					</div>
 					<div className="h-56">
 						<BodyText>#Quiz가_많은_영상 👀</BodyText>
-						<div
-							className="flex overflow-x-auto overflow-y-hidden whitespace-nowrap"
-							style={{overflow: 'hidden'}}
-						>
+						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
 							{videoSources.map((src, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
