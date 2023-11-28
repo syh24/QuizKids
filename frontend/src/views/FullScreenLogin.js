@@ -51,14 +51,14 @@ const FullScreenLogin = ({onLogin, onRegister, inputNickname, setInputNickname,
 					/>
 					<InputField
 						tabIndex={0}
-						placeholder="나이(임시)"
+						placeholder="나이(임시) <<숫자만 입력>>"
 						value={inputAge}
 						onChange={e => setInputAge(e.value)}
 						className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
 					/>
 					<InputField
 						tabIndex={0}
-						placeholder="imgSrc or imgIdx(임시)"
+						placeholder="imgSrc or imgIdx(임시) <<숫자만 입력>>"
 						value={inputImgSrc}
 						onChange={e => setInputImgSrc(e.value)}
 						className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"

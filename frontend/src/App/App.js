@@ -26,7 +26,8 @@ const App = props => {
 	const handleClose = useCloseHandler();
 	useDocumentEvent(setSkinVariants);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+	
+	const [userId, get_userId] = useState('');
 	const [nickname, getNickname] = useState('');
 	const [password, getPassword] = useState('');
 	const [sex, getSex] = useState('');
@@ -59,6 +60,9 @@ const App = props => {
 				console.log('login successfully');
 				//console.log(loginData);
 				//console.log(response_json);
+
+				//console.log(Object.values(response_json)[2]);
+				get_userId(Object.values(response_json)[2]);
 				setIsLoggedIn(true);
 			}
 			else {
@@ -145,6 +149,8 @@ const App = props => {
 					//console.log(registerData);
 					//console.log(response_json);
 					
+					//console.log(Object.values(response_json)[2]);
+					get_userId(Object.values(response_json)[2]);
 					handleLogin();
 				}
 				else {
@@ -222,7 +228,7 @@ const App = props => {
 					// className="bg-white text-black"
 					skin="light"
 				>
-					<Main skin="light" user_id={2}/>
+					<Main skin="light" user_id={userId}/>
 				</Panels>
 			)}
 		</div>
