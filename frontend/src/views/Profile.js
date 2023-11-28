@@ -1,15 +1,15 @@
 import Button from '@enact/sandstone/Button';
 import Icon from '@enact/sandstone/Icon';
 import React, {useState, useEffect} from 'react';
-import Input from '@enact/sandstone/Input';
+import Popup from '@enact/sandstone/Popup';
+import {InputField, Input} from '@enact/sandstone/Input';
 import BodyText from '@enact/ui/BodyText';
 import ProfileSelection from './ProfileSection';
 
-const Profile = ({imgSrc, nickName, sex, userAge, setProfile}) => {
+const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx}) => {
     const [showProfileSelection, setShowProfileSelection] = useState(false);
-    const [userName, setUserName] = useState(nickName);
-    const [gender, setGender] = useState(sex);
-    const [age, setAge] = useState(parseInt(userAge, 10));
+    const [isDuplicateNickname, setIsDuplicateNickName] = useState(false);
+    const [openFlag, setOpenFlag] = useState(false);
 
     const ageTypes = [
         '5살보다 어려요.',
@@ -21,16 +21,27 @@ const Profile = ({imgSrc, nickName, sex, userAge, setProfile}) => {
         '성인이에요.'
     ];
 
-    const onComplete= (event) => {
-        setUserName(event.value);
+    const handleUserName = async (event) => {
+        try {
+          const success = await setName(event.value, true);
+          console.log(success);
+      
+          if (success) {
+            setIsDuplicateNickName(false);
+          } else {
+            setIsDuplicateNickName(true);
+          }
+        } catch (error) {
+          console.error('에러 발생:', error);
+          // 에러 처리 로직 추가
+        }
     };
 
-    const handleGenderButton = (event) => {
-        (event.target.outerText === "남성") ? setGender("M") : setGender("F");
-        console.log(gender);
+    const handleUserSex = (event) => {
+        (event.target.outerText === "남성") ? setSex("M") : setSex("F");
     }
 
-    const handleAgeButton = (event) => {
+    const handleUserAge = (event) => {
         const clickedButton = event.target.innerText;
         const index = ageTypes.indexOf(clickedButton);
         setAge(index);
@@ -49,14 +60,16 @@ const Profile = ({imgSrc, nickName, sex, userAge, setProfile}) => {
                     />
                     <div className="mt-16 ml-10">
                         <Input
-                            invalidMessage="This is a bad value"
+                            onClick = {() => {setOpenFlag(true);}}
+                            invalidMessage="죄송합니다. 해당 닉네임은 이미 다른 사용자가 사용 중입니다. 다른 닉네임을 입력해주세요."
                             onBeforeChange={function noRefCheck(){}}
                             onChange={function noRefCheck(){}}
                             onClose={function noRefCheck(){}}
-                            onComplete={onComplete}
+                            onComplete={handleUserName}
                             onOpenPopup={function noRefCheck(){}}
-                            placeholder={userName}
                             popupType="fullscreen"
+                            placeholder={nickName}
+                            value={nickName}
                             size="small"
                             title="Enter new NickName"
                             type="text"
@@ -81,21 +94,21 @@ const Profile = ({imgSrc, nickName, sex, userAge, setProfile}) => {
                     <BodyText className="ml-11" size="large">
                         성별
                     </BodyText>
-                    <Button color={gender === 'M' ? "yellow" : null} onClick={handleGenderButton} className = "Spottable" size="small">남성</Button>
-                    <Button color={gender === 'F' ? "yellow" : null} onClick={handleGenderButton} className = "Spottable" size="small">여성</Button>
+                    <Button color={sex === 'M' ? "yellow" : null} onClick={handleUserSex} className = "Spottable" size="small">남성</Button>
+                    <Button color={sex === 'F' ? "yellow" : null} onClick={handleUserSex} className = "Spottable" size="small">여성</Button>
                 </div>
                 <div className="mt-8 ml-32 ">
                     <BodyText className="mx-11" size="large">
                         나이
                     </BodyText>
                     {ageTypes.map((ageType, index) => (
-                        <Button color = {index === age ? "yellow" : null } size="small" key={index} onClick={handleAgeButton}>
+                        <Button color = {index === age ? "yellow" : null } size="small" key={index} onClick={handleUserAge}>
                             {ageType}
                         </Button>
                     ))}
                 </div>
 
-                {showProfileSelection ? <ProfileSelection onClose={toggleProfileSelection} setProfile={setProfile} /> : null }
+                {showProfileSelection ? <ProfileSelection onClose={toggleProfileSelection} setIdx={setImgIdx} /> : null }
         </div>        
     )
 }

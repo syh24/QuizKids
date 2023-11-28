@@ -6,3 +6,12 @@ export const getSystemInfo = params =>
 
 const sam = request('luna://com.webos.applicationManager');
 export const launch = parameters => sam({method: 'launch', parameters});
+
+// get system status
+const mem_ = request('luna://com.webos.memorymanager');
+export const getMemoryInfo = params => 
+	mem_({method: 'getProcStat', ...params});
+
+const cpu_ = request('luna://com.webos.memorymanager');
+export const getCpuInfo = params => 
+	cpu_({method: 'getUnitList', ...params});

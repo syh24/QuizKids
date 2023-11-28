@@ -7,18 +7,13 @@ import imgsrc_3 from './dog.png';
 import imgsrc_4 from './dog_1.png';
 import { imagePaths } from './Main';
 
-const ProfileSelection = ({onClose, setProfile}) => {
+const ProfileSelection = ({onClose, setIdx}) => {
     
     const onClick = (event) => {
-        const urlString = event.target.lastElementChild.currentSrc;
-        const srcMatch = urlString.match(/\/src\/views\/([^\/]+)$/);
-
-        // src 값 출력
-        let srcValue = srcMatch && srcMatch[0];
-        srcValue = srcValue.replace(/^\//, '');
+        const srcValue = event.target.lastElementChild.currentSrc;
         console.log(srcValue);
         const index = imagePaths.indexOf(srcValue);
-        setProfile(index)
+        setIdx(index)
         onClose();
     };
 
@@ -31,8 +26,9 @@ const ProfileSelection = ({onClose, setProfile}) => {
                 className="backdrop-blur-md Slottable"
             >
                 <div className="flex Slottable justify-between">
-                    {imagePaths.map((src) => (
+                    {imagePaths.map((src, index) => (
                         <ImageItem
+                            key={index}
                             onClick={onClick}
                             src={src}
                             style={{
