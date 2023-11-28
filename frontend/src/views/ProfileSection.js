@@ -10,12 +10,7 @@ import { imagePaths } from './Main';
 const ProfileSelection = ({onClose, setIdx}) => {
     
     const onClick = (event) => {
-        const urlString = event.target.lastElementChild.currentSrc;
-        const srcMatch = urlString.match(/\/src\/views\/([^\/]+)$/);
-
-        // src 값 출력
-        let srcValue = srcMatch && srcMatch[0];
-        srcValue = srcValue.replace(/^\//, '');
+        const srcValue = event.target.lastElementChild.currentSrc;
         console.log(srcValue);
         const index = imagePaths.indexOf(srcValue);
         setIdx(index)
@@ -31,8 +26,9 @@ const ProfileSelection = ({onClose, setIdx}) => {
                 className="backdrop-blur-md Slottable"
             >
                 <div className="flex Slottable justify-between">
-                    {imagePaths.map((src) => (
+                    {imagePaths.map((src, index) => (
                         <ImageItem
+                            key={index}
                             onClick={onClick}
                             src={src}
                             style={{

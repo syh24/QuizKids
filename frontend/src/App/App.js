@@ -51,7 +51,7 @@ const App = props => {
 					// className="bg-white text-black"
 					skin="light"
 				>
-					<Main skin="light" user_id={5}/>
+					<Main skin="light" user_id={2}/>
 				</Panels>
 			)}
 		</div>
