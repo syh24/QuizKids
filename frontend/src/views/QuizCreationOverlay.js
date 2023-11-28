@@ -38,6 +38,8 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 		setQuestionType(type);
 		if (type === 'O X 문제') {
 			setIsOXSelected(true);
+		} else {
+			setIsOXSelected(false);
 		}
 		nextStep();
 	};
@@ -80,7 +82,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 		console.log('Selected answer index:', index); // 로그 출력으로 확인
 	};
 
-	const StepIndicator = ({currentStep, totalSteps}) => {
+	const StepIndicator = ({currentStep, totalSteps, isOXSelected}) => {
 		return (
 			<div className="flex justify-center items-center mb-5">
 				{[...Array(totalSteps).keys()].map((step, index) => (
@@ -88,11 +90,13 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 						{/* Circle */}
 						<div
 							className={`w-10 h-10 rounded-full flex items-center justify-center text-sm
-                                    ${
-																			currentStep === step
-																				? 'bg-bold text-white border-8 border-white'
-																				: 'bg-bold text-white'
-																		} mx-0`}
+																	${
+																		currentStep === step
+																			? 'bg-bold text-white border-8 border-white'
+																			: index === 2 && isOXSelected
+																			? 'bg-gray-400 text-white'
+																			: 'bg-bold text-white'
+																	} mx-0`}
 						>
 							{step + 1}
 						</div>
@@ -123,9 +127,9 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 							].map(type => (
 								<button
 									key={type}
-									onClick={() => setQuestionTypeAndAdvance(type)} // 수정된 함수 호출
+									onClick={() => setQuestionTypeAndAdvance(type)}
 									skin="light"
-									className="bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+									className="bg-white spottable rounded-md p-4 m-4 transition duration-300 ease-in-out 
 									focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
 									flex-grow"
 								>
@@ -148,6 +152,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 								onChange={e => setQuestion(e.value)}
 								autoFocus={true}
 								dismissOnEnter={true}
+								invalidMessage="값을 입력해주세요."
 								className="spottable flex-1 text-sm rounded-md h-8 shadow-xl m-2"
 							/>
 						</div>
@@ -169,6 +174,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 									placeholder={`선택지 ${index + 1}`}
 									autoFocus={true}
 									dismissOnEnter={true}
+									invalidMessage="값을 입력해주세요."
 									type={
 										questionType === '4개 중 맞는 숫자 고르기'
 											? 'number'
@@ -202,7 +208,7 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 											onClick={() => handleAnswerSelect(index)}
 											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
                   focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
-                  flex-grow ${selectedAnswer == index ? 'bg-black' : ''}`}
+                  flex-grow ${selectedAnswer == index ? 'bg-primary' : ''}`}
 										>
 											{option}
 										</button>
@@ -236,7 +242,11 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 			scrimType="transparent"
 			className="backdrop-blur-md rounded-xl h-[80vh] w-[93vw]  bg-white"
 		>
-			<StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
+			<StepIndicator
+				currentStep={currentStep}
+				totalSteps={totalSteps}
+				isOXSelected={isOXSelected}
+			/>
 			<div className="h-[60vh] px-8">{renderStep()}</div>
 			<div className="flex justify-between">
 				{currentStep > 0 && <Button onClick={prevStep}>이전</Button>}
