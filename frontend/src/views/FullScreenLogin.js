@@ -1,7 +1,12 @@
 // FullScreenLogin.js
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import {InputField} from '@enact/sandstone/Input';
+import Button from '@enact/sandstone/Button';
 
-const FullScreenLogin = ({onLogin, onRegister}) => {
+
+const FullScreenLogin = ({onLogin, onRegister, inputNickname, setInputNickname, 
+						inputPassword, setInputPassword, inputSex, setInputSex,
+						inputAge, setInputAge, inputImgSrc, setInputImgSrc}) => {
 	return (
 		<div className="w-screen h-screen flex justify-center items-center text-black">
 			{/* 로그인 및 회원가입 폼 구현 */}
@@ -20,6 +25,45 @@ const FullScreenLogin = ({onLogin, onRegister}) => {
 				>
 					로그인하기
 				</button>
+				<div className="flex">
+					<InputField
+						tabIndex={0}
+						placeholder="아이디를 입력하세요"
+						value={inputNickname}
+						onChange={e => setInputNickname(e.value)}
+						className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
+					/>
+					<InputField
+						tabIndex={0}
+						placeholder="비밀번호를 입력하세요"
+						value={inputPassword}
+						onChange={e => setInputPassword(e.value)}
+						className="spottable flex-1 text-sm rounded-md h-9 shadow-inner m-2"
+					/>
+				</div>
+				<div className="flex">
+					<InputField
+						tabIndex={0}
+						placeholder="남/녀(임시)"
+						value={inputSex}
+						onChange={e => setInputSex(e.value)}
+						className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
+					/>
+					<InputField
+						tabIndex={0}
+						placeholder="나이(임시)"
+						value={inputAge}
+						onChange={e => setInputAge(e.value)}
+						className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
+					/>
+					<InputField
+						tabIndex={0}
+						placeholder="imgSrc or imgIdx(임시)"
+						value={inputImgSrc}
+						onChange={e => setInputImgSrc(e.value)}
+						className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
+					/>
+				</div>
 			</div>
 		</div>
 	);
