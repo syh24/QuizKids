@@ -16,7 +16,7 @@ import imgsrc_____ from './dog_1.png';
 import Account from './Account';
 import Profile from './Profile';
 import MediaOverlay from '@enact/sandstone/MediaOverlay';
-
+import SystemState from './SystemState';
 const imagePaths = ['src/views/dog.png', 'src/views/dog_1.png', 'src/views/cat_1.png', 'src/views/cat_2.png', 'src/views/penguin.png'];
 
 // hover 상태에 따라 video를 제어하는 Component
@@ -164,6 +164,9 @@ const Main = props => {
 				</Tab>
 				<Tab icon="profile" title="login"> 
 					<Account />
+				</Tab>
+				<Tab icon="wisa" title="ResourceUsage" >
+					<SystemState />
 				</Tab>
 			</TabLayout>
 		</Panel>
