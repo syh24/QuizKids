@@ -1,5 +1,5 @@
 {
-	"id": "com.app.enact-template",
+	"id": "com.app.quizkids",
 	"version": "1.0.0",
 	"vendor": "SangWon Kang",
 	"type": "web",
@@ -13,7 +13,8 @@
 	"icon": "icon.png",
 	"largeIcon": "icon.png",
 	"lockable": false,
-	"noSplashOnLaunch": true,
+	"noSplashOnLaunch": false,
+	"splashBackground": "splashscreen.png",
 	"resolution": "1920x1080",
 	"resolutionIndependent": false,
 	"supportPortraitMode": true,
