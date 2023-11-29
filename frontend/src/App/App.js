@@ -36,7 +36,6 @@ const App = props => {
 		// 회원가입 로직 구현
 	};
 
-
 	return (
 		<div>
 			{!isLoggedIn && (
@@ -51,7 +50,7 @@ const App = props => {
 					// className="bg-white text-black"
 					skin="light"
 				>
-					<Main skin="light" user_id={2}/>
+					<Main skin="light" user_id={2} />
 				</Panels>
 			)}
 		</div>

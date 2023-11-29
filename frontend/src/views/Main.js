@@ -67,7 +67,8 @@ const Main = props => {
 	const updateUser = async new_body => {
 		try {
 			const response = await fetch(
-				`http://192.168.0.6:4000/api/users/${props.user_id}`,
+				// `http://localhost:4000/api/users/${props.user_id}`,
+				`${process.env.REACT_APP_BACKEND_URI}/api/users/${props.user_id}`,
 				{
 					method: 'PUT',
 					headers: {
@@ -126,10 +127,13 @@ const Main = props => {
 	// fetch user
 	const getUser = async () => {
 		const user = await (
-			await fetch(`http://192.168.0.6:4000/api/users/?user_id=${props.user_id}`)
+			await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/users/?user_id=${props.user_id}`
+			)
 		).json();
 
 		//setMovies(json.data.movies);
+		console.log('user:======================', user);
 		console.log(user[0]);
 		setUserNickName(user[0].nickname);
 		setUserAge(user[0].age);
