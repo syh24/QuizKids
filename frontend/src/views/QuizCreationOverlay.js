@@ -8,6 +8,8 @@ import Popup from '@enact/sandstone/Popup';
 import Scroller from '@enact/sandstone/Scroller';
 import BodyText from '@enact/ui/BodyText';
 
+import badWordsChecker from '../badWordsChecker';
+
 const QuizCreationOverlay = ({onClose, timestamp}) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [question, setQuestion] = useState('');

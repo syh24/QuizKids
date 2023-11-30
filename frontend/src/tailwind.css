@@ -95,16 +95,6 @@
 		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink {
 		@apply flex;
 	}
-
-	#c_1-viewport
-		> article
-		> section
-		> div
-		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink
-		> div
-		> div {
-		@apply mt-4;
-	}
 }
 
 @layer utilities {
