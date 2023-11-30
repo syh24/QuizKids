@@ -9,7 +9,11 @@ import ProfileSelection from './ProfileSection';
 const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx}) => {
     const [showProfileSelection, setShowProfileSelection] = useState(false);
     const [isDuplicateNickname, setIsDuplicateNickName] = useState(false);
-    const [openFlag, setOpenFlag] = useState(false);
+    const [userName, setUserName] = useState('');
+
+    useEffect(() => {
+        setUserName(nickName);
+    }, [nickName]);
 
     const ageTypes = [
         '5살보다 어려요.',
@@ -21,9 +25,9 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
         '성인이에요.'
     ];
 
-    const handleUserName = async (event) => {
+    const handleUserName = async () => {
         try {
-          const success = await setName(event.value, true);
+          const success = await setName(userName, true);
           console.log(success);
       
           if (success) {
@@ -51,6 +55,11 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
         setShowProfileSelection(current => !current);
     }
 
+    const onChange = (event) => {
+        console.log(event.value);
+        setUserName(event.value);
+    }
+    
     return (
         <div>
                 <div className="flex">
@@ -59,24 +68,19 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
                         className="ml-24 w-44 h-50 rounded-full"
                     />
                     <div className="mt-16 ml-10">
-                        <Input
-                            onClick = {() => {setOpenFlag(true);}}
-                            invalidMessage="죄송합니다. 해당 닉네임은 이미 다른 사용자가 사용 중입니다. 다른 닉네임을 입력해주세요."
-                            onBeforeChange={function noRefCheck(){}}
-                            onChange={function noRefCheck(){}}
-                            onClose={function noRefCheck(){}}
-                            onComplete={handleUserName}
-                            onOpenPopup={function noRefCheck(){}}
-                            popupType="fullscreen"
-                            placeholder={nickName}
-                            value={nickName}
+                        <InputField
+                            autoFocus={true}
+                            invalid={isDuplicateNickname}
+                            invalidMessage="이미 사용중인 닉네임입니다."
+                            onChange={onChange}
+                            placeholder="닉네임을 입력하세요."
+                            value={userName}
+                            onActivate={() => console.log('activate')}
+                            onDeactivate={() => {console.log('deactivate')}}
                             size="small"
-                            title="Enter new NickName"
                             type="text"
                         />
-                        <Icon>
-                            edit
-                        </Icon>
+                        <Button icon='edit' onClick = {handleUserName} />
                     </div>
                 </div>
 
