@@ -34,7 +34,7 @@ const App = props => {
 	const [age, getAge] = useState('');
 	const [imgSrc, getImgSrc] = useState('');
 
-	const [inputValidity, setinputValidity] = useState('0');
+	const [validityMsg, setValidityMsg] = useState(null);
 
 	const handleLogin = async () => {
 		const loginData = {
@@ -77,7 +77,7 @@ const App = props => {
 	};
 
 	const handleRegister = async () => {
-		setinputValidity(0);
+		setValidityMsg(null);
 		const registerData = {
 			nickname: nickname,
 			age: age,
@@ -91,15 +91,15 @@ const App = props => {
 					'Failed to register: Only can use [ _ , + , - , @ , ^ , & , ~ , ! ]'
 				);
 				console.log('Input nickname: ', nickname);
-				setinputValidity(1);
+				setValidityMsg('Only can use [ _ , + , - , @ , ^ , & , ~ , ! ]');
 			} else if (nickname.length < 2) {
 				console.log('Failed to register: too short nickname (allow minimum 2)');
 				console.log('nickname length: %d', nickname.length);
-				setinputValidity(2);
+				setValidityMsg('닉네임이 너무 짧습니다');
 			} else if (nickname.length > 10) {
 				console.log('Failed to register: too long nickname (allow maximum 10)');
 				console.log('nickname length: %d', nickname.length);
-				setinputValidity(3);
+				setValidityMsg('비밀번호가 너무 깁니다');
 			} else if (password.length < 4) {
 				/*
 			else if (false) {
@@ -110,20 +110,20 @@ const App = props => {
 			*/
 				console.log('Failed to register: too short password (allow minimum 4)');
 				console.log('password length: %d', password.length);
-				setinputValidity(5);
+				setValidityMsg('비밀번호가 너무 짧습니다');
 			} else if (password.length > 10) {
 				console.log('Failed to register: too long password (allow maximum 10)');
 				console.log('password length: %d', password.length);
-				setinputValidity(6);
+				setValidityMsg('비밀번호가 너무 깁니다');
 			} else if (sex == '') {
 				console.log('Failed to register: choose your sex');
-				setinputValidity(7);
+				setValidityMsg('성별을 선택해주세요');
 			} else if (age == '') {
 				console.log('Failed to register: choose your age');
-				setinputValidity(8);
+				setValidityMsg('나이를 선택해주세요');
 			} else if (imgSrc == '') {
 				console.log('Failed to register: choose your image');
-				setinputValidity(9);
+				setValidityMsg('프로필 이미지를 선택해주세요');
 			} else {
 				//valid 한 입력
 				const response = await fetch('http://localhost:4000/api/users/join', {
@@ -149,6 +149,7 @@ const App = props => {
 					handleLogin();
 				} else {
 					console.log('Failed to register:', Object.values(response_json)[1]);
+					setValidityMsg(Object.values(response_json)[1]);
 					//console.log(registerData);
 					//console.log(response_json);
 				}
@@ -184,32 +185,10 @@ const App = props => {
 					setInputImgSrc={getImgSrc}
 				/>
 			)}
-			{!isLoggedIn && inputValidity == '1' && (
-				<div className="flex">닉네임 특수문자</div>
-			)}
-			{!isLoggedIn && inputValidity == '2' && (
-				<div className="flex">닉네임 너무 짧음</div>
-			)}
-			{!isLoggedIn && inputValidity == '3' && (
-				<div className="flex">닉네임 너무 긺</div>
-			)}
-			{!isLoggedIn && inputValidity == '4' && (
-				<div className="flex">비밀번호 특수문자</div>
-			)}
-			{!isLoggedIn && inputValidity == '5' && (
-				<div className="flex">비밀번호 너무 짧음</div>
-			)}
-			{!isLoggedIn && inputValidity == '6' && (
-				<div className="flex">비밀번호 너무 긺</div>
-			)}
-			{!isLoggedIn && inputValidity == '7' && (
-				<div className="flex">성별고르라고</div>
-			)}
-			{!isLoggedIn && inputValidity == '8' && (
-				<div className="flex">나이고르라고</div>
-			)}
-			{!isLoggedIn && inputValidity == '9' && (
-				<div className="flex">이미지고르라고</div>
+			{!isLoggedIn && validityMsg && (
+				<div className="flex absolute top-0 right-52 text-red-500 p-4 px-6 rounded-full shadow-xl">
+					{validityMsg}
+				</div>
 			)}
 			{isLoggedIn && (
 				<Panels
