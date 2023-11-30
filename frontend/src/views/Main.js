@@ -20,6 +20,10 @@ import MediaOverlay from '@enact/sandstone/MediaOverlay';
 import SystemState from './SystemState';
 import SwitchItem from '@enact/sandstone/SwitchItem';
 
+import LogoPath from './logo.svg';
+
+import {Image} from '@enact/sandstone/Image';
+
 const imagePaths = [
 	'https://ssl.pstatic.net/mimgnews/image/112/2021/07/08/202107081008046563160_20210708100917_01_20210708101006245.jpg?type=w540',
 	'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
@@ -147,6 +151,11 @@ const Main = props => {
 
 	return (
 		<Panel className="bg-white">
+			<img
+				src={LogoPath}
+				alt="QuizKids"
+				className="w-12 h-12 absolute pt-4 pl-4"
+			/>
 			<TabLayout
 				onSelect={function noRefCheck() {}}
 				onTabAnimationEnd={function noRefCheck() {}}
