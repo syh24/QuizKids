@@ -164,7 +164,6 @@ const App = props => {
 		}
 	};
 
-
 	return (
 		<div>
 			{!isLoggedIn && (

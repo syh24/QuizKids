@@ -16,3 +16,6 @@ dist
 # others
 npm-debug.log
 .eslintcache
+
+# local env files
+.env

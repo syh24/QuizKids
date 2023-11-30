@@ -15,9 +15,22 @@ import imgsrc____ from './dog.png';
 import imgsrc_____ from './dog_1.png';
 import Account from './Account';
 import Profile from './Profile';
+import History from './History';
 import MediaOverlay from '@enact/sandstone/MediaOverlay';
 import SystemState from './SystemState';
-const imagePaths = ['https://ssl.pstatic.net/mimgnews/image/112/2021/07/08/202107081008046563160_20210708100917_01_20210708101006245.jpg?type=w540', 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTscDSszyGFxlaLRB8Aj1A3gfUKy0hCRhCH4g&usqp=CAU', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOByQi_wqBIRiSI8ta4O05kp-awGDIlYVhHQ&usqp=CAU', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUbasz5gJ16BJX0At8_H5IaBTn9H6OVEi_KA&usqp=CAU'];
+import SwitchItem from '@enact/sandstone/SwitchItem';
+
+import LogoPath from './logo.svg';
+
+import {Image} from '@enact/sandstone/Image';
+
+const imagePaths = [
+	'https://ssl.pstatic.net/mimgnews/image/112/2021/07/08/202107081008046563160_20210708100917_01_20210708101006245.jpg?type=w540',
+	'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTscDSszyGFxlaLRB8Aj1A3gfUKy0hCRhCH4g&usqp=CAU',
+	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOByQi_wqBIRiSI8ta4O05kp-awGDIlYVhHQ&usqp=CAU',
+	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUbasz5gJ16BJX0At8_H5IaBTn9H6OVEi_KA&usqp=CAU'
+];
 
 // hover 상태에 따라 video를 제어하는 Component
 const HoverVideoOverlay = ({src, ...rest}) => {
@@ -55,34 +68,37 @@ const Main = props => {
 	const [userSex, setUserSex] = useState('');
 	const [userImgIdx, setUserImgIdx] = useState(-1);
 
-	const updateUser = async(new_body) => {
+	const updateUser = async new_body => {
 		try {
-			const response = await fetch(`http://localhost:4000/api/users/${props.user_id}`, {
-			  method: 'PUT',
-			  headers: {
-				'Content-Type': 'application/json',
-			  },
-			  body: JSON.stringify(new_body),
-			});
-	  
+			const response = await fetch(
+				// `http://localhost:4000/api/users/${props.user_id}`,
+				`${process.env.REACT_APP_BACKEND_URI}/api/users/${props.user_id}`,
+				{
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(new_body)
+				}
+			);
+
 			if (!response.ok) {
-			  throw new Error('서버 응답 오류');
+				throw new Error('서버 응답 오류');
 			}
-	  
+
 			const updatedUserData = await response.json();
 			console.log('업데이트된 사용자 정보:', updatedUserData);
 			return true;
-
-		  } catch (error) {
+		} catch (error) {
 			console.error('데이터 업데이트 실패:', error);
 			return false;
-		  }
+		}
 	};
 
 	// following functions are the Props passed to the profile Component
-	const setWrapperName = async (newNickName) => {
+	const setWrapperName = async newNickName => {
 		try {
-			const success = await updateUser({ "nickname": newNickName });
+			const success = await updateUser({nickname: newNickName});
 			if (success) {
 				setUserNickName(newNickName);
 				return true;
@@ -97,51 +113,60 @@ const Main = props => {
 		}
 	};
 
-	const setWrapperAge = (newAge) => {
+	const setWrapperAge = newAge => {
 		setUserAge(newAge);
-		updateUser({"age": newAge})
-	}
+		updateUser({age: newAge});
+	};
 
-	const setWrapperSex = (newSex) => {
+	const setWrapperSex = newSex => {
 		setUserSex(newSex);
-		updateUser({"sex" : newSex})
-	}
+		updateUser({sex: newSex});
+	};
 
-	const setWrapperImgIdx = (newIdx) => {
+	const setWrapperImgIdx = newIdx => {
 		setUserImgIdx(newIdx);
-		updateUser({"img_idx" : newIdx})
-	}
+		updateUser({img_idx: newIdx});
+	};
 
 	// fetch user
-	const getUser = async() => {
-        const user = await
-        (await fetch(
-            `http://localhost:4000/api/users/?user_id=${props.user_id}`
-        )).json();
+	const getUser = async () => {
+		const user = await (
+			await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/users/?user_id=${props.user_id}`
+			)
+		).json();
 
-        //setMovies(json.data.movies);
+		//setMovies(json.data.movies);
+		console.log('user:======================', user);
 		console.log(user[0]);
 		setUserNickName(user[0].nickname);
 		setUserAge(user[0].age);
 		setUserSex(user[0].sex);
 		setUserImgIdx(user[0].img_idx);
-    };
+	};
 
-    useEffect(() => {getUser();}, []);
+	useEffect(() => {
+		getUser();
+	}, []);
 
 	return (
 		<Panel className="bg-white">
+			<img
+				src={LogoPath}
+				alt="QuizKids"
+				className="w-12 h-12 absolute pt-4 pl-4"
+			/>
 			<TabLayout
 				onSelect={function noRefCheck() {}}
 				onTabAnimationEnd={function noRefCheck() {}}
 				orientation="vertical"
 				tabSize={null}
 			>
-				<Tab title="Profile" icon={imagePaths[userImgIdx]}>
-					<Profile 
+				<Tab title="Profile" icon={imagePaths[userImgIdx]} className="mt-36">
+					<Profile
 						imgSrc={imagePaths[userImgIdx]}
-						nickName={userNickName} 
-						sex={userSex} 
+						nickName={userNickName}
+						sex={userSex}
 						age={userAge}
 						setName={setWrapperName}
 						setAge={setWrapperAge}
@@ -153,19 +178,25 @@ const Main = props => {
 					<Home />
 				</Tab>
 				<Tab icon="gear" title="Settings">
-					<Button icon="demosync">Button 1</Button>
+					{/* <Button icon="demosync">Button 1</Button>
 					<Button icon="demosync">Button 2</Button>
 					<Button icon="demosync">Button 3</Button>
 					<Button icon="demosync">Button 4</Button>
-					<Button icon="demosync">Button 5</Button>
+					<Button icon="demosync">Button 5</Button> */}
+					<SwitchItem onToggle={function noRefCheck() {}}>
+						사용자 맞춤 추천
+					</SwitchItem>
+					<SwitchItem onToggle={function noRefCheck() {}}>
+						Quiz 더 자주 띄우기
+					</SwitchItem>
 				</Tab>
 				<Tab icon="list" title="History">
-					<Item slotBefore={<Icon>playcircle</Icon>}>Single Item</Item>
+					<History />
 				</Tab>
-				<Tab icon="profile" title="login"> 
+				<Tab icon="profile" title="login">
 					<Account />
 				</Tab>
-				<Tab icon="wisa" title="ResourceUsage" >
+				<Tab icon="wisa" title="ResourceUsage">
 					<SystemState />
 				</Tab>
 			</TabLayout>

@@ -14,7 +14,7 @@ export const SystemState = () => {
 			debugLog('GET_CONFIGS[R]', {});
 			ref1.current = getMemoryInfo({
 				parameters: {
-					subscribe: true,
+					subscribe: true
 				},
 				onSuccess: res => {
 					debugLog('GET_CONFIGS[S]', res);
@@ -34,7 +34,7 @@ export const SystemState = () => {
 		};
 	}, []);
 
-    console.log('mem', value1);
+	console.log('mem', value1);
 
 	// cpu
 	useEffect(() => {
@@ -42,7 +42,7 @@ export const SystemState = () => {
 			debugLog('GET_CONFIGS[R]', {});
 			ref2.current = getCpuInfo({
 				parameters: {
-					subscribe: true,
+					subscribe: true
 				},
 				onSuccess: res => {
 					debugLog('GET_CONFIGS[S]', res);
@@ -62,13 +62,14 @@ export const SystemState = () => {
 		};
 	}, []);
 
-    console.log('cpu', value2);
+	console.log('cpu', value2);
 
 	return (
-        <div>
-            <h1>test</h1>
-        </div>
-    );
+		<div>
+			<h1>{JSON.stringify(value1)}</h1>
+			<h1>{JSON.stringify(value2)}</h1>
+		</div>
+	);
 };
 
 export default SystemState;

@@ -8,6 +8,8 @@ import Popup from '@enact/sandstone/Popup';
 import Scroller from '@enact/sandstone/Scroller';
 import BodyText from '@enact/ui/BodyText';
 
+import badWordsChecker from '../badWordsChecker';
+
 const QuizCreationOverlay = ({onClose, timestamp}) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [question, setQuestion] = useState('');
@@ -46,8 +48,8 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 
 	const handleSubmit = async () => {
 		const quizData = {
-			user_id: 1,
-			video_id: 1,
+			user_id: 1, // TODO
+			video_id: 1, // TODO
 			problem: options
 				.map((option, index) => `${index + 1}. ${option}`)
 				.join('\n'),
@@ -56,13 +58,16 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 		};
 
 		try {
-			const response = await fetch('http://localhost:4000/api/quiz', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(quizData)
-			});
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/quiz`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(quizData)
+				}
+			);
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);

@@ -46,7 +46,7 @@ const Home = () => {
 		<>
 			{currentVideoSrc === '' ? (
 				<>
-					<div className="h-56">
+					<div className="h-56 mt-12">
 						<BodyText># 최신_영상 🔥</BodyText>
 						<div className="flex overflow-x-auto  whitespace-nowrap h-full no-scrollbar">
 							{videoSources.map((src, index) => (
