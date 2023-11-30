@@ -8,7 +8,7 @@
 	}
 
 	.enact_sandstone_Popup_Popup_popup.light {
-		@apply bg-white bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[80vh] w-[80vw] mx-auto mb-16;
+		@apply bg-white bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[80vh] w-[80vw] mx-auto mb-16 shadow-2xl;
 	}
 	.enact_sandstone_VideoPlayer_VideoPlayer_videoPlayer.light
 		.enact_sandstone_VideoPlayer_VideoPlayer_overlay.enact_sandstone_VideoPlayer_VideoPlayer_scrim::after {

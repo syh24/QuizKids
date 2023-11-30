@@ -130,6 +130,8 @@ const Main = props => {
 
 	// fetch user
 	const getUser = async () => {
+		console.log('받아온 user_id:');
+		console.log(props.user_id);
 		const user = await (
 			await fetch(
 				`${process.env.REACT_APP_BACKEND_URI}/api/users/?user_id=${props.user_id}`
@@ -148,60 +150,62 @@ const Main = props => {
 	useEffect(() => {
 		getUser();
 	}, []);
-
-	return (
-		<Panel className="bg-white">
-			<img
-				src={LogoPath}
-				alt="QuizKids"
-				className="w-12 h-12 absolute pt-4 pl-4"
-			/>
-			<TabLayout
-				onSelect={function noRefCheck() {}}
-				onTabAnimationEnd={function noRefCheck() {}}
-				orientation="vertical"
-				tabSize={null}
-			>
-				<Tab title="Profile" icon={imagePaths[userImgIdx]} className="mt-36">
-					<Profile
-						imgSrc={imagePaths[userImgIdx]}
-						nickName={userNickName}
-						sex={userSex}
-						age={userAge}
-						setName={setWrapperName}
-						setAge={setWrapperAge}
-						setSex={setWrapperSex}
-						setImgIdx={setWrapperImgIdx}
-					/>
-				</Tab>
-				<Tab title={$L('Home')} icon="home">
-					<Home />
-				</Tab>
-				<Tab icon="gear" title="Settings">
-					{/* <Button icon="demosync">Button 1</Button>
+	if (props.user_id) {
+		return (
+			<Panel className="bg-white">
+				<img
+					src={LogoPath}
+					alt="QuizKids"
+					className="w-12 h-12 absolute pt-4 pl-4"
+				/>
+				<TabLayout
+					onSelect={function noRefCheck() {}}
+					onTabAnimationEnd={function noRefCheck() {}}
+					orientation="vertical"
+					tabSize={null}
+				>
+					<Tab title="Profile" icon={imagePaths[userImgIdx]} className="mt-36">
+						<Profile
+							imgSrc={imagePaths[userImgIdx]}
+							nickName={userNickName}
+							sex={userSex}
+							age={userAge}
+							setName={setWrapperName}
+							setAge={setWrapperAge}
+							setSex={setWrapperSex}
+							setImgIdx={setWrapperImgIdx}
+						/>
+					</Tab>
+					<Tab title={$L('Home')} icon="home">
+						<Home />
+					</Tab>
+					<Tab icon="gear" title="Settings">
+						{/* <Button icon="demosync">Button 1</Button>
 					<Button icon="demosync">Button 2</Button>
 					<Button icon="demosync">Button 3</Button>
 					<Button icon="demosync">Button 4</Button>
 					<Button icon="demosync">Button 5</Button> */}
-					<SwitchItem onToggle={function noRefCheck() {}}>
-						사용자 맞춤 추천
-					</SwitchItem>
-					<SwitchItem onToggle={function noRefCheck() {}}>
-						Quiz 더 자주 띄우기
-					</SwitchItem>
-				</Tab>
-				<Tab icon="list" title="History">
-					<History />
-				</Tab>
-				<Tab icon="profile" title="login">
-					<Account />
-				</Tab>
-				<Tab icon="wisa" title="ResourceUsage">
-					<SystemState />
-				</Tab>
-			</TabLayout>
-		</Panel>
-	);
+						<SwitchItem onToggle={function noRefCheck() {}}>
+							사용자 맞춤 추천
+						</SwitchItem>
+						<SwitchItem onToggle={function noRefCheck() {}}>
+							Quiz 더 자주 띄우기
+						</SwitchItem>
+					</Tab>
+					<Tab icon="list" title="History">
+						<History />
+					</Tab>
+					<Tab icon="profile" title="login">
+						<Account />
+					</Tab>
+					<Tab icon="wisa" title="ResourceUsage">
+						<SystemState />
+					</Tab>
+				</TabLayout>
+			</Panel>
+		);
+	}
+	return <div>대기 중...</div>;
 };
 
 export default Main;
