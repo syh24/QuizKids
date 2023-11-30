@@ -121,6 +121,7 @@
  *               example:
  *                 result: success
  *                 message: 회원가입 되었습니다
+ *                 user_id: 23
  * /api/users/login:
  *   post:
  *     tags: [Auth]
@@ -141,6 +142,7 @@
  *               example:
  *                 result: success
  *                 message: 로그인 성공
+ *                 user_id: 23
  * /api/users/logout:
  *   get:
  *     tags: [Auth]
