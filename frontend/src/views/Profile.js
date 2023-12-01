@@ -9,8 +9,10 @@ import ProfileSelection from './ProfileSection';
 const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx}) => {
     const [showProfileSelection, setShowProfileSelection] = useState(false);
     const [isDuplicateNickname, setIsDuplicateNickName] = useState(false);
+    const [isInProperLength, setIsInProperLength] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const [userName, setUserName] = useState('');
-
+    
     useEffect(() => {
         setUserName(nickName);
     }, [nickName]);
@@ -26,14 +28,21 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
     ];
 
     const handleUserName = async () => {
-        try {
+        if(userName.length < 2 || userName.length > 10){
+            setIsInProperLength(true);
+            setErrorMessage("닉네임 길이는 2-10자 사이여야 합니다.");
+            return;     
+        }
+        try { 
           const success = await setName(userName, true);
+          setIsInProperLength(false);
           console.log(success);
       
           if (success) {
             setIsDuplicateNickName(false);
           } else {
             setIsDuplicateNickName(true);
+            setErrorMessage("이미 사용중인 닉네임입니다.");
           }
         } catch (error) {
           console.error('에러 발생:', error);
@@ -70,8 +79,8 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
                     <div className="mt-16 ml-10">
                         <InputField
                             autoFocus={true}
-                            invalid={isDuplicateNickname}
-                            invalidMessage="이미 사용중인 닉네임입니다."
+                            invalid={isDuplicateNickname || isInProperLength}
+                            invalidMessage={errorMessage} 
                             onChange={onChange}
                             placeholder="닉네임을 입력하세요."
                             value={userName}
