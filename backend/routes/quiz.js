@@ -3,6 +3,7 @@ const { Video, User } = require('../models');
 const router = express.Router();
 const Quiz = require('../models/quiz');
 const Sequelize = require('sequelize');
+const { parse } = require('path');
 
 //추출될 퀴즈 사이의 거리
 const minimum_distance = 120;
@@ -11,22 +12,26 @@ const minimum_distance = 120;
 router.get('/', async (req, res) => {
 	try {
 		const { video_id, count } = req.query;
-
-		const parsedCount = parseInt(count, 10) || 0;
+		console.log(count);
+		var parsedCount = 0;
+		if (count != undefined) parsedCount = parseInt(count, 10) || 0;
+		console.log(parsedCount);
 		const quiz = await Quiz.findAll({
 			where: {
 				...(video_id ? { video_id: video_id } : {}),
 			},
 			//quiz가 등록된 시간순서대로 추출
-			order: Sequelize.fn('STR_TO_DATE', Sequelize.col('quiz_time'), '%H:%i'),
+			order: [
+				[Sequelize.literal('CONVERT(quiz_time, SIGNED)'), 'ASC']
+			],
 		});
-
 
 		//추후 로직 개선 필요
 		var prev_quiz_time, cur_quiz_time, selected_quiz_num;
 		const selected_quiz = [];
 		var low_problem_set = false;
-		
+		console.log(selected_quiz.length)
+		console.log(parsedCount)
 		while (quiz.length != 0 && selected_quiz.length != parsedCount) {
 			//퀴즈간의 간격이 minimum_distance 이상 되도록 설정
 			prev_quiz_time = - minimum_distance - 1;
@@ -34,12 +39,8 @@ router.get('/', async (req, res) => {
 			selected_quiz_num = 0;
 			temp = 0;
 			for (q of quiz) {
-				//시간 입력이 "분:초" 일때만 고려, "시:분:초" 는 고려하지 않음
-				cur_quiz_time = parseInt(q.quiz_time.split(':')[0]) * 60 
-								+ parseInt(q.quiz_time.split(':')[1]);
-				console.log("abcd", cur_quiz_time);
+				cur_quiz_time = parseInt(q.quiz_time);
 				if (cur_quiz_time - prev_quiz_time >= minimum_distance || low_problem_set) {
-					console.log("efgh", cur_quiz_time); 
 
 					if (Math.random() > 0.3) {
 						console.log(prev_quiz_time, cur_quiz_time);
@@ -56,7 +57,6 @@ router.get('/', async (req, res) => {
 					break;
 				}
 			}
-			console.log(selected_quiz_num);
 			//만약 한바퀴돌고도 다 못찾았다면 랜덤 추출
 			if (selected_quiz_num == 0) {
 				low_problem_set = true;
@@ -69,10 +69,8 @@ router.get('/', async (req, res) => {
 				q.hit++;
 				await q.save();
 			}
-			
-
-			res.json(selected_quiz);
 		}
+		res.json(selected_quiz);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
