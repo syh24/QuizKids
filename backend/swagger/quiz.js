@@ -47,7 +47,7 @@
  *         id: 1
  *         user_id: 3
  *         video_id: 5
- *         problem: {"title": "quiz?", "problem": "1. answer1\n2. answer2\n3. answer3\n4. answer4"}
+ *         problem: "quiz?\n1. answer1\n2. answer2\n3. answer3\n4. answer4"
  *         answer: 4
  *         hit: 200
  *         answer_count: 150
@@ -67,6 +67,12 @@
  *     tags: [Quiz]
  *     summary: get all quizes
  *     parameters:
+ *       - in: path
+ *         name: video_id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: video_id
  *       - in: path
  *         name: count
  *         schema:
