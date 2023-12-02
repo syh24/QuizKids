@@ -64,8 +64,6 @@ const App = props => {
 				get_userId(Object.values(response_json)[2]);
 
 				console.log('user_id: ', userId);
-
-				setIsLoggedIn(true);
 			} else {
 				console.log('Failed to login:', Object.values(response_json)[1]);
 				//console.log(loginData);
@@ -86,12 +84,13 @@ const App = props => {
 			password: password
 		};
 		try {
-			if (false) {
+			if (nickname.indexOf('/') != -1 || nickname.indexOf('&') == -1 
+				|| nickname.indexOf('*') != -1) {
 				console.log(
-					'Failed to register: Only can use [ _ , + , - , @ , ^ , & , ~ , ! ]'
+					'Failed to register: Can\'t use [ / , & , * ]'
 				);
 				console.log('Input nickname: ', nickname);
-				setValidityMsg('Only can use [ _ , + , - , @ , ^ , & , ~ , ! ]');
+				setValidityMsg('[ / , & , * ]는 사용할 수 없습니다.');
 			} else if (nickname.length < 2) {
 				console.log('Failed to register: too short nickname (allow minimum 2)');
 				console.log('nickname length: %d', nickname.length);
@@ -100,14 +99,13 @@ const App = props => {
 				console.log('Failed to register: too long nickname (allow maximum 10)');
 				console.log('nickname length: %d', nickname.length);
 				setValidityMsg('비밀번호가 너무 깁니다');
+			} else if (password.indexOf('/') != -1 || password.indexOf('&') == -1 
+						|| password.indexOf('*') != -1) {
+				console.log(
+					'Failed to register: Can\'t use [ / , & , * ]'
+				);
+				setValidityMsg('[ / , & , * ]는 사용할 수 없습니다.');
 			} else if (password.length < 4) {
-				/*
-			else if (false) {
-				console.log('Failed to register: Only can use [ _ , + , - , @ , ^ , & , ~ , ! ]');
-				console.log('Input password: ', password);
-				setinputValidity(4);
-			}
-			*/
 				console.log('Failed to register: too short password (allow minimum 4)');
 				console.log('password length: %d', password.length);
 				setValidityMsg('비밀번호가 너무 짧습니다');
