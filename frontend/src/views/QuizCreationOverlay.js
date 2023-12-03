@@ -68,9 +68,10 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
 		const quizData = {
 			user_id: 1, // TODO
 			video_id: 1, // TODO
-			problem: options
-				.map((option, index) => `${index + 1}. ${option}`)
-				.join('\n'),
+			problem:
+				question +
+				'\n' +
+				options.map((option, index) => `${index + 1}. ${option}`).join('\n'),
 			quiz_time: timestamp.toString(),
 			answer: selectedAnswer
 		};

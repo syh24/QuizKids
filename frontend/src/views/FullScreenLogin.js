@@ -174,7 +174,7 @@ const FullScreenLogin = ({
 									/>
 								</div>
 
-								<div className="flex justify-center">
+								<div className="flex justify-center bg-white">
 									<span className="text-red-500">{invalidMessage}</span>
 								</div>
 
