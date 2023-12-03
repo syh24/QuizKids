@@ -95,8 +95,8 @@ const SystemState = () => {
                     if(j === IDLE) idle = pad;
                 }
                 
-                Total = 100;
-                idle = 5;
+                //Total = 100;
+                //idle = 5;
                 //console.log('Total', Total)
                 //console.log('idle', idle);
                 idle = idle + 0.0; // make idle floating point
