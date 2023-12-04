@@ -53,5 +53,11 @@ module.exports = class Video extends Sequelize.Model {
             sourceKey: 'id',
             onDelete: 'CASCADE',
         })
+
+        Video.hasMany(models.ViewHistory, {
+            foreignKey: 'video_id',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+        })
     }
 };

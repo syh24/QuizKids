@@ -53,5 +53,11 @@ module.exports = class User extends Sequelize.Model {
             sourceKey: 'id',
             onDelete: 'CASCADE',
         });
+        
+        User.hasMany(models.ViewHistory, {
+            foreignKey: 'user_id',
+            sourceKey: 'id',
+            onDelete: 'CASCADE',
+        });
     }
 };
