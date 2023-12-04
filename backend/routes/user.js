@@ -17,8 +17,11 @@ router.get('/', async (req, res) => {
 				...(name ? { nickname: { [Op.like]: `%${name}%` } } : {}),
 			},
 		});
-
-		res.json(users);
+		let copy = JSON.parse(JSON.stringify(users));
+		for (c of copy) {
+			delete c.password;
+		}
+		res.json(copy);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
@@ -35,7 +38,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 			});
 		}
 		const hash = await bcrypt.hash(password, 12);
-		await User.create({
+		const new_user = await User.create({
 			nickname: nickname,
 			password: hash,
 			age: age,
@@ -45,6 +48,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 		return res.json({
 			result: 'success',
 			message: '회원가입 되었습니다',
+			user_id: new_user.id,
 		});
 	} catch (err) {
 		console.error(err);
@@ -72,6 +76,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 			return res.json({
 				result: 'success',
 				message: '로그인 성공',
+				user_id: user.id,
 			});
 		});
 	})(req, res, next);

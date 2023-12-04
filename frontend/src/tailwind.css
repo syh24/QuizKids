@@ -8,7 +8,7 @@
 	}
 
 	.enact_sandstone_Popup_Popup_popup.light {
-		@apply bg-white bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[80vh] w-[80vw] mx-auto mb-16;
+		@apply bg-white bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[80vh] w-[80vw] mx-auto mb-16 shadow-2xl;
 	}
 	.enact_sandstone_VideoPlayer_VideoPlayer_videoPlayer.light
 		.enact_sandstone_VideoPlayer_VideoPlayer_overlay.enact_sandstone_VideoPlayer_VideoPlayer_scrim::after {
@@ -87,6 +87,18 @@
 	#c_1-viewport > article > section > div > div.enact_ui_Layout_Layout_shrink {
 		@apply bg-black;
 	} */
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink {
+		@apply flex;
+	}
+
+	.enact_sandstone_Input_InputField_inputField.light {
+		@apply bg-white;
+	}
 }
 
 @layer utilities {

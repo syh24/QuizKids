@@ -8,7 +8,9 @@ import Popup from '@enact/sandstone/Popup';
 import Scroller from '@enact/sandstone/Scroller';
 import BodyText from '@enact/ui/BodyText';
 
-const QuizCreationOverlay = ({onClose, timestamp}) => {
+import badWordsChecker from '../badWordsChecker';
+
+const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [question, setQuestion] = useState('');
 	const [options, setOptions] = useState(['', '', '', '']); // Assuming 4 options
@@ -16,9 +18,27 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 	const [selectedAnswer, setSelectedAnswer] = useState(null);
 	const [isOXSelected, setIsOXSelected] = useState(false);
 
+	const [isQuestionValid, setIsQuestionValid] = useState(true);
+	const [isOptionsValid, setIsOptionsValid] = useState([
+		true,
+		true,
+		true,
+		true
+	]);
+
 	const totalSteps = 4; // Total number of steps
 
 	const nextStep = () => {
+		if (currentStep === 1) {
+			const isValid = !badWordsChecker(question);
+			setIsQuestionValid(isValid);
+			if (!isValid) return; // 비속어가 포함되어 있다면 다음 단계로 넘어가지 않음
+		} else if (currentStep === 2) {
+			const optionsValidity = options.map(option => !badWordsChecker(option));
+			setIsOptionsValid(optionsValidity);
+			if (!optionsValidity.every(Boolean)) return; // 어느 하나라도 비속어가 있다면 다음 단계로 넘어가지 않음
+		}
+
 		if (isOXSelected && currentStep === 1) {
 			setCurrentStep(currentStep + 2); // 1단계에서 바로 3단계로 넘어가기
 		} else {
@@ -46,23 +66,27 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 
 	const handleSubmit = async () => {
 		const quizData = {
-			user_id: 1,
-			video_id: 1,
-			problem: options
-				.map((option, index) => `${index + 1}. ${option}`)
-				.join('\n'),
+			user_id: user_id, // TODO
+			video_id: video_id, // TODO
+			problem:
+				question +
+				'\n' +
+				options.map((option, index) => `${option}`).join('\n'),
 			quiz_time: timestamp.toString(),
 			answer: selectedAnswer
 		};
 
 		try {
-			const response = await fetch('http://localhost:4000/api/quiz', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(quizData)
-			});
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/quiz`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(quizData)
+				}
+			);
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
@@ -150,9 +174,10 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 								placeholder="문제를 입력하세요. (최대 50자)"
 								value={question}
 								onChange={e => setQuestion(e.value)}
+								invalid={!isQuestionValid}
 								autoFocus={true}
 								dismissOnEnter={true}
-								invalidMessage="값을 입력해주세요."
+								invalidMessage="비속어가 포함된 문제는 출제할 수 없습니다."
 								className="spottable flex-1 text-sm rounded-md h-8 shadow-xl m-2"
 							/>
 						</div>
@@ -174,7 +199,8 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 									placeholder={`선택지 ${index + 1}`}
 									autoFocus={true}
 									dismissOnEnter={true}
-									invalidMessage="값을 입력해주세요."
+									invalid={!isOptionsValid[index]}
+									invalidMessage="비속어 포함"
 									type={
 										questionType === '4개 중 맞는 숫자 고르기'
 											? 'number'
