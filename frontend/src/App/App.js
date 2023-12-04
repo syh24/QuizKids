@@ -42,13 +42,16 @@ const App = props => {
 			password: password
 		};
 		try {
-			const response = await fetch('http://localhost:4000/api/users/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(loginData)
-			});
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/users/login`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(loginData)
+				}
+			);
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
@@ -84,11 +87,12 @@ const App = props => {
 			password: password
 		};
 		try {
-			if (nickname.indexOf('/') != -1 || nickname.indexOf('&') == -1 
-				|| nickname.indexOf('*') != -1) {
-				console.log(
-					'Failed to register: Can\'t use [ / , & , * ]'
-				);
+			if (
+				nickname.indexOf('/') != -1 ||
+				nickname.indexOf('&') == -1 ||
+				nickname.indexOf('*') != -1
+			) {
+				console.log("Failed to register: Can't use [ / , & , * ]");
 				console.log('Input nickname: ', nickname);
 				setValidityMsg('[ / , & , * ]는 사용할 수 없습니다.');
 			} else if (nickname.length < 2) {
@@ -99,11 +103,12 @@ const App = props => {
 				console.log('Failed to register: too long nickname (allow maximum 10)');
 				console.log('nickname length: %d', nickname.length);
 				setValidityMsg('비밀번호가 너무 깁니다');
-			} else if (password.indexOf('/') != -1 || password.indexOf('&') == -1 
-						|| password.indexOf('*') != -1) {
-				console.log(
-					'Failed to register: Can\'t use [ / , & , * ]'
-				);
+			} else if (
+				password.indexOf('/') != -1 ||
+				password.indexOf('&') == -1 ||
+				password.indexOf('*') != -1
+			) {
+				console.log("Failed to register: Can't use [ / , & , * ]");
 				setValidityMsg('[ / , & , * ]는 사용할 수 없습니다.');
 			} else if (password.length < 4) {
 				console.log('Failed to register: too short password (allow minimum 4)');
@@ -124,13 +129,16 @@ const App = props => {
 				setValidityMsg('프로필 이미지를 선택해주세요');
 			} else {
 				//valid 한 입력
-				const response = await fetch('http://localhost:4000/api/users/join', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(registerData)
-				});
+				const response = await fetch(
+					`${process.env.REACT_APP_BACKEND_URI}/api/users/join`,
+					{
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(registerData)
+					}
+				);
 
 				if (!response.ok) {
 					throw new Error(`HTTP error! status: ${response.status}`);
