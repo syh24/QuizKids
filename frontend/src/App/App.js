@@ -84,7 +84,7 @@ const App = props => {
 			password: password
 		};
 		try {
-			if (nickname.indexOf('/') != -1 || nickname.indexOf('&') == -1 
+			if (nickname.indexOf('/') != -1 || nickname.indexOf('&') != -1 
 				|| nickname.indexOf('*') != -1) {
 				console.log(
 					'Failed to register: Can\'t use [ / , & , * ]'
@@ -99,7 +99,7 @@ const App = props => {
 				console.log('Failed to register: too long nickname (allow maximum 10)');
 				console.log('nickname length: %d', nickname.length);
 				setValidityMsg('비밀번호가 너무 깁니다');
-			} else if (password.indexOf('/') != -1 || password.indexOf('&') == -1 
+			} else if (password.indexOf('/') != -1 || password.indexOf('&') != -1 
 						|| password.indexOf('*') != -1) {
 				console.log(
 					'Failed to register: Can\'t use [ / , & , * ]'
