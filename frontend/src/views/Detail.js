@@ -17,7 +17,12 @@ const Detail = props => {
 	const [currentTimestamp, setCurrentTimestamp] = useState(0);
 
 	const [processedTimestamps, setProcessedTimestamps] = useState([]); // State to store processed timestamps(quizs)
-	const timestamps = [3, 8, 12]; // 예: 3초, 18초, 12초에 문제..
+	// const timestamps = [3, 8, 12]; // 예: 3초, 18초, 12초에 문제..
+
+	const [quizs, setQuizs] = useState([]);
+	const [quizTimeStamps, setQuizTimeStamps] = useState([]);
+
+	const [currentQuiz, setCurrentQuiz] = useState(null);
 
 	const onPause = event => {
 		//console.log("current time : ", Math.floor(event.currentTime)); // save paused time
@@ -60,17 +65,53 @@ const Detail = props => {
 	// 	return () => clearInterval(interval);
 	// }, [timestamps]);
 
+	// Fetch quizzes when component mounts or video_id changes
+	useEffect(() => {
+		const fetchQuizzes = async () => {
+			try {
+				const response = await fetch(
+					`${process.env.REACT_APP_BACKEND_URI}/api/quiz/?video_id=${props.video_id}&count=6`
+				);
+				const quizData = await response.json();
+
+				console.log(
+					'Quiz data 가져옴: ',
+					props.video_id,
+					' id의 비디오에 대한 퀴즈 목록: ',
+					quizData
+				);
+				setQuizs(quizData);
+				const timestamps = quizData.map(quiz => parseInt(quiz.quiz_time, 10));
+				console.log('timestamps: ', timestamps);
+				setQuizTimeStamps(timestamps);
+			} catch (error) {
+				console.error('Error fetching quizzes:', error);
+			}
+		};
+
+		fetchQuizzes();
+	}, [props.video_id]);
+
 	const handleTimeUpdate = event => {
 		const currentTime = Math.floor(event.target.currentTime);
 		setCurrentTimestamp(currentTime);
+
+		// Check if the current time matches a quiz timestamp
+		const quizIndex = quizTimeStamps.findIndex(time => time === currentTime);
+
 		console.log('Aurrent time : ', Math.floor(currentTime));
 
+		console.log('Current video playing ID: ', props.video_id);
+
+		console.log('비교 대상인 quizTimeStamps: ', quizTimeStamps);
 		// 지정된 타임스탬프에 도달했는지 확인
 		if (
-			timestamps.includes(currentTime) &&
+			quizIndex !== -1 &&
+			quizTimeStamps.includes(currentTime) &&
 			!processedTimestamps.includes(currentTime)
 		) {
 			videoPlayerRef.current.pause();
+			setCurrentQuiz(quizs[quizIndex]); // Set the current quiz
 			setShowQuizSolveOverlay(true);
 			// 현재 타임스탬프를 처리된 타임스탬프 목록에 추가
 			setProcessedTimestamps(prev => [...prev, currentTime]);
@@ -136,15 +177,18 @@ const Detail = props => {
 					video_id={props.video_id}
 					src={props.src}
 					className="z-50"
+					user_id={props.user_id}
 				/>
 			)}
 			{showQuizSolveOverlay && (
 				<QuizSolveOverlay
 					onClose={() => setShowQuizSolveOverlay(false)}
 					timestamp={currentTimestamp}
+					quiz={currentQuiz} // Pass quizs as prop
 					video_id={props.video_id}
 					src={props.src}
 					className="z-50"
+					user_id={props.user_id}
 				/>
 			)}
 		</div>

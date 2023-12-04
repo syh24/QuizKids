@@ -177,7 +177,7 @@ const Main = props => {
 						/>
 					</Tab>
 					<Tab title={$L('Home')} icon="home">
-						<Home />
+						<Home user_id={props.user_id} />
 					</Tab>
 					<Tab icon="gear" title="Settings">
 						{/* <Button icon="demosync">Button 1</Button>
