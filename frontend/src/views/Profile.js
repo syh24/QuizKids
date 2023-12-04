@@ -10,6 +10,7 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
     const [showProfileSelection, setShowProfileSelection] = useState(false);
     const [isDuplicateNickname, setIsDuplicateNickName] = useState(false);
     const [isInProperLength, setIsInProperLength] = useState(false);
+    const [isInProperChar, setIsInProperChar] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [userName, setUserName] = useState('');
     
@@ -28,14 +29,25 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
     ];
 
     const handleUserName = async () => {
+        // 닉네임 길이 추가
         if(userName.length < 2 || userName.length > 10){
             setIsInProperLength(true);
             setErrorMessage("닉네임 길이는 2-10자 사이여야 합니다.");
             return;     
         }
+
+        // 특수문자 거르기
+        const hasSpecialChars = /[\/\*\&]/.test(userName);
+        if(hasSpecialChars){
+            setIsInProperChar(true);
+            setErrorMessage("[ / , & , * ]는 사용할 수 없습니다.");
+            return;
+        }
+
         try { 
           const success = await setName(userName, true);
           setIsInProperLength(false);
+          setIsInProperChar(false);
           console.log(success);
       
           if (success) {
@@ -79,7 +91,7 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
                     <div className="mt-16 ml-10">
                         <InputField
                             autoFocus={true}
-                            invalid={isDuplicateNickname || isInProperLength}
+                            invalid={isDuplicateNickname || isInProperLength || isInProperChar}
                             invalidMessage={errorMessage} 
                             onChange={onChange}
                             placeholder="닉네임을 입력하세요."
