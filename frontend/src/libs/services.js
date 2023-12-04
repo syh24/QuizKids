@@ -9,9 +9,9 @@ export const launch = parameters => sam({method: 'launch', parameters});
 
 // get system status
 const mem_ = request('luna://com.webos.memorymanager');
-export const getMemoryInfo = params => 
+export const getCpuInfo = params => 
 	mem_({method: 'getProcStat', ...params});
 
 const cpu_ = request('luna://com.webos.memorymanager');
-export const getCpuInfo = params => 
+export const getMemoryInfo = params => 
 	cpu_({method: 'getUnitList', ...params});
