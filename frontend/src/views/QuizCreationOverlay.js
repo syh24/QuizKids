@@ -10,7 +10,7 @@ import BodyText from '@enact/ui/BodyText';
 
 import badWordsChecker from '../badWordsChecker';
 
-const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
+const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [question, setQuestion] = useState('');
 	const [options, setOptions] = useState(['', '', '', '']); // Assuming 4 options
@@ -66,12 +66,12 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
 
 	const handleSubmit = async () => {
 		const quizData = {
-			user_id: 1, // TODO
-			video_id: 1, // TODO
+			user_id: user_id, // TODO
+			video_id: video_id, // TODO
 			problem:
 				question +
 				'\n' +
-				options.map((option, index) => `${index + 1}. ${option}`).join('\n'),
+				options.map((option, index) => `${option}`).join('\n'),
 			quiz_time: timestamp.toString(),
 			answer: selectedAnswer
 		};
