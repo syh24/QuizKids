@@ -14,6 +14,7 @@
     height: 60px;
     animation: spin 1s linear infinite;
     margin-right: 700px;
+    margin-bottom: 30px;
   }
   
   .loading-text {
