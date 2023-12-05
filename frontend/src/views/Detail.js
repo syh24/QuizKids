@@ -166,9 +166,9 @@ const Detail = props => {
 					playIcon="play"
 				></MediaControls>
 			</VideoPlayer>
-			<Button onClick={handlePause} className="z-50">
+			{/* <Button onClick={handlePause} className="z-50">
 				PAUSE!!
-			</Button>
+			</Button> */}
 			{/* Quiz Creation Overlay */}
 			{showQuizAddOverlay && (
 				<QuizCreationOverlay
