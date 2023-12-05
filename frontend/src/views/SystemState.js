@@ -12,24 +12,29 @@ const NICE = 1;
 const SYSTEM = 2;
 const IDLE = 3;
 
+let usage = [];
+
 const SystemState = () => {
     const cpuRef = useRef(null);
     const memRef = useRef(null);
     
     const [loading, setLoading] = useState(true); // 사용량 알 수 있을 때까지 1초 기다린 뒤, true로 set 됨
-    const [cpuStat, setCpuStat] = useState({'stat': []});
-    const [memoryStat, setMemoryStat] = useState({returnValue: false});
 
     const [count, setCount] = useState(0);
+
+    const cpuStat = useRef({stat: [], returnValue: false});
+    const memStat = useRef({returnValue : false});
     const prev = useRef([]);
     const curr = useRef([]);
-    const usage = useRef([]); // 각 cpu별 usage저장
+    const saveCnt = useRef(0);
 
     useEffect(() => {
         // 설정된 시간 간격마다 setInterval 콜백이 실행된다. 
         const id = setInterval(() => {
             // 타이머 숫자가 하나씩 줄어들도록
             setCount((current) => current + 1);
+            saveCnt.current = saveCnt.current+1;
+
             if (!cpuRef.current) {
                 //debugLog('GET_CONFIGS[R]', {});
                 cpuRef.current = getCpuInfo({
@@ -37,7 +42,9 @@ const SystemState = () => {
                         subscribe: true,
                     },
                     onSuccess: res => {
-                        setCpuStat(res);
+                        //setCpuStat(res);
+                        //test_cpu = res;
+                        cpuStat.current = res;
                     },
                     onFailure: err => {
                         debugLog('GET_CONFIGS[F]', err);
@@ -52,67 +59,70 @@ const SystemState = () => {
                         subscribe: true,
                     },
                     onSuccess: res => {
-                        setMemoryStat(res);
+                        //setMemoryStat(res);
+                        //test_mem = res;
+                        memStat.current = res;
                     },
                     onFailure: err => {
                         debugLog('GET_CONFIGS[F]', err);
                     }
                 });
             }
-        }, 1000);
-    
-        
-        console.log(count);
 
-        if(count === 1){
-			// initial cpu usage
-            cpuStat.stat.slice(0,5).map((element, index) => {
-                prev.current[index] = element.split(/\s+/).slice(1, 5);
-            });
-            console.log('prev', prev);
-        }
-    
-        // cpu usage calculate, set loading as true
-        else{
-			usage.current = [];
-			// current cpu usage
-            cpuStat.stat.slice(0,5).map((element, index) => {
-                curr.current[index] = element.split(/\s+/).slice(1, 5);
-            });
+            console.log(saveCnt.current);
+            //console.log('cpu', cpuStat.current.stat);
+            //console.log('mem', memStat.current.returnValue);
 
-            console.log('curr', curr);
-            // 각 cpu 별로 체크
-            for(let i=0; i<curr.current.length; i++){
-                const tmpCur  = curr.current[i];
-                const tmpPrev = prev.current[i];
-                let Total = 0;
-                let idle;
-                //console.log(tmpCur, tmpPrev);
-                //console.log(tmpCur[0]);
-                for(let j=0; j<tmpCur.length; j++){
-                    let pad = tmpCur[j] - tmpPrev[j];
-                    Total += pad;
-                    if(j === IDLE) idle = pad;
-                }
+            //prev 계산
+            if(saveCnt.current === 1){
+                cpuStat.current.stat.slice(0,5).map((element, index) => {
+                    prev.current[index] = element.split(/\s+/).slice(1, 5);
+                }); 
+                console.log('prev', prev);
+            }
+
+            else{
+                usage = [];
+
+                cpuStat.current.stat.slice(0,5).map((element, index) => {
+                    curr.current[index] = element.split(/\s+/).slice(1, 5);
+                });
+
+                console.log('curr', curr);
                 
-                //Total = 100;
-                //idle = 5;
-                //console.log('Total', Total)
-                //console.log('idle', idle);
-                idle = idle + 0.0; // make idle floating point
-                usage.current[i] = (1 - idle / Total) * 100;
-                setLoading(false);
-            }       
-			
-			//usage.current.push(memoryStat.usable_memory);
-            prev.current = curr.current;
-            console.log(usage);
-        }
+                // 모든 cpu의 usage를 계산.
+                for(let i=0; i<curr.current.length; i++){
+                    const tmpCur = curr.current[i];
+                    const tmpPrev = prev.current[i];
+                    let Total = 0;
+                    let idle;
+                    //console.log(tmpCur, tmpPrev);
+                    //console.log(tmpCur[0]);
+                    for(let j=0; j<tmpCur.length; j++){
+                        let pad = tmpCur[j] - tmpPrev[j];
+                        Total += pad;
+                        if(j === IDLE) idle = pad;
+                    }
+
+                    //Total = 100;    // dummy
+
+                    idle = idle + 0.0; //+ Math.min(saveCnt.current, 99); // make idle floating point
+                    console.log('idle', idle);
+                    usage[i] = (1 - idle / Total) * 100;
+                    //console.log(`usage ${i}`, usage.current[i]);
+                }       
+
+                console.log('usage', usage);
+                if(saveCnt.current === 2) setLoading(false);
+                prev.current = curr.current; 
+            }
+        }, 1000);
 
         return () => {
-            clearInterval(id);
+            clearInterval(id); // 자원 낭비 방지
+            // check
             if (cpuRef.current) {
-                cpuRef.current.cancel();
+                cpuRef.current.cancel(); 
                 cpuRef.current = null;
             }
 
@@ -121,11 +131,12 @@ const SystemState = () => {
                 memRef.current = null;
             }
         }
-    }, [count, cpuStat, memoryStat]);
+    }, [count]);
 
+    //console.log(cpuStat);
     return (
         <div>
-            {loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage.current} memoryUsage = {[memoryStat.usable_memory, memoryStat.swapUsed]}/>}
+            {loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage} memoryUsage = {[memStat.current.usable_memory, memStat.current.swapUsed]}/>}
         </div>
     );
 };
