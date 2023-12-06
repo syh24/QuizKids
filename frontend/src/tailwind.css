@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @layer base {
-	input[type='text']::placeholder {
-		@apply font-thin text-sm;
+	input::placeholder {
+		@apply text-gray-500 !important;
 	}
 
 	.enact_sandstone_Popup_Popup_popup.light {
