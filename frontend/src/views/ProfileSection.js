@@ -6,6 +6,7 @@ import imgsrc_2 from './penguin.png';
 import imgsrc_3 from './dog.png';
 import imgsrc_4 from './dog_1.png';
 import { imagePaths } from './Main';
+import Spottable from '@enact/spotlight/Spottable';
 
 const ProfileSelection = ({onClose, setIdx}) => {
     
@@ -18,14 +19,14 @@ const ProfileSelection = ({onClose, setIdx}) => {
     };
 
     return (
-        <div>
+        <div className="Spottable">
             <Popup
                 open={true}
                 onClose={onClose}
                 title="Create New Quiz Question"
-                className="backdrop-blur-md Slottable"
+                className="backdrop-blur-md Spottable"
             >
-                <div className="flex Slottable justify-between">
+                <div className="flex justify-between Spottable">
                     {imagePaths.map((src, index) => (
                         <ImageItem
                             key={index}
@@ -35,7 +36,7 @@ const ProfileSelection = ({onClose, setIdx}) => {
                                 height: '13.25rem',
                                 width: '13rem'
                             }}
-                            className="Slottable"
+                            className="Spottable"
                         />
 					))}
                 </div>

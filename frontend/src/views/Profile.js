@@ -5,6 +5,7 @@ import Popup from '@enact/sandstone/Popup';
 import {InputField, Input} from '@enact/sandstone/Input';
 import BodyText from '@enact/ui/BodyText';
 import ProfileSelection from './ProfileSection';
+import Spottable from '@enact/spotlight/Spottable';
 
 const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx}) => {
     const [showProfileSelection, setShowProfileSelection] = useState(false);
@@ -82,14 +83,15 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
     }
     
     return (
-        <div>
-                <div className="flex">
+        <div className="Spottable">
+                <div className="flex Spottable">
                     <img 
                         src={imgSrc}
                         className="ml-24 w-44 h-50 rounded-full"
                     />
-                    <div className="mt-16 ml-10">
-                        <InputField
+                    <div className="mt-16 ml-10 Spottable">
+                        <InputField 
+                            className="Spottable"
                             autoFocus={true}
                             invalid={isDuplicateNickname || isInProperLength || isInProperChar}
                             invalidMessage={errorMessage} 
@@ -101,12 +103,13 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
                             size="small"
                             type="text"
                         />
-                        <Button icon='edit' onClick = {handleUserName} />
+                        <Button className="Spottable" icon='edit' onClick = {handleUserName} />
                     </div>
                 </div>
 
-                <div className="ml-32" >
+                <div className="ml-32 Spottable">
                     <Button 
+                        className="Spottable"
                         onClick = {toggleProfileSelection}
                         size="small"
                         backgroundOpacity="transparent"
@@ -115,19 +118,19 @@ const Profile = ({imgSrc, nickName, sex, age, setName, setAge, setSex, setImgIdx
                     </Button>
                 </div>
                 
-                <div className="ml-32">
-                    <BodyText className="ml-11" size="large">
+                <div className="ml-32 Spottable">
+                    <BodyText className="ml-11 Spottable" size="large">
                         성별
                     </BodyText>
                     <Button color={sex === 'M' ? "yellow" : null} onClick={handleUserSex} className = "Spottable" size="small">남성</Button>
                     <Button color={sex === 'F' ? "yellow" : null} onClick={handleUserSex} className = "Spottable" size="small">여성</Button>
                 </div>
-                <div className="mt-8 ml-32 ">
+                <div className="mt-8 ml-32 Spottable">
                     <BodyText className="mx-11" size="large">
                         나이
                     </BodyText>
                     {ageTypes.map((ageType, index) => (
-                        <Button color = {index === age ? "yellow" : null } size="small" key={index} onClick={handleUserAge}>
+                        <Button className="Spottable" color = {index === age ? "yellow" : null } size="small" key={index} onClick={handleUserAge}>
                             {ageType}
                         </Button>
                     ))}
