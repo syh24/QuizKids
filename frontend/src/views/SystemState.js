@@ -12,133 +12,66 @@ const NICE = 1;
 const SYSTEM = 2;
 const IDLE = 3;
 
-let usage = [];
+// let usage = [];
 
 const SystemState = () => {
-    const cpuRef = useRef(null);
-    const memRef = useRef(null);
-    
-    const [loading, setLoading] = useState(true); // 사용량 알 수 있을 때까지 1초 기다린 뒤, true로 set 됨
+	const cpuRef = useRef(null);
+	const memRef = useRef(null);
+	const [cur, setCur] = useState([]);
+	const [loading, setLoading] = useState(true); // 사용량 알 수 있을 때까지 1초 기다린 뒤, true로 set 됨
 
-    const [count, setCount] = useState(0);
+	const [count, setCount] = useState(0);
 
-    const cpuStat = useRef({stat: [], returnValue: false});
-    const memStat = useRef({returnValue : false});
-    const prev = useRef([]);
-    const curr = useRef([]);
-    const saveCnt = useRef(0);
+	const [cpuStat, setCpuStat] = useState({stat: [], returnValue: false});
+	const memStat = useRef({returnValue: false});
+	const prev = useRef([]);
+	const saveCnt = useRef(0);
+	let usage = [];
+	useEffect(() => {
+		if (!cpuRef.current) {
+			debugLog('GET_CONFIGS[R]', {});
+			cpuRef.current = getCpuInfo({
+				parameters: {
+					subscribe: true
+				},
+				onSuccess: res => {
+					debugLog('GET_CONFIGS[S]', res);
+					//cpuStat.current = res;
+					setCpuStat(res);
+				},
+				onFailure: err => {
+					debugLog('GET_CONFIGS[F]', err);
+				}
+			});
+		}
 
-    useEffect(() => {
-        // 설정된 시간 간격마다 setInterval 콜백이 실행된다. 
-        const id = setInterval(() => {
-            // 타이머 숫자가 하나씩 줄어들도록
-            setCount((current) => current + 1);
-            saveCnt.current = saveCnt.current+1;
+		let newCur = cpuStat.stat.slice(0, 5).map((element, index) => {
+			return element.split(/\s+/).slice(1, 5);
+		});
 
-            if (!cpuRef.current) {
-                //debugLog('GET_CONFIGS[R]', {});
-                cpuRef.current = getCpuInfo({
-                    parameters: {
-                        subscribe: true,
-                    },
-                    onSuccess: res => {
-                        //setCpuStat(res);
-                        //test_cpu = res;
-                        cpuStat.current = res;
-                    },
-                    onFailure: err => {
-                        debugLog('GET_CONFIGS[F]', err);
-                    }
-                });
-            }
+		setCur(newCur); // cur 상태 업데이트
 
-            if (!memRef.current) {
-                //debugLog('GET_CONFIGS[R]', {});
-                memRef.current = getMemoryInfo({
-                    parameters: {
-                        subscribe: true,
-                    },
-                    onSuccess: res => {
-                        //setMemoryStat(res);
-                        //test_mem = res;
-                        memStat.current = res;
-                    },
-                    onFailure: err => {
-                        debugLog('GET_CONFIGS[F]', err);
-                    }
-                });
-            }
+		return () => {
+			if (cpuRef.current) {
+				cpuRef.current.cancel();
+				cpuRef.current = null;
+			}
+		};
+	}, [cpuStat]);
 
-            console.log(saveCnt.current);
-            //console.log('cpu', cpuStat.current.stat);
-            //console.log('mem', memStat.current.returnValue);
-
-            //prev 계산
-            if(saveCnt.current === 1){
-                cpuStat.current.stat.slice(0,5).map((element, index) => {
-                    prev.current[index] = element.split(/\s+/).slice(1, 5);
-                }); 
-                console.log('prev', prev);
-            }
-
-            else{
-                usage = [];
-
-                cpuStat.current.stat.slice(0,5).map((element, index) => {
-                    curr.current[index] = element.split(/\s+/).slice(1, 5);
-                });
-
-                console.log('curr', curr);
-                
-                // 모든 cpu의 usage를 계산.
-                for(let i=0; i<curr.current.length; i++){
-                    const tmpCur = curr.current[i];
-                    const tmpPrev = prev.current[i];
-                    let Total = 0;
-                    let idle;
-                    //console.log(tmpCur, tmpPrev);
-                    //console.log(tmpCur[0]);
-                    for(let j=0; j<tmpCur.length; j++){
-                        let pad = tmpCur[j] - tmpPrev[j];
-                        Total += pad;
-                        if(j === IDLE) idle = pad;
-                    }
-
-                    //Total = 100;    // dummy
-
-                    idle = idle + 0.0; //+ Math.min(saveCnt.current, 99); // make idle floating point
-                    console.log('idle', idle);
-                    usage[i] = (1 - idle / Total) * 100;
-                    //console.log(`usage ${i}`, usage.current[i]);
-                }       
-
-                console.log('usage', usage);
-                if(saveCnt.current === 2) setLoading(false);
-                prev.current = curr.current; 
-            }
-        }, 1000);
-
-        return () => {
-            clearInterval(id); // 자원 낭비 방지
-            // check
-            if (cpuRef.current) {
-                cpuRef.current.cancel(); 
-                cpuRef.current = null;
-            }
-
-            if (memRef.current) {
-                memRef.current.cancel();
-                memRef.current = null;
-            }
-        }
-    }, [count]);
-
-    //console.log(cpuStat);
-    return (
-        <div>
-            {loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage} memoryUsage = {[memStat.current.usable_memory, memStat.current.swapUsed]}/>}
-        </div>
-    );
+	//console.log(cpuStat);
+	return (
+		<div>
+			{/*loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage} memoryUsage = {[memStat.current.usable_memory, memStat.current.swapUsed]}/>*/}
+			<div className="text-red-500">{JSON.stringify(cpuStat)}</div>
+			<div className="text-green-500">{cpuStat.stat}</div>
+			<div className="text-blue-500">{cpuStat.stat[0]}</div>
+			<div className="text-purple-500">{cpuStat.stat[1]}</div>
+			<div className="text-red-500">{cpuStat.stat[2]}</div>
+			<div className="text-green-500">{cur}</div>
+			<div className="text-green-100">TTT</div>
+		</div>
+	);
 };
 
 export default SystemState;

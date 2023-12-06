@@ -43,7 +43,13 @@ const Detail = props => {
 
 	const handlePause = () => {
 		// VideoPlayer의 pause 메소드 호출
+		console.log('Paused by handlePause!!');
 		videoPlayerRef.current.pause();
+	};
+
+	const handlePlay = () => {
+		console.log('Played by handlePlay!!');
+		videoPlayerRef.current.play();
 	};
 
 	// useEffect(() => {
@@ -189,6 +195,7 @@ const Detail = props => {
 					src={props.src}
 					className="z-50"
 					user_id={props.user_id}
+					handlePlay={handlePlay}
 				/>
 			)}
 		</div>
