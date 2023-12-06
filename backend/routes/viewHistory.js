@@ -9,18 +9,15 @@ router.get('/', async (req, res) => {
 
 	try {
 		const { user_id, video_id } = req.query;
-        console.log(user_id)
-        console.log(typeof(user_id))
+        
 		const viewHistory = await ViewHistory.findAll({
 			where: {
 				...(user_id ? { user_id: user_id } : {}),
 				...(video_id ? { video_id: video_id } : {}),
 			},
 		});
-        console.log(viewHistory)
-        console.log(viewHistory[0])
 
-        if (viewHistory[0] == undefined) {
+        if (viewHistory[0] === undefined) {
 			return res.status(200).json({
 				result: 'fail',
 				message: '시청기록이 존재하지 않습니다.',
@@ -57,15 +54,15 @@ router.post('/', async (req, res) => {
 			},
 		});
 
-        if (viewHistory[0] == undefined) {
+        if (viewHistory[0] === undefined) {
             await newViewHistory.save();
             var massage = "시청기록 저장이 완료되었습니다.";
-        }
+            }
         else {
             viewHistory[0].stop_point = newViewHistory.stop_point;
             await viewHistory[0].save();
             var massage = "시청기록 업데이트가 완료되었습니다.";
-        }
+            }
 
         return res.status(200).json({
             result: 'success',
