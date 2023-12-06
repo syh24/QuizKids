@@ -174,6 +174,7 @@ const Main = props => {
 							setAge={setWrapperAge}
 							setSex={setWrapperSex}
 							setImgIdx={setWrapperImgIdx}
+							onLogout={props.onLogout}
 						/>
 					</Tab>
 					<Tab title={$L('Home')} icon="home">
