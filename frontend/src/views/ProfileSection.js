@@ -11,9 +11,28 @@ import Spottable from '@enact/spotlight/Spottable';
 const ProfileSelection = ({onClose, setIdx}) => {
     
     const onClick = (event) => {
-        const srcValue = event.target.lastElementChild.currentSrc;
+        console.log('event', event);
+        console.log('event.target.innerHTML', event.target.lastElementChild.innerHTML);
+        console.log('event.type', event.type);
+        let srcValue = '';
+
+        if(event.type === "click"){
+            srcValue = event.target.lastElementChild.currentSrc;
+        }
+
+        if(event.type === "keyup" || srcValue === undefined){
+            let regex = /https:\/\/[^"\']+\.jpg/g;
+            srcValue = event.target.lastElementChild.innerHTML.match(regex)[0];
+        }
+
         console.log(srcValue);
+        
         const index = imagePaths.indexOf(srcValue);
+        if(index === -1){
+            onClose();
+            return;
+        }
+
         setIdx(index)
         onClose();
     };
@@ -34,9 +53,9 @@ const ProfileSelection = ({onClose, setIdx}) => {
                             src={src}
                             style={{
                                 height: '13.25rem',
-                                width: '13rem'
+                                width: '50rem'
                             }}
-                            className="Spottable"
+                            className="Spottable h-20"
                         />
 					))}
                 </div>
