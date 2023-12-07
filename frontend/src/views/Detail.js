@@ -24,6 +24,8 @@ const Detail = props => {
 
 	const [currentQuiz, setCurrentQuiz] = useState(null);
 
+	const [showButton, setShowButton] = useState(true); // Skip to past view history button
+
 	const onPause = event => {
 		//console.log("current time : ", Math.floor(event.currentTime)); // save paused time
 		setIsPaused(true);
@@ -50,6 +52,16 @@ const Detail = props => {
 	const handlePlay = () => {
 		console.log('Played by handlePlay!!');
 		videoPlayerRef.current.play();
+	};
+
+	const [videoSrc, setVideoSrc] = useState(props.src);
+
+	// 특정 시간으로 이동하는 함수
+	const moveToTime = time => {
+		console.log('Skipped!!');
+		const newSrc = `${props.src}#t=${time}`;
+		setVideoSrc(newSrc); // URL을 업데이트하여 비디오 리로드
+		setShowButton(false); // 버튼 숨기기
 	};
 
 	// useEffect(() => {
@@ -120,7 +132,22 @@ const Detail = props => {
 		};
 
 		fetchQuizzes();
+
+		// // 3초 후 버튼 숨기기
+		// const timer = setTimeout(() => {
+		// 	setShowButton(false);
+		// }, 3000);
+		// return () => clearTimeout(timer);
 	}, [props.video_id]);
+
+	// 비디오 로드 완료 후 5초 뒤 버튼 숨기기
+	const handleLoadedData = () => {
+		const timer = setTimeout(() => {
+			setShowButton(false);
+		}, 5000);
+
+		return () => clearTimeout(timer);
+	};
 
 	const handleTimeUpdate = event => {
 		const currentTime = Math.floor(event.target.currentTime);
@@ -165,8 +192,21 @@ const Detail = props => {
 					퀴즈 추가하기
 				</Button>
 			</div>
+			{showButton && (
+				<button
+					onClick={() => moveToTime(100)}
+					className="spottable fixed bottom-36 right-12 overflow-hidden bg-primary text-white font-bold py-2 px-4 rounded flex justify-center items-center z-50"
+				>
+					<span className="block z-10">이전 시청 시점으로</span>
+					<span
+						className="absolute top-0 left-0 h-full bg-bold"
+						style={{animation: 'fill 5s linear', zIndex: 5}}
+					></span>
+				</button>
+			)}
 			<VideoPlayer
 				ref={videoPlayerRef}
+				onLoadedData={handleLoadedData}
 				onTimeUpdate={handleTimeUpdate}
 				autoCloseTimeout={7000}
 				backButtonAriaLabel="go to previous"
@@ -181,9 +221,9 @@ const Detail = props => {
 				onBack={props.onBack} // when click back button, will back to the home screen
 				onPause={onPause}
 				onPlay={onPlay}
-				spotlightDisabled={showQuizAddOverlay}
+				className="z-0"
 			>
-				<source src={props.src} type="video/mp4" />
+				<source src={videoSrc} type="video/mp4" />
 				<infoComponents>
 					A video about some things happening to and around some characters.{' '}
 					{/* will be replaced by prob */}
@@ -196,6 +236,28 @@ const Detail = props => {
 					playIcon="play"
 				></MediaControls>
 			</VideoPlayer>
+
+			{/* 5초 동안만 표시되는 버튼 */}
+			<Button
+				onClick={() => {
+					moveToTime(100);
+				}}
+			>
+				SSS
+			</Button>
+			{showButton && (
+				<button
+					onClick={() => moveToTime(100)}
+					className="spottable fixed bottom-36 right-12 overflow-hidden bg-primary text-white font-bold py-2 px-4 rounded flex justify-center items-center z-50"
+				>
+					<span className="block z-10">이전 시청 시점으로</span>
+					<span
+						className="absolute top-0 left-0 h-full bg-bold"
+						style={{animation: 'fill 5s linear', zIndex: 5}}
+					></span>
+				</button>
+			)}
+
 			{/* <Button onClick={handlePause} className="z-50">
 				PAUSE!!
 			</Button> */}
