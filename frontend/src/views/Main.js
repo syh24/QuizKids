@@ -25,11 +25,11 @@ import LogoPath from './logo.svg';
 import {Image} from '@enact/sandstone/Image';
 
 const imagePaths = [
-	'https://ssl.pstatic.net/mimgnews/image/112/2021/07/08/202107081008046563160_20210708100917_01_20210708101006245.jpg?type=w540',
-	'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
-	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTscDSszyGFxlaLRB8Aj1A3gfUKy0hCRhCH4g&usqp=CAU',
-	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOByQi_wqBIRiSI8ta4O05kp-awGDIlYVhHQ&usqp=CAU',
-	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUbasz5gJ16BJX0At8_H5IaBTn9H6OVEi_KA&usqp=CAU'
+	'https://i.esdrop.com/d/f/7KR1V6ddvN/HHgzYEAZCS.jpg',
+	'https://i.esdrop.com/d/f/7KR1V6ddvN/uREUlVacey.jpg',
+	'https://i.esdrop.com/d/f/7KR1V6ddvN/WsvlJs70rr.jpg',
+	'https://i.esdrop.com/d/f/7KR1V6ddvN/aKRDbFql4b.jpg',
+	'https://i.esdrop.com/d/f/7KR1V6ddvN/zUnpoLvpMG.jpg'
 ];
 
 // hover 상태에 따라 video를 제어하는 Component
