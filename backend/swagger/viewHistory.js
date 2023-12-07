@@ -42,23 +42,35 @@
  * tags:
  *   name: ViewHistories
  *   description: The user's view history managing API
- * /api/viewHistories:
+ * /api/viewHistories/{user_id}:
  *   get:
  *     tags: [ViewHistories]
  *     summary: get user's view histories
  *     parameters:
  *       - in: path
- *         name: user_id
- *         schema:
- *           type: integer
- *         required: true
- *         description: 유저 id
- *       - in: path
  *         name: video_id
  *         schema:
  *           type: integer
- *         required: true
+ *         required: false
  *         description: 비디오 id
+ *       - in: path
+ *         name: order_by
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: ordering할 attribute 이름
+ *       - in: path
+ *         name: order_type
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: ordering할 방식
+ *       - in: path
+ *         name: count
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 추출할 row 개수
  *     responses:
  *       200:
  *         description: get user view histories
@@ -66,7 +78,6 @@
  *           application/json:
  *             schema:
  *               example:
- *                 result: success
  *                 user_id: 2
  *                 video_id: 1
  *                 stop_point: 1
@@ -78,6 +89,7 @@
  *               example:
  *                 result: fail
  *                 message: err.message
+ * /api/viewHistories:
  *   post:
  *     tags: [ViewHistories]
  *     summary: create user's view history

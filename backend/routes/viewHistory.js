@@ -5,17 +5,37 @@ const Sequelize = require('sequelize');
 
 //유저의 시청기록 추출
 
-router.get('/', async (req, res) => {
+router.get('/:user_id', async (req, res) => {
 
 	try {
-		const { user_id, video_id } = req.query;
-        
-		const viewHistory = await ViewHistory.findAll({
-			where: {
-				...(user_id ? { user_id: user_id } : {}),
-				...(video_id ? { video_id: video_id } : {}),
-			},
-		});
+		const { user_id } = req.params;
+		var { video_id, order_by, order_type, count } = req.query;
+
+		count = parseInt(count, 10) || 10000000;
+		if (order_by !== undefined && order_type === undefined) order_type = 'ASC';
+		if (order_by === undefined && order_type !== undefined) order_by = 'updatedAt';
+
+		var viewHistory;
+
+		if (order_by === undefined && order_type === undefined) {
+			viewHistory = await ViewHistory.findAll({
+				where: {
+					...(user_id ? { user_id: user_id } : {}),
+					...(video_id ? { video_id: video_id } : {}),
+				},
+			});
+		}
+        else {
+			viewHistory = await ViewHistory.findAll({
+				where: {
+					...(user_id ? { user_id: user_id } : {}),
+					...(video_id ? { video_id: video_id } : {}),
+				},
+				order: [
+					[Sequelize.literal(order_by), order_type]
+				],
+			});
+		}
 
         if (viewHistory[0] === undefined) {
 			return res.status(200).json({
@@ -24,12 +44,19 @@ router.get('/', async (req, res) => {
 			});
         }
         else {
-            return res.status(200).json({
-				result: 'success',
-                user_id: user_id,
-                video_id: video_id,
-                stop_point: viewHistory[0].stop_point,
-			});
+			var temp = [];
+			var temp_index = 0;
+			for (v of viewHistory) {
+				temp.push(v);
+
+				delete temp[temp_index].dataValues.createdAt;
+				delete temp[temp_index].dataValues.updatedAt;
+				delete temp[temp_index].dataValues.deletedAt;
+
+				temp_index++;
+				if (temp_index === count) break;
+			}
+            return res.status(200).json(temp);
         }
 
 	} catch (err) {
