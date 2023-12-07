@@ -82,7 +82,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 	})(req, res, next);
 });
 
-router.get('/logout', isLoggedIn, (req, res, next) => {
+router.get('/logout', (req, res, next) => {
 	req.logOut((err) => {
 		if (err) {
 			return next(err);
