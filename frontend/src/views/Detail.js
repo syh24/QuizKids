@@ -104,32 +104,33 @@ const Detail = props => {
 				setQuizTimeStamps(timestamps);
 
 				// Call the function to post to videoHistories
-				postVideoHistory();
+				// postVideoHistory();
 			} catch (error) {
 				console.error('Error fetching quizzes:', error);
 			}
 		};
 
-		const postVideoHistory = async () => {
-			try {
-				const postData = {
-					user_id: props.user_id,
-					video_id: props.video_id
-				};
+		// const postVideoHistory = async () => {
+		// 	try {
+		// 		const postData = {
+		// 			user_id: props.user_id,
+		// 			video_id: props.video_id,
+		// 			stop_point:
+		// 		};
 
-				await fetch(`${process.env.REACT_APP_BACKEND_URI}/api/videoHistories`, {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(postData)
-				});
+		// 		await fetch(`${process.env.REACT_APP_BACKEND_URI}/api/videoHistories`, {
+		// 			method: 'POST',
+		// 			headers: {
+		// 				'Content-Type': 'application/json'
+		// 			},
+		// 			body: JSON.stringify(postData)
+		// 		});
 
-				console.log('Posted to videoHistories successfully');
-			} catch (error) {
-				console.error('Error posting to videoHistories:', error);
-			}
-		};
+		// 		console.log('Posted to videoHistories successfully');
+		// 	} catch (error) {
+		// 		console.error('Error posting to videoHistories:', error);
+		// 	}
+		// };
 
 		fetchQuizzes();
 
@@ -161,6 +162,31 @@ const Detail = props => {
 		console.log('Current video playing ID: ', props.video_id);
 
 		console.log('비교 대상인 quizTimeStamps: ', quizTimeStamps);
+
+		// 비동기 함수를 즉시 실행
+		(async () => {
+			console.log('VIDEO HISTORY PUSHING...');
+			try {
+				const postData = {
+					user_id: props.user_id,
+					video_id: props.video_id,
+					stop_point: currentTime
+				};
+
+				await fetch(`${process.env.REACT_APP_BACKEND_URI}/api/viewHistories`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(postData)
+				});
+
+				console.log('Posted to videoHistories successfully');
+			} catch (error) {
+				console.error('Error posting to videoHistories:', error);
+			}
+		})();
+
 		// 지정된 타임스탬프에 도달했는지 확인
 		if (
 			quizIndex !== -1 &&
