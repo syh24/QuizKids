@@ -12,7 +12,7 @@ router.get('/:user_id', async (req, res) => {
 		var { video_id, order_by, order_type, count } = req.query;
 
 		count = parseInt(count, 10) || 10000000;
-		if (order_by !== undefined && order_type === undefined) order_type = 'ASC';
+		if (order_by !== undefined && order_type === undefined) order_type = 'DESC';
 		if (order_by === undefined && order_type !== undefined) order_by = 'updatedAt';
 
 		var viewHistory;
