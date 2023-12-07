@@ -84,7 +84,7 @@ router.post('/', async (req, res) => {
 	const quiz = new Quiz(req.body);
 	try {
 		await quiz.save();
-		res.status(201).json(quiz);
+		res.status(201).json({ message: '생성되었습니다' });
 	} catch (err) {
 		console.log('퀴즈 생성 실패');
 		console.log(err.message);

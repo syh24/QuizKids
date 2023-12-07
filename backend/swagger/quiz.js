@@ -19,6 +19,9 @@
  *         problem:
  *           type: string
  *           description: 문제 및 선지
+ *         quiz_time:
+ *           type: interger
+ *           description: quiz가 등록된 시간
  *         answer:
  *           type: interger
  *           description: quiz 답 ex) 4
@@ -48,6 +51,7 @@
  *         user_id: 3
  *         video_id: 5
  *         problem: "quiz?\n1. answer1\n2. answer2\n3. answer3\n4. answer4"
+ *         quiz_time: 613
  *         answer: 4
  *         hit: 200
  *         answer_count: 150
@@ -99,7 +103,8 @@
  *             example:
  *               user_id: 3
  *               video_id: 5
- *               problem: {"title": "quiz?", "problem": "1. answer1\n2. answer2\n3. answer3\n4. answer4"}
+ *               problem: "quiz?\n1. answer1\n2. answer2\n3. answer3\n4. answer4"
+ *               quiz_time: 613
  *               answer: 4
  *     responses:
  *       200:
