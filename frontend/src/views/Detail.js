@@ -90,8 +90,32 @@ const Detail = props => {
 				const timestamps = quizData.map(quiz => parseInt(quiz.quiz_time, 10));
 				console.log('timestamps: ', timestamps);
 				setQuizTimeStamps(timestamps);
+
+				// Call the function to post to videoHistories
+				postVideoHistory();
 			} catch (error) {
 				console.error('Error fetching quizzes:', error);
+			}
+		};
+
+		const postVideoHistory = async () => {
+			try {
+				const postData = {
+					user_id: props.user_id,
+					video_id: props.video_id
+				};
+
+				await fetch(`${process.env.REACT_APP_BACKEND_URI}/api/videoHistories`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(postData)
+				});
+
+				console.log('Posted to videoHistories successfully');
+			} catch (error) {
+				console.error('Error posting to videoHistories:', error);
 			}
 		};
 
