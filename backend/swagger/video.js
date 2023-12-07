@@ -82,13 +82,41 @@
  *           type: string
  *         required: false
  *         description: 비디오명
+ *       - in: path
+ *         name: order_by
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: ordering할 attribute 이름
+ *       - in: path
+ *         name: order_type
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: ordering할 방식
+ *       - in: path
+ *         name: count
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 추출할 row 개수
  *     responses:
  *       200:
  *         description: get all videos.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Video'
+ *               example:
+ *                 id: 3
+ *                 user_id: 2
+ *                 name: 재밌는 영상
+ *                 thumbnail: image.png
+ *                 url_link: https://youtu.be/7F33b2eK4
+ *                 hit: 3
+ *                 User:
+ *                   id: 2
+ *                   nickname: 샌즈TV
+ *                   img_idx: 2
  *       500:
  *         description: Some server error
  *   post:
