@@ -10,7 +10,7 @@ import BodyText from '@enact/ui/BodyText';
 
 import badWordsChecker from '../badWordsChecker';
 
-const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
+const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [question, setQuestion] = useState('');
 	const [options, setOptions] = useState(['', '', '', '']); // Assuming 4 options
@@ -28,21 +28,50 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
 
 	const totalSteps = 4; // Total number of steps
 
+	const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
+
+	const handleSubmissionConfirmation = () => {
+		handleSubmit(); // Proceed with the actual submission
+		setShowConfirmationPopup(false); // Close the confirmation popup
+		onClose();
+	};
+
+	const handleSubmissionCancel = () => {
+		setShowConfirmationPopup(false); // Close the confirmation popup
+	};
+
+	const handleSubmitWithConfirmation = () => {
+		setShowConfirmationPopup(true); // Show the confirmation popup
+	};
+
 	const nextStep = () => {
+		// Check for empty question or bad words
 		if (currentStep === 1) {
-			const isValid = !badWordsChecker(question);
+			const isValid = question.trim() !== '' && !badWordsChecker(question);
 			setIsQuestionValid(isValid);
-			if (!isValid) return; // 비속어가 포함되어 있다면 다음 단계로 넘어가지 않음
-		} else if (currentStep === 2) {
-			const optionsValidity = options.map(option => !badWordsChecker(option));
-			setIsOptionsValid(optionsValidity);
-			if (!optionsValidity.every(Boolean)) return; // 어느 하나라도 비속어가 있다면 다음 단계로 넘어가지 않음
+			if (!isValid) return; // Prevents proceeding if the question is empty or contains bad words
 		}
 
+		// Check for empty options or bad words
+		if (currentStep === 2) {
+			const optionsValidity = options.map(
+				option => option.trim() !== '' && !badWordsChecker(option)
+			);
+			setIsOptionsValid(optionsValidity);
+			if (!optionsValidity.every(Boolean)) return; // Prevents proceeding if any option is empty or contains bad words
+		}
+
+		// Check if an answer is selected (only for non-OX questions)
+		if (currentStep === 3 && !isOXSelected && selectedAnswer === null) {
+			// Add logic to show an error message or indication
+			return; // Prevents proceeding without selecting an answer
+		}
+
+		// Logic for OX questions to skip options step
 		if (isOXSelected && currentStep === 1) {
-			setCurrentStep(currentStep + 2); // 1단계에서 바로 3단계로 넘어가기
+			setCurrentStep(currentStep + 2); // Skips directly to answer selection for OX questions
 		} else {
-			setCurrentStep(currentStep + 1);
+			setCurrentStep(currentStep + 1); // Proceed to the next step
 		}
 	};
 
@@ -66,11 +95,12 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
 
 	const handleSubmit = async () => {
 		const quizData = {
-			user_id: 1, // TODO
-			video_id: 1, // TODO
-			problem: options
-				.map((option, index) => `${index + 1}. ${option}`)
-				.join('\n'),
+			user_id: user_id, // TODO
+			video_id: video_id, // TODO
+			problem:
+				question +
+				'\n' +
+				options.map((option, index) => `${option}`).join('\n'),
 			quiz_time: timestamp.toString(),
 			answer: selectedAnswer
 		};
@@ -176,7 +206,7 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
 								invalid={!isQuestionValid}
 								autoFocus={true}
 								dismissOnEnter={true}
-								invalidMessage="비속어가 포함된 문제는 출제할 수 없습니다."
+								invalidMessage="부적합한 문제 (비속어, 빈 내용 등)"
 								className="spottable flex-1 text-sm rounded-md h-8 shadow-xl m-2"
 							/>
 						</div>
@@ -199,7 +229,7 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
 									autoFocus={true}
 									dismissOnEnter={true}
 									invalid={!isOptionsValid[index]}
-									invalidMessage="비속어 포함"
+									invalidMessage="부적합"
 									type={
 										questionType === '4개 중 맞는 숫자 고르기'
 											? 'number'
@@ -265,7 +295,7 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
 			onClose={onClose}
 			title="Create New Quiz Question"
 			scrimType="transparent"
-			className="backdrop-blur-md rounded-xl h-[80vh] w-[93vw]  bg-white"
+			className="backdrop-blur-md rounded-xl h-[80vh] w-[93vw] bg-white"
 		>
 			<StepIndicator
 				currentStep={currentStep}
@@ -278,8 +308,43 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id}) => {
 				{0 < currentStep && currentStep < 3 && (
 					<Button onClick={nextStep}>다음</Button>
 				)}
-				{currentStep === 3 && <Button onClick={handleSubmit}>제출</Button>}
+				{currentStep === 3 && (
+					<Button onClick={handleSubmitWithConfirmation}>제출</Button>
+				)}
 			</div>
+
+			{showConfirmationPopup && (
+				<Popup
+					open={showConfirmationPopup}
+					onClose={handleSubmissionCancel}
+					title="Confirm Submission"
+					scrimType="transparent"
+					className="rounded-xl"
+				>
+					<div className="bg-white p-6 rounded-lg shadow-2xl w-2/3 h-2/3 mx-auto mt-20 flex flex-col justify-center items-center">
+						<BodyText className="text-gray-700 text-3xl text-center">
+							한 번 제출하면 수정할 수 없으며, <br />
+							운영진 검토 후 문제가 등록됩니다. <br />
+							제출하시겠습니까?
+						</BodyText>
+
+						<div className="flex justify-center mt-6 space-x-4">
+							<button
+								onClick={handleSubmissionCancel}
+								className="spottable bg-gray-500 focus:bg-gray-400 focus:scale-110 focus:shadow-xl text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out text-2xl"
+							>
+								다시 한번 생각해볼래요.
+							</button>
+							<button
+								onClick={handleSubmissionConfirmation}
+								className="spottable bg-bold focus:bg-yellow-400 focus:scale-110 focus:shadow-xl text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out text-2xl"
+							>
+								제출할래요!
+							</button>
+						</div>
+					</div>
+				</Popup>
+			)}
 		</Popup>
 	);
 };

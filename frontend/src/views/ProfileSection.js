@@ -6,26 +6,46 @@ import imgsrc_2 from './penguin.png';
 import imgsrc_3 from './dog.png';
 import imgsrc_4 from './dog_1.png';
 import { imagePaths } from './Main';
+import Spottable from '@enact/spotlight/Spottable';
 
 const ProfileSelection = ({onClose, setIdx}) => {
     
     const onClick = (event) => {
-        const srcValue = event.target.lastElementChild.currentSrc;
+        console.log('event', event);
+        console.log('event.target.innerHTML', event.target.lastElementChild.innerHTML);
+        console.log('event.type', event.type);
+        let srcValue = '';
+
+        if(event.type === "click"){
+            srcValue = event.target.lastElementChild.currentSrc;
+        }
+
+        if(event.type === "keyup" || srcValue === undefined){
+            let regex = /https:\/\/[^"\']+\.jpg/g;
+            srcValue = event.target.lastElementChild.innerHTML.match(regex)[0];
+        }
+
         console.log(srcValue);
+        
         const index = imagePaths.indexOf(srcValue);
+        if(index === -1){
+            onClose();
+            return;
+        }
+
         setIdx(index)
         onClose();
     };
 
     return (
-        <div>
+        <div className="Spottable">
             <Popup
                 open={true}
                 onClose={onClose}
                 title="Create New Quiz Question"
-                className="backdrop-blur-md Slottable"
+                className="backdrop-blur-md Spottable"
             >
-                <div className="flex Slottable justify-between">
+                <div className="flex justify-between Spottable">
                     {imagePaths.map((src, index) => (
                         <ImageItem
                             key={index}
@@ -33,9 +53,9 @@ const ProfileSelection = ({onClose, setIdx}) => {
                             src={src}
                             style={{
                                 height: '13.25rem',
-                                width: '13rem'
+                                width: '50rem'
                             }}
-                            className="Slottable"
+                            className="Spottable h-20"
                         />
 					))}
                 </div>

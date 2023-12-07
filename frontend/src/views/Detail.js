@@ -17,7 +17,14 @@ const Detail = props => {
 	const [currentTimestamp, setCurrentTimestamp] = useState(0);
 
 	const [processedTimestamps, setProcessedTimestamps] = useState([]); // State to store processed timestamps(quizs)
-	const timestamps = [3, 8, 12]; // 예: 3초, 18초, 12초에 문제..
+	// const timestamps = [3, 8, 12]; // 예: 3초, 18초, 12초에 문제..
+
+	const [quizs, setQuizs] = useState([]);
+	const [quizTimeStamps, setQuizTimeStamps] = useState([]);
+
+	const [currentQuiz, setCurrentQuiz] = useState(null);
+
+	const [showButton, setShowButton] = useState(true); // Skip to past view history button
 
 	const onPause = event => {
 		//console.log("current time : ", Math.floor(event.currentTime)); // save paused time
@@ -38,7 +45,23 @@ const Detail = props => {
 
 	const handlePause = () => {
 		// VideoPlayer의 pause 메소드 호출
+		console.log('Paused by handlePause!!');
 		videoPlayerRef.current.pause();
+	};
+
+	const handlePlay = () => {
+		console.log('Played by handlePlay!!');
+		videoPlayerRef.current.play();
+	};
+
+	const [videoSrc, setVideoSrc] = useState(props.src);
+
+	// 특정 시간으로 이동하는 함수
+	const moveToTime = time => {
+		console.log('Skipped!!');
+		const newSrc = `${props.src}#t=${time}`;
+		setVideoSrc(newSrc); // URL을 업데이트하여 비디오 리로드
+		setShowButton(false); // 버튼 숨기기
 	};
 
 	// useEffect(() => {
@@ -60,17 +83,92 @@ const Detail = props => {
 	// 	return () => clearInterval(interval);
 	// }, [timestamps]);
 
+	// Fetch quizzes when component mounts or video_id changes
+	useEffect(() => {
+		const fetchQuizzes = async () => {
+			try {
+				const response = await fetch(
+					`${process.env.REACT_APP_BACKEND_URI}/api/quiz/?video_id=${props.video_id}&count=6`
+				);
+				const quizData = await response.json();
+
+				console.log(
+					'Quiz data 가져옴: ',
+					props.video_id,
+					' id의 비디오에 대한 퀴즈 목록: ',
+					quizData
+				);
+				setQuizs(quizData);
+				const timestamps = quizData.map(quiz => parseInt(quiz.quiz_time, 10));
+				console.log('timestamps: ', timestamps);
+				setQuizTimeStamps(timestamps);
+
+				// Call the function to post to videoHistories
+				postVideoHistory();
+			} catch (error) {
+				console.error('Error fetching quizzes:', error);
+			}
+		};
+
+		const postVideoHistory = async () => {
+			try {
+				const postData = {
+					user_id: props.user_id,
+					video_id: props.video_id
+				};
+
+				await fetch(`${process.env.REACT_APP_BACKEND_URI}/api/videoHistories`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(postData)
+				});
+
+				console.log('Posted to videoHistories successfully');
+			} catch (error) {
+				console.error('Error posting to videoHistories:', error);
+			}
+		};
+
+		fetchQuizzes();
+
+		// // 3초 후 버튼 숨기기
+		// const timer = setTimeout(() => {
+		// 	setShowButton(false);
+		// }, 3000);
+		// return () => clearTimeout(timer);
+	}, [props.video_id]);
+
+	// 비디오 로드 완료 후 5초 뒤 버튼 숨기기
+	const handleLoadedData = () => {
+		const timer = setTimeout(() => {
+			setShowButton(false);
+		}, 5000);
+
+		return () => clearTimeout(timer);
+	};
+
 	const handleTimeUpdate = event => {
 		const currentTime = Math.floor(event.target.currentTime);
 		setCurrentTimestamp(currentTime);
+
+		// Check if the current time matches a quiz timestamp
+		const quizIndex = quizTimeStamps.findIndex(time => time === currentTime);
+
 		console.log('Aurrent time : ', Math.floor(currentTime));
 
+		console.log('Current video playing ID: ', props.video_id);
+
+		console.log('비교 대상인 quizTimeStamps: ', quizTimeStamps);
 		// 지정된 타임스탬프에 도달했는지 확인
 		if (
-			timestamps.includes(currentTime) &&
+			quizIndex !== -1 &&
+			quizTimeStamps.includes(currentTime) &&
 			!processedTimestamps.includes(currentTime)
 		) {
 			videoPlayerRef.current.pause();
+			setCurrentQuiz(quizs[quizIndex]); // Set the current quiz
 			setShowQuizSolveOverlay(true);
 			// 현재 타임스탬프를 처리된 타임스탬프 목록에 추가
 			setProcessedTimestamps(prev => [...prev, currentTime]);
@@ -94,8 +192,21 @@ const Detail = props => {
 					퀴즈 추가하기
 				</Button>
 			</div>
+			{showButton && (
+				<button
+					onClick={() => moveToTime(100)}
+					className="spottable fixed bottom-36 right-12 overflow-hidden bg-primary text-white font-bold py-2 px-4 rounded flex justify-center items-center z-50"
+				>
+					<span className="block z-10">이전 시청 시점으로</span>
+					<span
+						className="absolute top-0 left-0 h-full bg-bold"
+						style={{animation: 'fill 5s linear', zIndex: 5}}
+					></span>
+				</button>
+			)}
 			<VideoPlayer
 				ref={videoPlayerRef}
+				onLoadedData={handleLoadedData}
 				onTimeUpdate={handleTimeUpdate}
 				autoCloseTimeout={7000}
 				backButtonAriaLabel="go to previous"
@@ -110,9 +221,9 @@ const Detail = props => {
 				onBack={props.onBack} // when click back button, will back to the home screen
 				onPause={onPause}
 				onPlay={onPlay}
-				spotlightDisabled={showQuizAddOverlay}
+				className="z-0"
 			>
-				<source src={props.src} type="video/mp4" />
+				<source src={videoSrc} type="video/mp4" />
 				<infoComponents>
 					A video about some things happening to and around some characters.{' '}
 					{/* will be replaced by prob */}
@@ -125,9 +236,31 @@ const Detail = props => {
 					playIcon="play"
 				></MediaControls>
 			</VideoPlayer>
-			<Button onClick={handlePause} className="z-50">
-				PAUSE!!
+
+			{/* 5초 동안만 표시되는 버튼 */}
+			<Button
+				onClick={() => {
+					moveToTime(100);
+				}}
+			>
+				SSS
 			</Button>
+			{showButton && (
+				<button
+					onClick={() => moveToTime(100)}
+					className="spottable fixed bottom-36 right-12 overflow-hidden bg-primary text-white font-bold py-2 px-4 rounded flex justify-center items-center z-50"
+				>
+					<span className="block z-10">이전 시청 시점으로</span>
+					<span
+						className="absolute top-0 left-0 h-full bg-bold"
+						style={{animation: 'fill 5s linear', zIndex: 5}}
+					></span>
+				</button>
+			)}
+
+			{/* <Button onClick={handlePause} className="z-50">
+				PAUSE!!
+			</Button> */}
 			{/* Quiz Creation Overlay */}
 			{showQuizAddOverlay && (
 				<QuizCreationOverlay
@@ -136,15 +269,19 @@ const Detail = props => {
 					video_id={props.video_id}
 					src={props.src}
 					className="z-50"
+					user_id={props.user_id}
 				/>
 			)}
 			{showQuizSolveOverlay && (
 				<QuizSolveOverlay
 					onClose={() => setShowQuizSolveOverlay(false)}
 					timestamp={currentTimestamp}
+					quiz={currentQuiz} // Pass quizs as prop
 					video_id={props.video_id}
 					src={props.src}
 					className="z-50"
+					user_id={props.user_id}
+					handlePlay={handlePlay}
 				/>
 			)}
 		</div>

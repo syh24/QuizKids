@@ -2,23 +2,40 @@
 import {useEffect, useRef, useState} from 'react';
 
 import debugLog from '../libs/log';
-import {getSystemInfo, getMemoryInfo, getCpuInfo} from '../libs/services';
+import {getMemoryInfo, getCpuInfo} from '../libs/services';
+import RenderingGraph from './RenderingGraph';
+import BodyText from '@enact/sandstone/BodyText';
+import RenderingLoading from './RenderingLoading';
+import RenderingMemoryGraph from './RenderingMemoryGraph';
 
-export const SystemState = () => {
-	const ref1 = useRef(null);
-	const ref2 = useRef(null);
-	const [value1, setValue1] = useState({returnValue: false});
-	const [value2, setValue2] = useState({returnValue: false});
+const USER = 0;
+const NICE = 1;
+const SYSTEM = 2;
+const IDLE = 3;
+
+// let usage = [];
+
+const SystemState = () => {
+	const cpuRef = useRef(null);
+	const memRef = useRef(null);
+	const [curCpu, setCurCpu] = useState([]);
+    const [curMem, setCurMem] = useState([]);
+	const [loading, setLoading] = useState(true); // 사용량 알 수 있을 때까지 1초 기다린 뒤, true로 set 됨
+
+	const [cpuStat, setCpuStat] = useState({stat: [], returnValue: false});
+    const [memoryStat, setMemoryStat] = useState({returnValue: false});
+
 	useEffect(() => {
-		if (!ref1.current) {
+		if (!cpuRef.current) {
 			debugLog('GET_CONFIGS[R]', {});
-			ref1.current = getMemoryInfo({
+			cpuRef.current = getCpuInfo({
 				parameters: {
 					subscribe: true
 				},
 				onSuccess: res => {
 					debugLog('GET_CONFIGS[S]', res);
-					setValue1(res);
+					//cpuStat.current = res;
+					setCpuStat(res);
 				},
 				onFailure: err => {
 					debugLog('GET_CONFIGS[F]', err);
@@ -26,27 +43,16 @@ export const SystemState = () => {
 			});
 		}
 
-		return () => {
-			if (ref1.current) {
-				ref1.current.cancel();
-				ref1.current = null;
-			}
-		};
-	}, []);
-
-	console.log('mem', value1);
-
-	// cpu
-	useEffect(() => {
-		if (!ref2.current) {
+        if (!memRef.current) {
 			debugLog('GET_CONFIGS[R]', {});
-			ref2.current = getCpuInfo({
+			memRef.current = getMemoryInfo({
 				parameters: {
 					subscribe: true
 				},
 				onSuccess: res => {
 					debugLog('GET_CONFIGS[S]', res);
-					setValue2(res);
+					//cpuStat.current = res;
+					setMemoryStat(res);
 				},
 				onFailure: err => {
 					debugLog('GET_CONFIGS[F]', err);
@@ -54,20 +60,34 @@ export const SystemState = () => {
 			});
 		}
 
+		let newCur = cpuStat.stat.slice(0, 5).map((element, index) => {
+			return element.split(/\s+/).slice(1, 5);
+		});
+
+		setCurCpu(newCur); // cur 상태 업데이트
+        setCurMem([memoryStat.usable_memory, memoryStat.swapUsed]);
+
 		return () => {
-			if (ref2.current) {
-				ref2.current.cancel();
-				ref2.current = null;
+			if (cpuRef.current) {
+				cpuRef.current.cancel();
+				cpuRef.current = null;
+			}
+
+            if (memRef.current) {
+				memRef.current.cancel();
+				memRef.current = null;
 			}
 		};
-	}, []);
+	}, [cpuStat, memoryStat]);
 
-	console.log('cpu', value2);
+	console.log(curCpu);
+    console.log(curMem);
 
 	return (
 		<div>
-			<h1>{JSON.stringify(value1)}</h1>
-			<h1>{JSON.stringify(value2)}</h1>
+			{/*loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage} memoryUsage = {[memStat.current.usable_memory, memStat.current.swapUsed]}/>*/}
+			<RenderingGraph cpuUsage={curCpu} />
+            <RenderingMemoryGraph memoryUsage={curMem} />
 		</div>
 	);
 };
