@@ -5,7 +5,7 @@ import Button from '@enact/sandstone/Button';
 
 import Icon from '@enact/sandstone/Icon';
 
-const QuizSolveOverlay = ({onClose, timestamp, video_id, quiz}) => {
+const QuizSolveOverlay = ({onClose, timestamp, video_id, quiz, handlePlay}) => {
 	// const [currentQuizIndex, setCurrentQuizIndex] = useState(0); // Index to track the current quiz
 	const currentQuiz = quiz; // Current quiz object
 
@@ -87,7 +87,10 @@ const QuizSolveOverlay = ({onClose, timestamp, video_id, quiz}) => {
 				</BodyText>
 				<Button
 					className="mt-4 bg-blue-500 text-white rounded-lg"
-					onClick={onClose}
+					onClick={() => {
+						onClose();
+						handlePlay();
+					}}
 				>
 					확인
 				</Button>

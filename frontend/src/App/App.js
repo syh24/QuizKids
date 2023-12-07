@@ -8,6 +8,14 @@ import Skinnable from '@enact/sandstone/Skinnable';
 
 import FullScreenLogin from '../views/FullScreenLogin';
 
+const imagePaths = [
+	'https://ssl.pstatic.net/mimgnews/image/112/2021/07/08/202107081008046563160_20210708100917_01_20210708101006245.jpg?type=w540',
+	'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTscDSszyGFxlaLRB8Aj1A3gfUKy0hCRhCH4g&usqp=CAU',
+	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOByQi_wqBIRiSI8ta4O05kp-awGDIlYVhHQ&usqp=CAU',
+	'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUbasz5gJ16BJX0At8_H5IaBTn9H6OVEi_KA&usqp=CAU'
+];
+
 /* istanbul ignore next*/
 if (isDevServe()) {
 	window.webOSSystem = {
@@ -121,10 +129,10 @@ const App = props => {
 			} else if (sex == '') {
 				console.log('Failed to register: choose your sex');
 				setValidityMsg('성별을 선택해주세요');
-			} else if (age == '') {
+			} else if (age === '') {
 				console.log('Failed to register: choose your age');
 				setValidityMsg('나이를 선택해주세요');
-			} else if (imgSrc == '') {
+			} else if (imgSrc === '') {
 				console.log('Failed to register: choose your image');
 				setValidityMsg('프로필 이미지를 선택해주세요');
 			} else {
@@ -162,6 +170,29 @@ const App = props => {
 			}
 		} catch (error) {
 			console.error('Failed to register:', error);
+		}
+	};
+
+	const handleLogout = async () => {
+		console.log('Trying to log out!');
+		console.log(`${process.env.REACT_APP_BACKEND_URI}/api/users/logout`);
+		try {
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/users/logout`,
+				{
+					method: 'GET' // 로그아웃은 GET 요청으로 처리
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			// 로그아웃 성공 시 로그인 상태 변경
+			setIsLoggedIn(false);
+			console.log('Logged out successfully');
+		} catch (error) {
+			console.error('Failed to logout:', error);
 		}
 	};
 
@@ -205,7 +236,12 @@ const App = props => {
 					// className="bg-white text-black"
 					skin="light"
 				>
-					<Main skin="light" user_id={userId} />
+					<Main
+						skin="light"
+						user_id={userId}
+						onLogout={handleLogout}
+						imgPaths={imagePaths}
+					/>
 				</Panels>
 			)}
 		</div>
