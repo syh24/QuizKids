@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 		const { video_id, count } = req.query;
 		console.log(count);
 		var parsedCount = 0;
-		if (count != undefined) parsedCount = parseInt(count, 10) || 0;
+		parsedCount = parseInt(count, 10) || 0;
 		console.log(parsedCount);
 		const quiz = await Quiz.findAll({
 			where: {
