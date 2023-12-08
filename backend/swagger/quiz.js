@@ -75,13 +75,19 @@
  *         name: video_id
  *         schema:
  *           type: integer
- *         required: true
+ *         required: false
  *         description: video_id
+ *       - in: path
+ *         name: user_id
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: user_id
  *       - in: path
  *         name: count
  *         schema:
  *           type: integer
- *         required: true
+ *         required: false
  *         description: 가져올 퀴즈 개수
  *     responses:
  *       200:

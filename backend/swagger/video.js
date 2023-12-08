@@ -69,7 +69,7 @@
  *         schema:
  *           type: integer
  *         required: false
- *         description: 비디오 id
+ *         description: 비디오 id (콤마를 이용하여 여러개 조회 가능)
  *       - in: path
  *         name: user_id
  *         schema:
