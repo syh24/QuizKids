@@ -3,6 +3,8 @@ import Media from './Media';
 import {useState, useEffect} from 'react';
 import Detail from './Detail';
 
+const EMPTY = 0;
+
 const History = ({userID}) => {
 	const [currentVideoSrc, setCurrentVideoSrc] = useState('');
 	const [viewHistory, setViewHistory] = useState([]);
@@ -19,7 +21,9 @@ const History = ({userID}) => {
 				`${process.env.REACT_APP_BACKEND_URI}/api/viewHistories/${userID}`
 			);
 			const data = await response.json();
+			
 			setViewHistory(data);
+			if(data.length === EMPTY) return;
 
 			// view history video idx 가져오기
 			const videoIds = data.map(item => item.video_id);
@@ -49,13 +53,15 @@ const History = ({userID}) => {
 			);
 			const data = await response.json();
 			
+			if(data.length === EMPTY) return;
+
 			setQuizHistory(data);
 
 			// quiz history video idx 가져오기
 			const quizIds = [...new Set(data.map(item => item.video_id))]; // 중복 비디오 제거
 			const quizSubQuery = `video_id=${quizIds.join(',')}`;
 			
-			console.log(quizSubQuery);
+			console.log('quisSubQuery', quizSubQuery);
 			
 			const viewResponse = await fetch(
 				`${process.env.REACT_APP_BACKEND_URI}/api/videos?${quizSubQuery}`
