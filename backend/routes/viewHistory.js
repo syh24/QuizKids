@@ -12,30 +12,19 @@ router.get('/:user_id', async (req, res) => {
 		var { video_id, order_by, order_type, count } = req.query;
 
 		count = parseInt(count, 10) || 10000000;
-		if (order_by !== undefined && order_type === undefined) order_type = 'DESC';
-		if (order_by === undefined && order_type !== undefined) order_by = 'updatedAt';
+		order_type = order_type ? order_type : "asc";
 
-		var viewHistory;
-
-		if (order_by === undefined && order_type === undefined) {
-			viewHistory = await ViewHistory.findAll({
-				where: {
-					...(user_id ? { user_id: user_id } : {}),
-					...(video_id ? { video_id: video_id } : {}),
-				},
-			});
-		}
-        else {
-			viewHistory = await ViewHistory.findAll({
-				where: {
-					...(user_id ? { user_id: user_id } : {}),
-					...(video_id ? { video_id: video_id } : {}),
-				},
-				order: [
-					[Sequelize.literal(order_by), order_type]
-				],
-			});
-		}
+		let viewHistory = await ViewHistory.findAll({
+			where: {
+				...(user_id ? { user_id: user_id } : {}),
+				...(video_id ? { video_id: video_id } : {}),
+			},
+			order: [
+				...(order_by ? [[order_by, order_type]] : []),
+			  ],
+			attributes: ['user_id', 'video_id', 'stop_point', 'createdAt'],
+			limit: count,
+		});
 
         if (viewHistory[0] === undefined) {
 			return res.status(200).json({
@@ -44,19 +33,7 @@ router.get('/:user_id', async (req, res) => {
 			});
         }
         else {
-			var temp = [];
-			var temp_index = 0;
-			for (v of viewHistory) {
-				temp.push(v);
-
-				delete temp[temp_index].dataValues.createdAt;
-				delete temp[temp_index].dataValues.updatedAt;
-				delete temp[temp_index].dataValues.deletedAt;
-
-				temp_index++;
-				if (temp_index === count) break;
-			}
-            return res.status(200).json(temp);
+            return res.status(200).json(viewHistory);
         }
 
 	} catch (err) {
