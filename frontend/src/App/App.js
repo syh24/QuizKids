@@ -75,6 +75,7 @@ const App = props => {
 				get_userId(Object.values(response_json)[2]);
 
 				console.log('user_id: ', userId);
+				setIsLoggedIn(true);
 			} else {
 				console.log('Failed to login:', Object.values(response_json)[1]);
 				//console.log(loginData);
