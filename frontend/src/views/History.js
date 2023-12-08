@@ -24,7 +24,7 @@ const History = ({userID}) => {
 			// view history video idx 가져오기
 			const videoIds = data.map(item => item.video_id);
 			console.log(videoIds);
-			const viewSubQuery = `video=${videoIds.join(',')}`;
+			const viewSubQuery = `video_id=${videoIds.join(',')}`;
 
 			console.log(viewSubQuery);
 			//setVideoIdx(videoIds);
@@ -53,7 +53,7 @@ const History = ({userID}) => {
 
 			// quiz history video idx 가져오기
 			const quizIds = [...new Set(data.map(item => item.video_id))]; // 중복 비디오 제거
-			const quizSubQuery = `video=${quizIds.join(',')}`;
+			const quizSubQuery = `video_id=${quizIds.join(',')}`;
 			
 			console.log(quizSubQuery);
 			
