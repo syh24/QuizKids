@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 	try {
 		const { video_id, user_id, count } = req.query;
 		var parsedCount = 0;
-		parsedCount = parseInt(count, 10) || 0;
+		parsedCount = parseInt(count, 10) || 100000;
 		const quiz = await Quiz.findAll({
 			where: {
         ...(user_id ? { user_id: user_id } : {}),
