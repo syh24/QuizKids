@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
 
 		count = parseInt(count, 10) || 10000000;
     order_type = order_type ? order_type : "asc";
+    let video_ids = video_id ? video_id.split(',').map(Number) : [];
 
     let video = await Video.findAll({
       include: [{
@@ -18,7 +19,7 @@ router.get('/', async (req, res) => {
         attributes: ['id', 'nickname', 'age', 'sex', 'img_idx', 'createdAt'],
       }],
       where: {
-        ...(video_id ? { id: video_id } : {}),
+        ...(video_id ? { id: video_ids } : {}),
         ...(user_id ? { user_id: user_id } : {}),
         ...(name ? { name: { [Op.like]: `%${name}%` } } : {}),
       },
