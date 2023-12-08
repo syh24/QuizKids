@@ -194,7 +194,7 @@ const Main = props => {
 						</SwitchItem>
 					</Tab>
 					<Tab icon="list" title="History">
-						<History />
+						<History userID={props.user_id}/>
 					</Tab>
 					<Tab icon="profile" title="login">
 						<Account />
