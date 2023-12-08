@@ -11,13 +11,12 @@ const minimum_distance = 120;
 //퀴즈 조회
 router.get('/', async (req, res) => {
 	try {
-		const { video_id, count } = req.query;
-		console.log(count);
+		const { video_id, user_id, count } = req.query;
 		var parsedCount = 0;
-		if (count != undefined) parsedCount = parseInt(count, 10) || 0;
-		console.log(parsedCount);
+		parsedCount = parseInt(count, 10) || 100000;
 		const quiz = await Quiz.findAll({
 			where: {
+        ...(user_id ? { user_id: user_id } : {}),
 				...(video_id ? { video_id: video_id } : {}),
 			},
 			//quiz가 등록된 시간순서대로 추출

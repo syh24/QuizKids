@@ -1,35 +1,76 @@
-import Alert from '@enact/sandstone/Alert';
 import BodyText from '@enact/sandstone/BodyText';
-import Button from '@enact/sandstone/Button';
-import css from './Main.module.less';
-import $L from '@enact/i18n/$L';
-import {useConfigs} from '../hooks/configs';
-import {usePopup} from './HomeState';
-import {VirtualGridList, VirtualList} from '@enact/sandstone/VirtualList';
 import Media from './Media';
-import ImageItem from '@enact/sandstone/ImageItem';
-import Scroller from '@enact/ui/Scroller';
-import MediaOverlay from '@enact/sandstone/MediaOverlay';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Detail from './Detail';
 
-const History = () => {
+const History = ({userID}) => {
 	const [currentVideoSrc, setCurrentVideoSrc] = useState('');
-	const [videoSources, setVideoSources] = useState([
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
-		'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
-	]);
+	const [viewHistory, setViewHistory] = useState([]);
+	const [quizHistory, setQuizHistory] = useState([]);
+	const [videoIdx, setVideoIdx] = useState([]);
+	const [quizIdx, setQuizIdx] = useState([]);
+
+	const [viewSrc, setViewSrc] = useState([]);
+	const [quizSrc, setQuizSrc] = useState([]);
+
+	const getViewHistories = async () => {
+		try {
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/viewHistories/${userID}`
+			);
+			const data = await response.json();
+			setViewHistory(data);
+
+			// view history video idx 가져오기
+			const videoIds = data.map(item => item.video_id);
+			console.log(videoIds);
+			const viewSubQuery = `video_id=${videoIds.join(',')}`;
+
+			console.log(viewSubQuery);
+			//setVideoIdx(videoIds);
+
+			// history video fetch
+			const viewResponse = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/videos?${viewSubQuery}`
+			);
+			const viewData = await viewResponse.json();
+			console.log('view Data', viewData);
+			setViewSrc(viewData);
+
+		} catch (error) {
+			console.log('Eror fetching videos:', error);
+		}
+	};
+
+	const getQuizHistories = async () => {
+		try {
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/quiz?user_id=${userID}&order_by=updatedAt&order_type=DESC`
+			);
+			const data = await response.json();
+			
+			setQuizHistory(data);
+
+			// quiz history video idx 가져오기
+			const quizIds = [...new Set(data.map(item => item.video_id))]; // 중복 비디오 제거
+			const quizSubQuery = `video_id=${quizIds.join(',')}`;
+			
+			console.log(quizSubQuery);
+			
+			const viewResponse = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/videos?${quizSubQuery}`
+			);
+
+			const viewData = await viewResponse.json();
+			setQuizSrc(viewData);
+			console.log('quiz data', viewData);
+		} catch (error) {
+			console.log('Eror fetching videos:', error);
+		}
+	};
+
+	useEffect(()=>{getViewHistories();}, []);
+	useEffect(()=>{getQuizHistories();}, []);
 
 	// Updated to accept src directly
 	const handleVideoSelect = src => {
@@ -49,13 +90,14 @@ const History = () => {
 					<div className="h-56">
 						<BodyText>내가 본 동영상</BodyText>
 						<div className="flex overflow-x-auto  whitespace-nowrap h-full no-scrollbar">
-							{videoSources.map((src, index) => (
+							{viewSrc.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
-										onClick={() => handleVideoSelect(src)}
-										onKeyDown={event => handleKeyPress(event, src)}
+										onClick={() => handleVideoSelect(video.url_link)}
+										onKeyDown={event => handleKeyPress(event, video.url_link)}
 										idx={index}
-										src={src}
+										src={video.url_link}
+										thumbSrc={video.thumbnail}
 									/>
 								</div>
 							))}
@@ -65,13 +107,14 @@ const History = () => {
 					<div className="h-56">
 						<BodyText>내 퀴즈 동영상</BodyText>
 						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
-							{videoSources.map((src, index) => (
+							{quizSrc.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
-										onClick={() => handleVideoSelect(src)}
-										onKeyDown={event => handleKeyPress(event, src)}
+										onClick={() => handleVideoSelect(video.url_link)}
+										onKeyDown={event => handleKeyPress(event, video.url_link)}
 										idx={index}
-										src={src}
+										src={video.url_link}
+										thumbSrc={video.thumbnail}
 									/>
 								</div>
 							))}
@@ -83,6 +126,7 @@ const History = () => {
 			)}
 		</>
 	);
+		
 };
 
 export default History;

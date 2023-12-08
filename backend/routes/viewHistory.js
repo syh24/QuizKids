@@ -5,16 +5,25 @@ const Sequelize = require('sequelize');
 
 //유저의 시청기록 추출
 
-router.get('/', async (req, res) => {
+router.get('/:user_id', async (req, res) => {
 
 	try {
-		const { user_id, video_id } = req.query;
-        
-		const viewHistory = await ViewHistory.findAll({
+		const { user_id } = req.params;
+		var { video_id, order_by, order_type, count } = req.query;
+
+		count = parseInt(count, 10) || 10000000;
+		order_type = order_type ? order_type : "asc";
+
+		let viewHistory = await ViewHistory.findAll({
 			where: {
 				...(user_id ? { user_id: user_id } : {}),
 				...(video_id ? { video_id: video_id } : {}),
 			},
+			order: [
+				...(order_by ? [[order_by, order_type]] : []),
+			  ],
+			attributes: ['user_id', 'video_id', 'stop_point', 'createdAt'],
+			limit: count,
 		});
 
         if (viewHistory[0] === undefined) {
@@ -24,12 +33,7 @@ router.get('/', async (req, res) => {
 			});
         }
         else {
-            return res.status(200).json({
-				result: 'success',
-                user_id: user_id,
-                video_id: video_id,
-                stop_point: viewHistory[0].stop_point,
-			});
+            return res.status(200).json(viewHistory);
         }
 
 	} catch (err) {
