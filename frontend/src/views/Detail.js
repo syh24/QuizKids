@@ -25,6 +25,7 @@ const Detail = props => {
 	const [currentQuiz, setCurrentQuiz] = useState(null);
 
 	const [showButton, setShowButton] = useState(true); // Skip to past view history button
+	const [lastViewedStopPoint, setLastViewedStopPoint] = useState(0); // State to store last viewed stop point
 
 	const onPause = event => {
 		//console.log("current time : ", Math.floor(event.currentTime)); // save paused time
@@ -110,6 +111,23 @@ const Detail = props => {
 			}
 		};
 
+		// 사용자의 마지막 시청 시점을 가져오는 함수
+		const fetchLastViewHistory = async () => {
+			try {
+				const response = await fetch(
+					`${process.env.REACT_APP_BACKEND_URI}/api/viewHistories/${props.user_id}?video_id=${props.video_id}`
+				);
+				const data = await response.json();
+
+				if (data && data.length > 0) {
+					console.log('Last view history:', data[0].stop_point);
+					setLastViewedStopPoint(data[0].stop_point);
+				}
+			} catch (error) {
+				console.error('Error fetching last view history:', error);
+			}
+		};
+
 		// const postVideoHistory = async () => {
 		// 	try {
 		// 		const postData = {
@@ -133,6 +151,7 @@ const Detail = props => {
 		// };
 
 		fetchQuizzes();
+		fetchLastViewHistory();
 
 		// // 3초 후 버튼 숨기기
 		// const timer = setTimeout(() => {
@@ -218,18 +237,7 @@ const Detail = props => {
 					퀴즈 추가하기
 				</Button>
 			</div>
-			{showButton && (
-				<button
-					onClick={() => moveToTime(100)}
-					className="spottable fixed bottom-36 right-12 overflow-hidden bg-primary text-white font-bold py-2 px-4 rounded flex justify-center items-center z-50"
-				>
-					<span className="block z-10">이전 시청 시점으로</span>
-					<span
-						className="absolute top-0 left-0 h-full bg-bold"
-						style={{animation: 'fill 5s linear', zIndex: 5}}
-					></span>
-				</button>
-			)}
+
 			<VideoPlayer
 				ref={videoPlayerRef}
 				onLoadedData={handleLoadedData}
@@ -262,28 +270,24 @@ const Detail = props => {
 					playIcon="play"
 				></MediaControls>
 			</VideoPlayer>
-
-			{/* 5초 동안만 표시되는 버튼 */}
-			<Button
-				onClick={() => {
-					moveToTime(100);
-				}}
-			>
-				SSS
-			</Button>
 			{showButton && (
 				<button
-					onClick={() => moveToTime(100)}
-					className="spottable fixed bottom-36 right-12 overflow-hidden bg-primary text-white font-bold py-2 px-4 rounded flex justify-center items-center z-50"
+					onClick={() => moveToTime(lastViewedStopPoint)}
+					className="spottable fixed bottom-36 right-12 overflow-hidden bg-primary text-white font-bold py-2 px-4 rounded flex justify-center items-center 
+				transition duration-300 ease-in-out	focus:bg-primary focus:shadow-xl focus:text-black  focus:scale-110
+				hover:bg-primary hover:shadow-xl hover:text-black  hover:scale-110"
+					style={{
+						zIndex: 1000 // z-index를 높여서 VideoPlayer 위에 표시
+					}}
+					onAnimationEnd={() => setShowButton(false)} // 애니메이션이 끝나면 버튼 숨기기
 				>
-					<span className="block z-10">이전 시청 시점으로</span>
+					<span className="block z-10">이어서 풀기</span>
 					<span
 						className="absolute top-0 left-0 h-full bg-bold"
-						style={{animation: 'fill 5s linear', zIndex: 5}}
+						style={{animation: 'fill 5s linear', zIndex: -1}}
 					></span>
 				</button>
 			)}
-
 			{/* <Button onClick={handlePause} className="z-50">
 				PAUSE!!
 			</Button> */}
