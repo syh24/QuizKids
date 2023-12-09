@@ -22,7 +22,7 @@ const Media = ({onClick, idx, src, thumbSrc}) => {
 	return (
 		<MediaOverlay
 			marqueeOn="focus"
-			muted={!isHovering}
+			muted={true}
 			noAutoPlay={!isHovering}
 			progress={0.5}
 			textAlign="end"
