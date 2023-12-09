@@ -90,6 +90,7 @@ const Home = ({user_id}) => {
 										idx={video.id}
 										src={video.url_link}
 										thumbSrc={video.thumbnail}
+										name={video.name}
 									/>
 								</div>
 							))}
@@ -107,6 +108,7 @@ const Home = ({user_id}) => {
 										idx={video.id}
 										src={video.url_link}
 										thumbSrc={video.thumbnail}
+										name={video.name}
 									/>
 								</div>
 							))}
@@ -123,6 +125,7 @@ const Home = ({user_id}) => {
 										idx={video.id}
 										src={video.url_link}
 										thumbSrc={video.thumbnail}
+										name={video.name}
 									/>
 								</div>
 							))}

@@ -110,6 +110,7 @@ const History = ({userID}) => {
 										idx={video.id}
 										src={video.url_link}
 										thumbSrc={video.thumbnail}
+										name={video.name}
 									/>
 								</div>
 							))}
@@ -127,6 +128,7 @@ const History = ({userID}) => {
 										idx={video.id}
 										src={video.url_link}
 										thumbSrc={video.thumbnail}
+										name={video.name}
 									/>
 								</div>
 							))}
