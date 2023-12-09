@@ -99,13 +99,14 @@ const Home = ({user_id}) => {
 					<div className="h-56">
 						<BodyText>@헤이지니 Hey Jini님의 최신 영상</BodyText>
 						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
-							{videoSources.map((src, index) => (
+							{videoSources.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
-										onClick={() => handleVideoSelect(src)}
-										onKeyDown={event => handleKeyPress(event, src)}
-										idx={index}
-										src={src}
+										onClick={() => handleVideoSelect(video)}
+										onKeyDown={event => handleKeyPress(event, video.url_link)}
+										idx={video.id}
+										src={video.url_link}
+										thumbSrc={video.thumbnail}
 									/>
 								</div>
 							))}
@@ -114,13 +115,14 @@ const Home = ({user_id}) => {
 					<div className="h-56">
 						<BodyText>#Quiz가_많은_영상 👀</BodyText>
 						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
-							{videoSources.map((src, index) => (
+							{videoSources.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
-										onClick={() => handleVideoSelect(src)}
-										onKeyDown={event => handleKeyPress(event, src)}
-										idx={index}
-										src={src}
+										onClick={() => handleVideoSelect(video)}
+										onKeyDown={event => handleKeyPress(event, video.url_link)}
+										idx={video.id}
+										src={video.url_link}
+										thumbSrc={video.thumbnail}
 									/>
 								</div>
 							))}

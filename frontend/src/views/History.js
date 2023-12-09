@@ -7,6 +7,8 @@ const EMPTY = 0;
 
 const History = ({userID}) => {
 	const [currentVideoSrc, setCurrentVideoSrc] = useState('');
+	const [currentVideoId, setCurrentVideoId] = useState('');
+
 	const [viewHistory, setViewHistory] = useState([]);
 	const [quizHistory, setQuizHistory] = useState([]);
 	const [videoIdx, setVideoIdx] = useState([]);
@@ -21,9 +23,9 @@ const History = ({userID}) => {
 				`${process.env.REACT_APP_BACKEND_URI}/api/viewHistories/${userID}`
 			);
 			const data = await response.json();
-			
+
 			setViewHistory(data);
-			if(data.length === EMPTY) return;
+			if (data.length === EMPTY) return;
 
 			// view history video idx 가져오기
 			const videoIds = data.map(item => item.video_id);
@@ -40,7 +42,6 @@ const History = ({userID}) => {
 			const viewData = await viewResponse.json();
 			console.log('view Data', viewData);
 			setViewSrc(viewData);
-
 		} catch (error) {
 			console.log('Eror fetching videos:', error);
 		}
@@ -52,17 +53,17 @@ const History = ({userID}) => {
 				`${process.env.REACT_APP_BACKEND_URI}/api/quiz?user_id=${userID}&order_by=updatedAt&order_type=DESC`
 			);
 			const data = await response.json();
-			
-			if(data.length === EMPTY) return;
+
+			if (data.length === EMPTY) return;
 
 			setQuizHistory(data);
 
 			// quiz history video idx 가져오기
 			const quizIds = [...new Set(data.map(item => item.video_id))]; // 중복 비디오 제거
 			const quizSubQuery = `video_id=${quizIds.join(',')}`;
-			
+
 			console.log('quisSubQuery', quizSubQuery);
-			
+
 			const viewResponse = await fetch(
 				`${process.env.REACT_APP_BACKEND_URI}/api/videos?${quizSubQuery}`
 			);
@@ -75,12 +76,17 @@ const History = ({userID}) => {
 		}
 	};
 
-	useEffect(()=>{getViewHistories();}, []);
-	useEffect(()=>{getQuizHistories();}, []);
+	useEffect(() => {
+		getViewHistories();
+	}, []);
+	useEffect(() => {
+		getQuizHistories();
+	}, []);
 
 	// Updated to accept src directly
-	const handleVideoSelect = src => {
-		setCurrentVideoSrc(src ? src : '');
+	const handleVideoSelect = video => {
+		setCurrentVideoSrc(video ? video.url_link : '');
+		setCurrentVideoId(video ? video.id : '');
 	};
 
 	const handleKeyPress = (event, src) => {
@@ -99,9 +105,9 @@ const History = ({userID}) => {
 							{viewSrc.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
-										onClick={() => handleVideoSelect(video.url_link)}
+										onClick={() => handleVideoSelect(video)}
 										onKeyDown={event => handleKeyPress(event, video.url_link)}
-										idx={index}
+										idx={video.id}
 										src={video.url_link}
 										thumbSrc={video.thumbnail}
 									/>
@@ -116,9 +122,9 @@ const History = ({userID}) => {
 							{quizSrc.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
-										onClick={() => handleVideoSelect(video.url_link)}
+										onClick={() => handleVideoSelect(video)}
 										onKeyDown={event => handleKeyPress(event, video.url_link)}
-										idx={index}
+										idx={video.id}
 										src={video.url_link}
 										thumbSrc={video.thumbnail}
 									/>
@@ -128,11 +134,15 @@ const History = ({userID}) => {
 					</div>
 				</>
 			) : (
-				<Detail src={currentVideoSrc} onBack={() => handleVideoSelect('')} />
+				<Detail
+					src={currentVideoSrc}
+					video_id={currentVideoId}
+					onBack={() => handleVideoSelect('')}
+					user_id={userID}
+				/>
 			)}
 		</>
 	);
-		
 };
 
 export default History;
