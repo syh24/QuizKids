@@ -8,13 +8,9 @@ import Home from './Home';
 import Button from '@enact/sandstone/Button';
 import Item from '@enact/sandstone/Item';
 import Icon from '@enact/sandstone/Icon';
-import imgsrc_ from './cat_1.png';
-import imgsrc__ from './cat_2.png';
-import imgsrc___ from './penguin.png';
-import imgsrc____ from './dog.png';
-import imgsrc_____ from './dog_1.png';
 import Account from './Account';
 import Profile from './Profile';
+import Search from './Search';
 import History from './History';
 import MediaOverlay from '@enact/sandstone/MediaOverlay';
 import SystemState from './SystemState';
@@ -180,6 +176,9 @@ const Main = props => {
 					<Tab title={$L('Home')} icon="home">
 						<Home user_id={props.user_id} />
 					</Tab>
+					<Tab icon="search" title="Search">
+						<Search />
+					</Tab>
 					<Tab icon="gear" title="Settings">
 						{/* <Button icon="demosync">Button 1</Button>
 					<Button icon="demosync">Button 2</Button>
@@ -196,9 +195,9 @@ const Main = props => {
 					<Tab icon="list" title="History">
 						<History userID={props.user_id} />
 					</Tab>
-					<Tab icon="profile" title="login">
+					{/* <Tab icon="profile" title="login">
 						<Account />
-					</Tab>
+					</Tab> */}
 					<Tab icon="wisa" title="ResourceUsage">
 						<SystemState />
 					</Tab>
