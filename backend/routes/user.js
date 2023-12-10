@@ -16,12 +16,9 @@ router.get('/', async (req, res) => {
 				...(user_id ? { id: user_id } : {}),
 				...(name ? { nickname: { [Op.like]: `%${name}%` } } : {}),
 			},
+			attributes: ['id', 'nickname', 'age', 'sex', 'img_idx', 'createdAt'],
 		});
-		let copy = JSON.parse(JSON.stringify(users));
-		for (c of copy) {
-			delete c.password;
-		}
-		res.json(copy);
+		res.json(users);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
 	}
