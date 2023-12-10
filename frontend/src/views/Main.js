@@ -160,7 +160,11 @@ const Main = props => {
 					orientation="vertical"
 					tabSize={null}
 				>
-					<Tab title="Profile" icon={imagePaths[userImgIdx]} className="mt-36">
+					<Tab
+						title="Profile"
+						icon={imagePaths[userImgIdx]}
+						className="mt-36 object-contain"
+					>
 						<Profile
 							imgSrc={imagePaths[userImgIdx]}
 							nickName={userNickName}

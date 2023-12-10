@@ -164,20 +164,25 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 		);
 	};
 
+	const imgTypeSrc = [
+		'https://github.com/kevink1113/static_CSE4103/blob/main/img/button/four_char.png?raw=true',
+		'https://github.com/kevink1113/static_CSE4103/blob/main/img/button/ox.png?raw=true',
+		'https://github.com/kevink1113/static_CSE4103/blob/main/img/button/four_num.png?raw=true'
+	];
 	const renderStep = () => {
 		switch (currentStep) {
 			case 0:
 				return (
 					<>
 						<BodyText className="bg-secondary px-1 py-3 text-2xl">
-							문제의 종류를 선택하세요. {timestamp}
+							문제의 종류를 선택하세요.
 						</BodyText>
 						<div className="flex flex-auto justify-center">
 							{[
 								'4개 중 맞는 문장 고르기',
 								'O X 문제',
 								'4개 중 맞는 숫자 고르기'
-							].map(type => (
+							].map((type, index) => (
 								<button
 									key={type}
 									onClick={() => setQuestionTypeAndAdvance(type)}
@@ -186,6 +191,11 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 									focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
 									flex-grow"
 								>
+									<img
+										src={imgTypeSrc[index]}
+										className="w-48 h-48 mx-auto mb-2 object-contain"
+										alt="quiz"
+									/>
 									{type}
 								</button>
 							))}
@@ -218,13 +228,13 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 						<BodyText className="bg-primary rounded-md p-2">
 							선택지를 입력하세요.
 						</BodyText>
-						<div className="flex">
+						<div className="flex flex-wrap">
 							{options.map((option, index) => (
 								<InputField
 									key={index}
 									tabIndex={index}
 									value={option}
-									className="spottable text-sm rounded-md h-8 shadow-inner m-2 w-32"
+									className="spottable text-sm rounded-md h-8 shadow-inner m-2 w-1/3 mb-8"
 									placeholder={`선택지 ${index + 1}`}
 									autoFocus={true}
 									dismissOnEnter={true}
@@ -261,7 +271,7 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 										<button
 											key={index}
 											onClick={() => handleAnswerSelect(index)}
-											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+											className={`bg-white spottable rounded-md p-4 m-2 h-80 text-7xl font-extrabold transition duration-300 ease-in-out 
                   focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
                   flex-grow ${selectedAnswer == index ? 'bg-primary' : ''}`}
 										>
@@ -272,10 +282,12 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 										<button
 											key={index}
 											onClick={() => handleAnswerSelect(index)}
-											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+											className={`bg-white spottable rounded-md p-4 m-2 h-16 transition duration-300 ease-in-out 
                   focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
                   flex-grow ${
-										selectedAnswer === index ? 'bg-black font-black' : ''
+										selectedAnswer === index
+											? 'bg-black font-black text-green-600'
+											: ''
 									}`}
 										>
 											{option}
@@ -322,6 +334,10 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 					className="rounded-xl"
 				>
 					<div className="bg-white p-6 rounded-lg shadow-2xl w-2/3 h-2/3 mx-auto mt-20 flex flex-col justify-center items-center">
+						<img
+							src="https://github.com/kevink1113/static_CSE4103/blob/main/img/button/notice.png?raw=true"
+							className="w-32 h-32"
+						/>
 						<BodyText className="text-gray-700 text-3xl text-center">
 							한 번 제출하면 수정할 수 없으며, <br />
 							운영진 검토 후 문제가 등록됩니다. <br />
