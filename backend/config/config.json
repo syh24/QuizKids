@@ -1,8 +1,15 @@
 {
 	"development": {
 		"username": "root",
-		"password": "12345678",
+		"password": "1234",
 		"database": "test",
+		"host": "127.0.0.1",
+		"dialect": "mysql"
+	},
+	"test": {
+		"username": "root",
+		"password": "1234",
+		"database": "quizkids_test",
 		"host": "127.0.0.1",
 		"dialect": "mysql"
 	}
