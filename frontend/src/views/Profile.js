@@ -93,9 +93,13 @@ const Profile = ({
 	};
 
 	return (
-		<div className="Spottable">
+		<div className="Spottable mt-8">
 			<div className="flex Spottable">
-				<img src={imgSrc} className="ml-24 w-44 h-50 rounded-full" />
+				<img
+					src={imgSrc}
+					className="spottable ml-24 w-44 h-50 rounded-full shadow-xl cursor-pointer hover:shadow-2xl hover:scale-105 transition duration-300 ease-in-out focus:shadow-2xl focus:scale-105"
+					onClick={toggleProfileSelection}
+				/>
 				<div className="mt-16 ml-10 Spottable">
 					<InputField
 						className="Spottable"
@@ -116,7 +120,7 @@ const Profile = ({
 				</div>
 			</div>
 
-			<div className="ml-32 Spottable">
+			{/* <div className="ml-32 Spottable">
 				<Button
 					className="Spottable"
 					onClick={toggleProfileSelection}
@@ -125,7 +129,7 @@ const Profile = ({
 				>
 					변경
 				</Button>
-			</div>
+			</div> */}
 
 			<div className="ml-32 Spottable">
 				<BodyText className="ml-11 Spottable" size="large">
@@ -163,9 +167,9 @@ const Profile = ({
 						{ageType}
 					</Button>
 				))}
-			</div>
-			<div>
-				<Button onClick={onLogout}>로그아웃</Button>
+				<div className="mt-12">
+					<Button onClick={onLogout}>로그아웃</Button>
+				</div>
 			</div>
 
 			{showProfileSelection ? (
