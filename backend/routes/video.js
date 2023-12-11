@@ -4,6 +4,8 @@ const { Op } = require('sequelize');
 const Sequelize = require('sequelize');
 const User = require('../models/user');
 const Video = require('../models/video');
+const ViewHistory = require('../models/viewHistory');
+const { sequelize } = require('../models');
 
 router.get('/', async (req, res) => {
 	try {
@@ -53,6 +55,29 @@ router.post('/', async (req, res) => {
 		});
 	} catch (err) {
 		res.status(400).json({ message: err.message });
+	}
+});
+
+router.get('/:id/favorite', async (req, res) => {
+	try {
+    const { id } = req.params;
+
+    const sqlQuery = `
+      SELECT COUNT(videos.user_id) as cnt, videos.user_id
+      FROM videos
+      JOIN (
+        SELECT * FROM view_history
+        WHERE view_history.user_id = ${id}
+      ) AS tmp
+      ON tmp.video_id = videos.id
+      GROUP BY videos.user_id
+      ORDER BY cnt desc
+      LIMIT 1
+    `;
+    const result = await sequelize.query(sqlQuery, { type: Sequelize.QueryTypes.SELECT });
+		res.status(200).json(result);
+	} catch (err) {
+		res.status(500).json({ message: err.message });
 	}
 });
 
