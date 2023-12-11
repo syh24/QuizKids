@@ -7,7 +7,7 @@ import RenderingGraph from './RenderingGraph';
 import BodyText from '@enact/sandstone/BodyText';
 import RenderingLoading from './RenderingLoading';
 import RenderingMemoryGraph from './RenderingMemoryGraph';
-
+import Checkbox from '@enact/sandstone/Checkbox';
 const USER = 0;
 const NICE = 1;
 const SYSTEM = 2;
@@ -21,6 +21,9 @@ const SystemState = () => {
 	const [curCpu, setCurCpu] = useState([]);
     const [curMem, setCurMem] = useState([]);
 	const [loading, setLoading] = useState(true); // 사용량 알 수 있을 때까지 1초 기다린 뒤, true로 set 됨
+	
+	const [burstFlag, setBurstFlag] = useState(false);
+	const [idx, setIdx] = useState(0);
 
 	const [cpuStat, setCpuStat] = useState({stat: [], returnValue: false});
     const [memoryStat, setMemoryStat] = useState({returnValue: false});
@@ -67,6 +70,12 @@ const SystemState = () => {
 		setCurCpu(newCur); // cur 상태 업데이트
         setCurMem([memoryStat.usable_memory, memoryStat.swapUsed]);
 
+		if(burstFlag){
+			while(true){
+				setIdx((current) => (current+1)%3000);
+			}
+		}
+
 		return () => {
 			if (cpuRef.current) {
 				cpuRef.current.cancel();
@@ -82,12 +91,15 @@ const SystemState = () => {
 
 	console.log(curCpu);
     console.log(curMem);
-
+	console.log(idx);
+	console.log(burstFlag);
 	return (
 		<div>
 			{/*loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage} memoryUsage = {[memStat.current.usable_memory, memStat.current.swapUsed]}/>*/}
 			<RenderingGraph cpuUsage={curCpu} />
             <RenderingMemoryGraph memoryUsage={curMem} />
+			<Checkbox onToggle={function noRefCheck(){}} onClick={() => setBurstFlag(current => !current)} />
+			<BodyText>{idx}</BodyText>
 		</div>
 	);
 };
