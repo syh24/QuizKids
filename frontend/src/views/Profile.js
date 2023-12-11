@@ -168,7 +168,7 @@ const Profile = ({
 					</Button>
 				))}
 				<div className="mt-12">
-					<Button onClick={onLogout}>로그아웃</Button>
+					<Button size="small" onClick={onLogout}>로그아웃</Button>
 				</div>
 			</div>
 
