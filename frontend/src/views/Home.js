@@ -17,21 +17,9 @@ const Home = ({user_id}) => {
 	const [currentVideoSrc, setCurrentVideoSrc] = useState('');
 	const [currentVideoId, setCurrentVideoId] = useState('');
 
-	const [videoSources, setVideoSources] = useState([
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/VolkswagenGTIReview.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
-		// 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4'
-	]);
+	const [videoSources, setVideoSources] = useState([]);
+	const [popularVideoSources, setPopularVideoSources] = useState([]);
+	const [hardVideoSources, setHardVideoSources] = useState([]);
 
 	const fetchVideos = async () => {
 		try {
@@ -53,7 +41,7 @@ const Home = ({user_id}) => {
 			);
 			const data = await response.json();
 			// const videoUrls = data.map(video => video.url_link);
-			setVideoSources(data);
+			setPopularVideoSources(data);
 		} catch (error) {
 			console.log('Eror fetching videos:', error);
 		}
@@ -62,11 +50,11 @@ const Home = ({user_id}) => {
 	const fetchHardVideos = async () => {
 		try {
 			const response = await fetch(
-				`${process.env.REACT_APP_BACKEND_URI}/api/videos?order_by=createdAt&order_type=desc`
+				`${process.env.REACT_APP_BACKEND_URI}/api/videos?order_by=createdAt&order_type=desc` // TODO
 			);
 			const data = await response.json();
 			// const videoUrls = data.map(video => video.url_link);
-			setVideoSources(data);
+			setHardVideoSources(data);
 		} catch (error) {
 			console.log('Eror fetching videos:', error);
 		}
@@ -99,6 +87,8 @@ const Home = ({user_id}) => {
 	// Use useEffect to fetch videos on component mount
 	useEffect(() => {
 		fetchVideos();
+		fetchPopularVideos();
+		fetchHardVideos();
 	}, []);
 
 	return (
@@ -126,7 +116,7 @@ const Home = ({user_id}) => {
 					<div className="h-56">
 						<BodyText># 조회수가_많은_영상</BodyText>
 						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
-							{videoSources.map((video, index) => (
+							{popularVideoSources.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
 										onClick={() => handleVideoSelect(video)}
@@ -143,7 +133,7 @@ const Home = ({user_id}) => {
 					<div className="h-56">
 						<BodyText># 오답_많은_영상</BodyText>
 						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
-							{videoSources.map((video, index) => (
+							{hardVideoSources.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
 										onClick={() => handleVideoSelect(video)}
