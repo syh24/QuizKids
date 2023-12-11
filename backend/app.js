@@ -26,13 +26,15 @@ const port = process.env.PORT || 4000;
 
 app.use(cors());
 
-sequelize.sync({ force: false })
-    .then(() => {
-        console.log('데이터베이스 연결 성공');
-    })
-    .catch((err) => {
-        console.error(err);
-    });
+if (process.env.NODE_ENV != "test") {
+  sequelize.sync({ force: false })
+      .then(() => {
+          console.log('데이터베이스 연결 성공');
+      })
+      .catch((err) => {
+          console.error(err);
+      });
+  }
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -94,4 +96,4 @@ app.use("/api-docs",
   swaggerUi.setup(specs)
 );
 
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+module.exports = app;
