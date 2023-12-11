@@ -67,7 +67,7 @@ router.get('/:id/favorite', async (req, res) => {
       FROM videos
       JOIN (
         SELECT * FROM view_history
-        WHERE view_history.user_id = 1
+        WHERE view_history.user_id = ${id}
       ) AS tmp
       ON tmp.video_id = videos.id
       join users on users.id = videos.user_id
