@@ -19,14 +19,14 @@ const SystemState = () => {
 	const cpuRef = useRef(null);
 	const memRef = useRef(null);
 	const [curCpu, setCurCpu] = useState([]);
-    const [curMem, setCurMem] = useState([]);
+	const [curMem, setCurMem] = useState([]);
 	const [loading, setLoading] = useState(true); // 사용량 알 수 있을 때까지 1초 기다린 뒤, true로 set 됨
-	
+
 	const [burstFlag, setBurstFlag] = useState(false);
 	const [idx, setIdx] = useState(0);
 
 	const [cpuStat, setCpuStat] = useState({stat: [], returnValue: false});
-    const [memoryStat, setMemoryStat] = useState({returnValue: false});
+	const [memoryStat, setMemoryStat] = useState({returnValue: false});
 
 	useEffect(() => {
 		if (!cpuRef.current) {
@@ -46,7 +46,7 @@ const SystemState = () => {
 			});
 		}
 
-        if (!memRef.current) {
+		if (!memRef.current) {
 			debugLog('GET_CONFIGS[R]', {});
 			memRef.current = getMemoryInfo({
 				parameters: {
@@ -68,13 +68,7 @@ const SystemState = () => {
 		});
 
 		setCurCpu(newCur); // cur 상태 업데이트
-        setCurMem([memoryStat.usable_memory, memoryStat.swapUsed]);
-
-		if(burstFlag){
-			while(true){
-				setIdx((current) => (current+1)%3000);
-			}
-		}
+		setCurMem([memoryStat.usable_memory, memoryStat.swapUsed]);
 
 		return () => {
 			if (cpuRef.current) {
@@ -82,7 +76,7 @@ const SystemState = () => {
 				cpuRef.current = null;
 			}
 
-            if (memRef.current) {
+			if (memRef.current) {
 				memRef.current.cancel();
 				memRef.current = null;
 			}
@@ -90,16 +84,14 @@ const SystemState = () => {
 	}, [cpuStat, memoryStat]);
 
 	console.log(curCpu);
-    console.log(curMem);
+	console.log(curMem);
 	console.log(idx);
 	console.log(burstFlag);
 	return (
 		<div>
 			{/*loading ? <RenderingLoading /> : <RenderingGraph cpuUsage={usage} memoryUsage = {[memStat.current.usable_memory, memStat.current.swapUsed]}/>*/}
 			<RenderingGraph cpuUsage={curCpu} />
-            <RenderingMemoryGraph memoryUsage={curMem} />
-			<Checkbox onToggle={function noRefCheck(){}} onClick={() => setBurstFlag(current => !current)} />
-			<BodyText>{idx}</BodyText>
+			<RenderingMemoryGraph memoryUsage={curMem} />
 		</div>
 	);
 };
