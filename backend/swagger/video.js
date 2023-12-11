@@ -158,6 +158,7 @@
  *               example:
  *                 cnt: 4
  *                 user_id: 1
+ *                 nickname: test
  *       500:
  *         description: Some server error
  *
