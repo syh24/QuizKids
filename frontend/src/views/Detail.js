@@ -250,6 +250,7 @@ const Detail = props => {
 				loop
 				miniFeedbackHideDelay={2000}
 				muted={false}
+				title="Sandstone VideoPlayer Sample Video" // will be replaced by prop.title
 				titleHideDelay={4000}
 				onBack={props.onBack} // when click back button, will back to the home screen
 				onPause={onPause}
@@ -280,7 +281,7 @@ const Detail = props => {
 					}}
 					onAnimationEnd={() => setShowButton(false)} // 애니메이션이 끝나면 버튼 숨기기
 				>
-					<span className="block z-10">이어서 보기</span>
+					<span className="block z-10">이어서 풀기</span>
 					<span
 						className="absolute top-0 left-0 h-full bg-bold"
 						style={{animation: 'fill 5s linear', zIndex: -1}}
