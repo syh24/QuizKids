@@ -143,5 +143,22 @@
  *                 message: 생성되었습니다
  *       500:
  *         description: Some server error
+ * /api/videos/{user_id}/favorite:
+ *   get:
+ *     tags: [Videos]
+ *     summary: find favorite user
+ *     requestBody:
+ *       required: false
+ *     responses:
+ *       200:
+ *         description: find favorite user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 cnt: 4
+ *                 user_id: 1
+ *       500:
+ *         description: Some server error
  *
  */
