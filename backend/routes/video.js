@@ -63,13 +63,14 @@ router.get('/:id/favorite', async (req, res) => {
     const { id } = req.params;
 
     const sqlQuery = `
-      SELECT COUNT(videos.user_id) as cnt, videos.user_id
+      SELECT COUNT(videos.user_id) as cnt, videos.user_id, users.nickname
       FROM videos
       JOIN (
         SELECT * FROM view_history
-        WHERE view_history.user_id = ${id}
+        WHERE view_history.user_id = 1
       ) AS tmp
       ON tmp.video_id = videos.id
+      join users on users.id = videos.user_id
       GROUP BY videos.user_id
       ORDER BY cnt desc
       LIMIT 1
