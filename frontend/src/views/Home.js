@@ -19,7 +19,9 @@ const Home = ({user_id}) => {
 
 	const [videoSources, setVideoSources] = useState([]);
 	const [popularVideoSources, setPopularVideoSources] = useState([]);
-	const [hardVideoSources, setHardVideoSources] = useState([]);
+	const [idVideoSources, setIdVideoSources] = useState([]);
+
+	const [popularId, setPopularId] = useState('');
 
 	const fetchVideos = async () => {
 		try {
@@ -34,6 +36,7 @@ const Home = ({user_id}) => {
 		}
 	};
 
+	// 조회수 많은 영상
 	const fetchPopularVideos = async () => {
 		try {
 			const response = await fetch(
@@ -47,16 +50,27 @@ const Home = ({user_id}) => {
 		}
 	};
 
-	const fetchHardVideos = async () => {
+	// 인기 있는 사람의 영상
+	const fetchIdVideos = async () => {
 		try {
 			const response = await fetch(
-				`${process.env.REACT_APP_BACKEND_URI}/api/videos?order_by=createdAt&order_type=desc` // TODO
+				`${process.env.REACT_APP_BACKEND_URI}/api/videos/${user_id}/favorite`
 			);
 			const data = await response.json();
-			// const videoUrls = data.map(video => video.url_link);
-			setHardVideoSources(data);
+
+			const fetchedPopularId = data[0].user_id; // 여기서 가져온 ID를 저장
+			setPopularId(data[0].nickname);
+
+			console.log('fetchedPopularId: ', fetchedPopularId); // 바로 사용 가능
+
+			// 다음 fetch 호출에서 fetchedPopularId 사용
+			const responseVideos = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/videos?user_id=${fetchedPopularId}`
+			);
+			const videosData = await responseVideos.json();
+			setIdVideoSources(videosData);
 		} catch (error) {
-			console.log('Eror fetching videos:', error);
+			console.log('Error fetching videos:', error);
 		}
 	};
 
@@ -88,7 +102,7 @@ const Home = ({user_id}) => {
 	useEffect(() => {
 		fetchVideos();
 		fetchPopularVideos();
-		fetchHardVideos();
+		fetchIdVideos();
 	}, []);
 
 	return (
@@ -131,9 +145,13 @@ const Home = ({user_id}) => {
 						</div>
 					</div>
 					<div className="h-56">
-						<BodyText># 오답_많은_영상</BodyText>
+						<BodyText>
+							#자주_보는_
+							<span className="italic font-extrabold">@{popularId}</span>님의
+							최신 영상
+						</BodyText>
 						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
-							{hardVideoSources.map((video, index) => (
+							{idVideoSources.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
 									<Media
 										onClick={() => handleVideoSelect(video)}

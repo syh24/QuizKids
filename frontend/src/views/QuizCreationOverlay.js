@@ -270,7 +270,10 @@ const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 								? ['O', 'X'].map((option, index) => (
 										<button
 											key={index}
-											onClick={() => handleAnswerSelect(index)}
+											onClick={() => {
+												handleAnswerSelect(index);
+												setOptions(['O', 'X']);
+											}}
 											className={`bg-white spottable rounded-md p-4 m-2 h-80 text-7xl font-extrabold transition duration-300 ease-in-out 
                   focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
                   flex-grow ${selectedAnswer == index ? 'bg-primary' : ''}`}

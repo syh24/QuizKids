@@ -58,6 +58,8 @@ const QuizSolveOverlay = ({onClose, timestamp, video_id, quiz, handlePlay}) => {
 		const lines = quiz.problem.split('\n');
 		const question = lines[0];
 		const options = lines.slice(1); // Get the options (excluding the question)
+		console.log('question: ', question);
+		console.log('options: ', options);
 
 		return (
 			<>
