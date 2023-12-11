@@ -270,7 +270,7 @@ const Detail = props => {
 					playIcon="play"
 				></MediaControls>
 			</VideoPlayer>
-			{showButton && (
+			{showButton && lastViewedStopPoint > 0 && (
 				<button
 					onClick={() => moveToTime(lastViewedStopPoint)}
 					className="spottable fixed bottom-36 right-12 overflow-hidden bg-primary text-white font-bold py-2 px-4 rounded flex justify-center items-center 

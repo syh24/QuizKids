@@ -161,7 +161,7 @@ const Main = props => {
 					tabSize={null}
 				>
 					<Tab
-						title="Profile"
+						title="프로필"
 						icon={imagePaths[userImgIdx]}
 						className="mt-36 object-contain"
 					>
@@ -177,13 +177,13 @@ const Main = props => {
 							onLogout={props.onLogout}
 						/>
 					</Tab>
-					<Tab title={$L('Home')} icon="home">
+					<Tab title="홈" icon="home">
 						<Home user_id={props.user_id} />
 					</Tab>
-					<Tab icon="search" title="Search">
+					<Tab icon="search" title="검색">
 						<Search />
 					</Tab>
-					<Tab icon="gear" title="Settings">
+					<Tab icon="gear" title="설정">
 						{/* <Button icon="demosync">Button 1</Button>
 					<Button icon="demosync">Button 2</Button>
 					<Button icon="demosync">Button 3</Button>
@@ -196,13 +196,13 @@ const Main = props => {
 							Quiz 더 자주 띄우기
 						</SwitchItem>
 					</Tab>
-					<Tab icon="list" title="History">
+					<Tab icon="list" title="사용자 기록">
 						<History userID={props.user_id} />
 					</Tab>
 					{/* <Tab icon="profile" title="login">
 						<Account />
 					</Tab> */}
-					<Tab icon="wisa" title="ResourceUsage">
+					<Tab icon="wisa" title="리소스 사용량">
 						<SystemState />
 					</Tab>
 				</TabLayout>

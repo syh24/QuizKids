@@ -22,6 +22,37 @@ const QuizSolveOverlay = ({onClose, timestamp, video_id, quiz, handlePlay}) => {
 		setSelectedAnswer(selectedOption);
 	};
 
+	const postAnswer = async () => {
+		const ans = {
+			answer: selectedAnswer
+		};
+
+		try {
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/quiz/${quiz.id}/answer`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(ans)
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+
+			const data = await response.json();
+			console.log('답변 전송 완료:', data);
+
+			// 여기서 videoHistories 관련 로직을 추가할 수 있음
+			// 예: postVideoHistory();
+		} catch (error) {
+			console.error('Error posting quiz answer:', error);
+		}
+	};
+
 	const renderOptions = quiz => {
 		// Split the problem into lines, with the first line being the question
 		const lines = quiz.problem.split('\n');
@@ -105,6 +136,7 @@ const QuizSolveOverlay = ({onClose, timestamp, video_id, quiz, handlePlay}) => {
 					onClick={() => {
 						onClose();
 						handlePlay();
+						postAnswer();
 					}}
 				>
 					확인

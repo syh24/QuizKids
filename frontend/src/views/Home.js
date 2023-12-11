@@ -36,7 +36,33 @@ const Home = ({user_id}) => {
 	const fetchVideos = async () => {
 		try {
 			const response = await fetch(
-				`${process.env.REACT_APP_BACKEND_URI}/api/videos/`
+				`${process.env.REACT_APP_BACKEND_URI}/api/videos?order_by=createdAt&order_type=desc`
+			);
+			const data = await response.json();
+			// const videoUrls = data.map(video => video.url_link);
+			setVideoSources(data);
+		} catch (error) {
+			console.log('Eror fetching videos:', error);
+		}
+	};
+
+	const fetchPopularVideos = async () => {
+		try {
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/videos?order_by=hit&order_type=desc`
+			);
+			const data = await response.json();
+			// const videoUrls = data.map(video => video.url_link);
+			setVideoSources(data);
+		} catch (error) {
+			console.log('Eror fetching videos:', error);
+		}
+	};
+
+	const fetchHardVideos = async () => {
+		try {
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/videos?order_by=createdAt&order_type=desc`
 			);
 			const data = await response.json();
 			// const videoUrls = data.map(video => video.url_link);
@@ -80,7 +106,7 @@ const Home = ({user_id}) => {
 			{currentVideoSrc === '' ? (
 				<>
 					<div className="h-56 mt-12">
-						<BodyText># 최신_영상 🔥</BodyText>
+						<BodyText># 최신_영상</BodyText>
 						<div className="flex overflow-x-auto  whitespace-nowrap h-full no-scrollbar">
 							{videoSources.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
@@ -98,7 +124,7 @@ const Home = ({user_id}) => {
 					</div>
 
 					<div className="h-56">
-						<BodyText>@헤이지니 Hey Jini님의 최신 영상</BodyText>
+						<BodyText># 조회수가_많은_영상</BodyText>
 						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
 							{videoSources.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">
@@ -115,7 +141,7 @@ const Home = ({user_id}) => {
 						</div>
 					</div>
 					<div className="h-56">
-						<BodyText>#Quiz가_많은_영상 👀</BodyText>
+						<BodyText># 오답_많은_영상</BodyText>
 						<div className="flex overflow-x-auto whitespace-nowrap h-full no-scrollbar">
 							{videoSources.map((video, index) => (
 								<div key={index} className="mr-2 flex-shrink-0">

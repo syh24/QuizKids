@@ -99,7 +99,7 @@ const History = ({userID}) => {
 		<>
 			{currentVideoSrc === '' ? (
 				<>
-					<div className="h-56">
+					<div className="h-56 mt-12">
 						<BodyText>내가 본 동영상</BodyText>
 						<div className="flex overflow-x-auto  whitespace-nowrap h-full no-scrollbar">
 							{viewSrc.map((video, index) => (
