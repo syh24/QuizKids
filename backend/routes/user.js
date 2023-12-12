@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Op } = require('sequelize');
 const passport = require('passport');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { isLoggedIn, isNotLoggedIn } = require('./middleware');
 const User = require('../models/user');
 const Video = require('../models/video');
@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
 				...(user_id ? { id: user_id } : {}),
 				...(name ? { nickname: { [Op.like]: `%${name}%` } } : {}),
 			},
+			attributes: ['id', 'nickname', 'age', 'sex', 'img_idx', 'createdAt'],
 		});
-
 		res.json(users);
 	} catch (err) {
 		res.status(500).json({ message: err.message });
@@ -35,7 +35,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 			});
 		}
 		const hash = await bcrypt.hash(password, 12);
-		await User.create({
+		const new_user = await User.create({
 			nickname: nickname,
 			password: hash,
 			age: age,
@@ -45,6 +45,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
 		return res.json({
 			result: 'success',
 			message: '회원가입 되었습니다',
+			user_id: new_user.id,
 		});
 	} catch (err) {
 		console.error(err);
@@ -72,12 +73,13 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 			return res.json({
 				result: 'success',
 				message: '로그인 성공',
+				user_id: user.id,
 			});
 		});
 	})(req, res, next);
 });
 
-router.get('/logout', isLoggedIn, (req, res, next) => {
+router.get('/logout', (req, res, next) => {
 	req.logOut((err) => {
 		if (err) {
 			return next(err);

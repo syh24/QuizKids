@@ -69,7 +69,7 @@
  *         schema:
  *           type: integer
  *         required: false
- *         description: 비디오 id
+ *         description: 비디오 id (콤마를 이용하여 여러개 조회 가능)
  *       - in: path
  *         name: user_id
  *         schema:
@@ -82,13 +82,41 @@
  *           type: string
  *         required: false
  *         description: 비디오명
+ *       - in: path
+ *         name: order_by
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: ordering할 attribute 이름
+ *       - in: path
+ *         name: order_type
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: ordering할 방식
+ *       - in: path
+ *         name: count
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: 추출할 row 개수
  *     responses:
  *       200:
  *         description: get all videos.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Video'
+ *               example:
+ *                 id: 3
+ *                 user_id: 2
+ *                 name: 재밌는 영상
+ *                 thumbnail: image.png
+ *                 url_link: https://youtu.be/7F33b2eK4
+ *                 hit: 3
+ *                 User:
+ *                   id: 2
+ *                   nickname: 샌즈TV
+ *                   img_idx: 2
  *       500:
  *         description: Some server error
  *   post:
@@ -113,6 +141,24 @@
  *               example:
  *                 result: success
  *                 message: 생성되었습니다
+ *       500:
+ *         description: Some server error
+ * /api/videos/{user_id}/favorite:
+ *   get:
+ *     tags: [Videos]
+ *     summary: find favorite user
+ *     requestBody:
+ *       required: false
+ *     responses:
+ *       200:
+ *         description: find favorite user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               example:
+ *                 cnt: 4
+ *                 user_id: 1
+ *                 nickname: test
  *       500:
  *         description: Some server error
  *

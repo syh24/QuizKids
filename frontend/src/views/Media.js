@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import MediaOverlay from '@enact/sandstone/MediaOverlay';
 import css from './Media.module.css';
 
-const Media = ({onClick, idx, src}) => {
+const Media = ({onClick, idx, src, thumbSrc, name}) => {
 	const [isHovering, setIsHovering] = useState(false);
 
 	const handleKeyPress = e => {
@@ -22,12 +22,12 @@ const Media = ({onClick, idx, src}) => {
 	return (
 		<MediaOverlay
 			marqueeOn="focus"
-			muted={!isHovering}
+			muted={true}
 			noAutoPlay={!isHovering}
 			progress={0.5}
 			textAlign="end"
-			caption="Program Name"
-			imageOverlay={isHovering ? null : 'https://via.placeholder.com/1600x900'}
+			caption={name}
+			imageOverlay={isHovering ? null : thumbSrc}
 			className="font-light p-0 rounded-lg shadow-xl  w-48 h-24 object-cover transition duration-500 ease-in-out"
 			css={customTextStyles}
 			skin="light"

@@ -3,11 +3,180 @@
 @tailwind utilities;
 
 @layer base {
-	input[type='text']::placeholder {
-		@apply font-thin text-sm;
+	input::placeholder {
+		@apply text-gray-500 !important;
 	}
 
 	.enact_sandstone_Popup_Popup_popup.light {
-		@apply bg-gray-300 bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[87vh] w-[80vw] ml-[330px];
+		@apply bg-white bg-opacity-75 backdrop-filter backdrop-blur-xl rounded-xl h-[80vh] w-[80vw] mx-auto mb-16 shadow-2xl;
+	}
+	.enact_sandstone_VideoPlayer_VideoPlayer_videoPlayer.light
+		.enact_sandstone_VideoPlayer_VideoPlayer_overlay.enact_sandstone_VideoPlayer_VideoPlayer_scrim::after {
+		@apply bg-none;
+	}
+
+	#c_1-viewport > article > section {
+		@apply px-0;
+	}
+
+	.light ::selection {
+		@apply bg-primary;
+	}
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_sandstone_TabLayout_TabLayout_tabsExpanded.enact_ui_Layout_Layout_size
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.light.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_iconBefore.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large.enact_sandstone_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client {
+		@apply bg-primary;
+	}
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.collapsed.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_iconOnly.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_bg.enact_sandstone_Button_Button_bg.enact_sandstone_TabLayout_TabGroup_bg.enact_sandstone_TabLayout_TabGroup_bg.enact_sandstone_TabLayout_TabLayout_bg {
+		@apply bg-primary;
+	}
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.collapsed.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_iconOnly.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Icon_Icon_icon.enact_sandstone_Icon_Icon_icon.light.enact_ui_Button_Button_icon.enact_sandstone_Button_Button_icon.enact_sandstone_Icon_Icon_large.enact_ui_Icon_Icon_large.enact_sandstone_Icon_Icon_large {
+		@apply text-black;
+	}
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_sandstone_TabLayout_TabLayout_tabsExpanded.enact_ui_Layout_Layout_size
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_iconBefore.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Icon_Icon_icon.enact_sandstone_Icon_Icon_icon.light.enact_ui_Button_Button_icon.enact_sandstone_Button_Button_icon.enact_sandstone_Icon_Icon_large.enact_ui_Icon_Icon_large.enact_sandstone_Icon_Icon_large {
+		@apply text-black;
+	}
+
+	/* #c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_sandstone_TabLayout_TabLayout_tabsExpanded.enact_ui_Layout_Layout_size
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_iconBefore.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Marquee_Marquee_marquee.enact_sandstone_Button_Button_marquee {
+		@apply text-black;
+	}
+	#c_1-viewport > article > section > div > div.enact_ui_Layout_Layout_shrink {
+		@apply bg-black;
+	} */
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink {
+		@apply flex;
+	}
+
+	.enact_sandstone_Input_InputField_inputField.light {
+		@apply bg-white;
+	}
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.mt-36.object-contain.collapsed.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_iconOnly.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Icon_Icon_icon.enact_sandstone_Icon_Icon_icon.light.enact_ui_Button_Button_icon.enact_sandstone_Button_Button_icon.enact_sandstone_Icon_Icon_large.enact_ui_Icon_Icon_dingbat.enact_sandstone_Icon_Icon_dingbat.enact_ui_Icon_Icon_large.enact_sandstone_Icon_Icon_large {
+		@apply bg-contain;
+	}
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_sandstone_TabLayout_TabLayout_tabsExpanded.enact_ui_Layout_Layout_size
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.mt-36.object-contain.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_iconBefore.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_selected.enact_sandstone_Button_Button_selected.enact_sandstone_TabLayout_TabGroup_selected.enact_sandstone_TabLayout_TabLayout_selected.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Icon_Icon_icon.enact_sandstone_Icon_Icon_icon.light.enact_ui_Button_Button_icon.enact_sandstone_Button_Button_icon.enact_sandstone_Icon_Icon_large.enact_ui_Icon_Icon_dingbat.enact_sandstone_Icon_Icon_dingbat.enact_ui_Icon_Icon_large.enact_sandstone_Icon_Icon_large {
+		@apply bg-contain;
+	}
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_sandstone_TabLayout_TabLayout_tabsExpanded.enact_ui_Layout_Layout_size
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.mt-36.object-contain.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_iconBefore.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_large
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Icon_Icon_icon.enact_sandstone_Icon_Icon_icon.light.enact_ui_Button_Button_icon.enact_sandstone_Button_Button_icon.enact_sandstone_Icon_Icon_large.enact_ui_Icon_Icon_dingbat.enact_sandstone_Icon_Icon_dingbat.enact_ui_Icon_Icon_large.enact_sandstone_Icon_Icon_large {
+		@apply bg-contain;
+	}
+
+	#c_1-viewport
+		> article
+		> section
+		> div
+		> div.enact_ui_Layout_Layout_cell.enact_sandstone_TabLayout_TabLayout_tabs.enact_ui_Layout_Layout_shrink
+		> div
+		> div
+		> div.enact_ui_Button_Button_button.enact_sandstone_Button_Button_button.enact_sandstone_TabLayout_TabGroup_button.enact_sandstone_TabLayout_TabLayout_button.light.enact_sandstone_TabLayout_TabGroup_tab.enact_sandstone_TabLayout_TabLayout_tab.mt-36.object-contain.collapsed.enact_sandstone_TabLayout_TabGroup_vertical.enact_sandstone_TabLayout_TabLayout_vertical.spottable.enact_sandstone_Button_Button_iconOnly.enact_sandstone_Button_Button_collapsable.enact_sandstone_Button_Button_transparent.enact_sandstone_Button_Button_focusStatic.enact_sandstone_Button_Button_large.enact_ui_Button_Button_hasIcon.enact_sandstone_Button_Button_hasIcon.enact_ui_Button_Button_large.spottable-next-up
+		> div.enact_ui_Button_Button_client.enact_sandstone_Button_Button_client.enact_sandstone_TabLayout_TabGroup_client.enact_sandstone_TabLayout_TabGroup_client
+		> div.enact_ui_Icon_Icon_icon.enact_sandstone_Icon_Icon_icon.light.enact_ui_Button_Button_icon.enact_sandstone_Button_Button_icon.enact_sandstone_Icon_Icon_large.enact_ui_Icon_Icon_dingbat.enact_sandstone_Icon_Icon_dingbat.enact_ui_Icon_Icon_large.enact_sandstone_Icon_Icon_large {
+		@apply bg-contain;
+	}
+
+	.enact_sandstone_Icon_Icon_large {
+		@apply bg-contain !important;
+	}
+}
+
+@layer utilities {
+	@variants responsive {
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		.no-scrollbar::-webkit-scrollbar {
+			display: none;
+		}
+
+		/* Hide scrollbar for IE, Edge and Firefox */
+		.no-scrollbar {
+			-ms-overflow-style: none; /* IE and Edge */
+			scrollbar-width: none; /* Firefox */
+		}
+	}
+
+	@keyframes fill {
+		0% {
+			width: 0;
+		}
+		100% {
+			width: 100%;
+		}
 	}
 }

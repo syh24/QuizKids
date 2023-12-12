@@ -8,7 +8,9 @@ import Popup from '@enact/sandstone/Popup';
 import Scroller from '@enact/sandstone/Scroller';
 import BodyText from '@enact/ui/BodyText';
 
-const QuizCreationOverlay = ({onClose, timestamp}) => {
+import badWordsChecker from '../badWordsChecker';
+
+const QuizCreationOverlay = ({onClose, timestamp, video_id, user_id}) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [question, setQuestion] = useState('');
 	const [options, setOptions] = useState(['', '', '', '']); // Assuming 4 options
@@ -16,13 +18,60 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 	const [selectedAnswer, setSelectedAnswer] = useState(null);
 	const [isOXSelected, setIsOXSelected] = useState(false);
 
+	const [isQuestionValid, setIsQuestionValid] = useState(true);
+	const [isOptionsValid, setIsOptionsValid] = useState([
+		true,
+		true,
+		true,
+		true
+	]);
+
 	const totalSteps = 4; // Total number of steps
 
+	const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
+
+	const handleSubmissionConfirmation = () => {
+		handleSubmit(); // Proceed with the actual submission
+		setShowConfirmationPopup(false); // Close the confirmation popup
+		onClose();
+	};
+
+	const handleSubmissionCancel = () => {
+		setShowConfirmationPopup(false); // Close the confirmation popup
+	};
+
+	const handleSubmitWithConfirmation = () => {
+		setShowConfirmationPopup(true); // Show the confirmation popup
+	};
+
 	const nextStep = () => {
+		// Check for empty question or bad words
+		if (currentStep === 1) {
+			const isValid = question.trim() !== '' && !badWordsChecker(question);
+			setIsQuestionValid(isValid);
+			if (!isValid) return; // Prevents proceeding if the question is empty or contains bad words
+		}
+
+		// Check for empty options or bad words
+		if (currentStep === 2) {
+			const optionsValidity = options.map(
+				option => option.trim() !== '' && !badWordsChecker(option)
+			);
+			setIsOptionsValid(optionsValidity);
+			if (!optionsValidity.every(Boolean)) return; // Prevents proceeding if any option is empty or contains bad words
+		}
+
+		// Check if an answer is selected (only for non-OX questions)
+		if (currentStep === 3 && !isOXSelected && selectedAnswer === null) {
+			// Add logic to show an error message or indication
+			return; // Prevents proceeding without selecting an answer
+		}
+
+		// Logic for OX questions to skip options step
 		if (isOXSelected && currentStep === 1) {
-			setCurrentStep(currentStep + 2); // 1단계에서 바로 3단계로 넘어가기
+			setCurrentStep(currentStep + 2); // Skips directly to answer selection for OX questions
 		} else {
-			setCurrentStep(currentStep + 1);
+			setCurrentStep(currentStep + 1); // Proceed to the next step
 		}
 	};
 
@@ -38,29 +87,35 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 		setQuestionType(type);
 		if (type === 'O X 문제') {
 			setIsOXSelected(true);
+		} else {
+			setIsOXSelected(false);
 		}
 		nextStep();
 	};
 
 	const handleSubmit = async () => {
 		const quizData = {
-			user_id: 1,
-			video_id: 1,
-			problem: options
-				.map((option, index) => `${index + 1}. ${option}`)
-				.join('\n'),
+			user_id: user_id, // TODO
+			video_id: video_id, // TODO
+			problem:
+				question +
+				'\n' +
+				options.map((option, index) => `${option}`).join('\n'),
 			quiz_time: timestamp.toString(),
 			answer: selectedAnswer
 		};
 
 		try {
-			const response = await fetch('http://localhost:4000/api/quiz', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(quizData)
-			});
+			const response = await fetch(
+				`${process.env.REACT_APP_BACKEND_URI}/api/quiz`,
+				{
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(quizData)
+				}
+			);
 
 			if (!response.ok) {
 				throw new Error(`HTTP error! status: ${response.status}`);
@@ -80,26 +135,28 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 		console.log('Selected answer index:', index); // 로그 출력으로 확인
 	};
 
-	const StepIndicator = ({currentStep, totalSteps}) => {
+	const StepIndicator = ({currentStep, totalSteps, isOXSelected}) => {
 		return (
 			<div className="flex justify-center items-center mb-5">
 				{[...Array(totalSteps).keys()].map((step, index) => (
 					<React.Fragment key={step}>
 						{/* Circle */}
 						<div
-							className={`w-8 h-8 rounded-full flex items-center justify-center
-                                    ${
-																			currentStep === step
-																				? 'bg-bold text-white border-8 border-white'
-																				: 'bg-bold text-white'
-																		} mx-0`}
+							className={`w-10 h-10 rounded-full flex items-center justify-center text-sm
+																	${
+																		currentStep === step
+																			? 'bg-bold text-white border-8 border-white'
+																			: index === 2 && isOXSelected
+																			? 'bg-gray-400 text-white'
+																			: 'bg-bold text-white'
+																	} mx-0`}
 						>
 							{step + 1}
 						</div>
 
 						{/* Dotted Line Connector */}
 						{index < totalSteps - 1 && (
-							<div className="border-b-8 border-dotted border-bold w-16"></div>
+							<div className="border-b-8 border-dashed border-bold w-16"></div>
 						)}
 					</React.Fragment>
 				))}
@@ -107,28 +164,38 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 		);
 	};
 
+	const imgTypeSrc = [
+		'https://github.com/kevink1113/static_CSE4103/blob/main/img/button/four_char.png?raw=true',
+		'https://github.com/kevink1113/static_CSE4103/blob/main/img/button/ox.png?raw=true',
+		'https://github.com/kevink1113/static_CSE4103/blob/main/img/button/four_num.png?raw=true'
+	];
 	const renderStep = () => {
 		switch (currentStep) {
 			case 0:
 				return (
 					<>
-						<BodyText className="bg-primary rounded-md p-2">
-							문제의 종류를 선택하세요. {timestamp}
+						<BodyText className="bg-secondary px-1 py-3 text-2xl">
+							문제의 종류를 선택하세요.
 						</BodyText>
 						<div className="flex flex-auto justify-center">
 							{[
 								'4개 중 맞는 문장 고르기',
 								'O X 문제',
 								'4개 중 맞는 숫자 고르기'
-							].map(type => (
+							].map((type, index) => (
 								<button
 									key={type}
-									onClick={() => setQuestionTypeAndAdvance(type)} // 수정된 함수 호출
+									onClick={() => setQuestionTypeAndAdvance(type)}
 									skin="light"
-									className="bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+									className="bg-white spottable rounded-md p-4 m-4 transition duration-300 ease-in-out 
 									focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
 									flex-grow"
 								>
+									<img
+										src={imgTypeSrc[index]}
+										className="w-48 h-48 mx-auto mb-2 object-contain"
+										alt="quiz"
+									/>
 									{type}
 								</button>
 							))}
@@ -142,12 +209,15 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 							문제를 입력하세요.
 						</BodyText>
 						<div className="flex">
-							<input
-								tabIndex={0}
+							<InputField
 								placeholder="문제를 입력하세요. (최대 50자)"
 								value={question}
-								onChange={e => setQuestion(e.target.value)}
-								className="spottable flex-1 text-sm rounded-md h-8 shadow-inner m-2"
+								onChange={e => setQuestion(e.value)}
+								invalid={!isQuestionValid}
+								autoFocus={true}
+								dismissOnEnter={true}
+								invalidMessage="부적합한 문제 (비속어, 빈 내용 등)"
+								className="spottable flex-1 text-sm rounded-md h-8 shadow-xl m-2"
 							/>
 						</div>
 					</>
@@ -158,18 +228,26 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 						<BodyText className="bg-primary rounded-md p-2">
 							선택지를 입력하세요.
 						</BodyText>
-						<div className="flex">
+						<div className="flex flex-wrap">
 							{options.map((option, index) => (
-								<input
+								<InputField
 									key={index}
+									tabIndex={index}
 									value={option}
-									className="spottable text-sm rounded-md h-8 shadow-inner
-								p-2 m-2 transition duration-300 ease-in-out flex-grow
-									focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105"
+									className="spottable text-sm rounded-md h-8 shadow-inner m-2 w-1/3 mb-8"
 									placeholder={`선택지 ${index + 1}`}
+									autoFocus={true}
+									dismissOnEnter={true}
+									invalid={!isOptionsValid[index]}
+									invalidMessage="부적합"
+									type={
+										questionType === '4개 중 맞는 숫자 고르기'
+											? 'number'
+											: 'text'
+									}
 									onChange={e =>
 										setOptions(
-											options.map((o, i) => (i === index ? e.target.value : o))
+											options.map((o, i) => (i === index ? e.value : o))
 										)
 									}
 								/>
@@ -192,10 +270,13 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 								? ['O', 'X'].map((option, index) => (
 										<button
 											key={index}
-											onClick={() => handleAnswerSelect(index)}
-											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+											onClick={() => {
+												handleAnswerSelect(index);
+												setOptions(['O', 'X']);
+											}}
+											className={`bg-white spottable rounded-md p-4 m-2 h-80 text-7xl font-extrabold transition duration-300 ease-in-out 
                   focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
-                  flex-grow ${selectedAnswer == index ? 'bg-black' : ''}`}
+                  flex-grow ${selectedAnswer == index ? 'bg-primary' : ''}`}
 										>
 											{option}
 										</button>
@@ -204,10 +285,12 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 										<button
 											key={index}
 											onClick={() => handleAnswerSelect(index)}
-											className={`bg-white spottable rounded-md p-2 m-2 transition duration-300 ease-in-out 
+											className={`bg-white spottable rounded-md p-4 m-2 h-16 transition duration-300 ease-in-out 
                   focus:bg-gray-100 focus:shadow-md focus:ring-4 focus:ring-bold focus:scale-105
                   flex-grow ${
-										selectedAnswer === index ? 'bg-black font-black' : ''
+										selectedAnswer === index
+											? 'bg-black font-black text-green-600'
+											: ''
 									}`}
 										>
 											{option}
@@ -227,17 +310,60 @@ const QuizCreationOverlay = ({onClose, timestamp}) => {
 			onClose={onClose}
 			title="Create New Quiz Question"
 			scrimType="transparent"
-			className="backdrop-blur-md rounded-xl h-[80vh] w-[93vw]  bg-white"
+			className="backdrop-blur-md rounded-xl h-[80vh] w-[93vw] bg-white"
 		>
-			<StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
-			<div className="h-[60vh]">{renderStep()}</div>
+			<StepIndicator
+				currentStep={currentStep}
+				totalSteps={totalSteps}
+				isOXSelected={isOXSelected}
+			/>
+			<div className="h-[60vh] px-8">{renderStep()}</div>
 			<div className="flex justify-between">
 				{currentStep > 0 && <Button onClick={prevStep}>이전</Button>}
 				{0 < currentStep && currentStep < 3 && (
 					<Button onClick={nextStep}>다음</Button>
 				)}
-				{currentStep === 3 && <Button onClick={handleSubmit}>제출</Button>}
+				{currentStep === 3 && (
+					<Button onClick={handleSubmitWithConfirmation}>제출</Button>
+				)}
 			</div>
+
+			{showConfirmationPopup && (
+				<Popup
+					open={showConfirmationPopup}
+					onClose={handleSubmissionCancel}
+					title="Confirm Submission"
+					scrimType="transparent"
+					className="rounded-xl"
+				>
+					<div className="bg-white p-6 rounded-lg shadow-2xl w-2/3 h-2/3 mx-auto mt-20 flex flex-col justify-center items-center">
+						<img
+							src="https://github.com/kevink1113/static_CSE4103/blob/main/img/button/notice.png?raw=true"
+							className="w-32 h-32"
+						/>
+						<BodyText className="text-gray-700 text-3xl text-center">
+							한 번 제출하면 수정할 수 없으며, <br />
+							운영진 검토 후 문제가 등록됩니다. <br />
+							제출하시겠습니까?
+						</BodyText>
+
+						<div className="flex justify-center mt-6 space-x-4">
+							<button
+								onClick={handleSubmissionCancel}
+								className="spottable bg-gray-500 focus:bg-gray-400 focus:scale-110 focus:shadow-xl text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out text-2xl"
+							>
+								다시 한번 생각해볼래요.
+							</button>
+							<button
+								onClick={handleSubmissionConfirmation}
+								className="spottable bg-bold focus:bg-yellow-400 focus:scale-110 focus:shadow-xl text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out text-2xl"
+							>
+								제출할래요!
+							</button>
+						</div>
+					</div>
+				</Popup>
+			)}
 		</Popup>
 	);
 };

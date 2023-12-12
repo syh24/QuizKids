@@ -1,0 +1,9 @@
+{
+    "returnValue" : "true",
+    "vmallocInfo":{"cur_vmallocSize":368, "init_vmallocSize":367},
+    "ATSC3.0-NRT":0,
+    "swapUsed":75,
+    "usable_memory":1045,
+    "subscribe":true,
+    "EFS_BufferCacheStat":{"EFS_BC_CurrentSize":14, "EFS_BC_AccuShrinkSize":0, "EFS_BC_ZspageSize":15}
+}
