@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
 	const video = new Video(req.body);
 	try {
 		await video.save();
-		res.status(201).json({
+		res.status(200).json({
 			result: 'success',
 			message: '생성되었습니다',
 		});

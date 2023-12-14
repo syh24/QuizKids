@@ -25,7 +25,7 @@ beforeAll(async () => {
     };
 });
 
-describe('post /api/users/join', () => {
+describe('POST /api/users/join', () => {
     it('should respond with JSON containing a list of users', async () => {
       try {
           //api 통신
@@ -47,7 +47,7 @@ describe('post /api/users/join', () => {
 
   });
 
-describe('GET /', () => {
+describe('GET /api/users', () => {
   it('should respond with JSON containing a list of users', async () => {
     try {
         //api 통신
@@ -65,9 +65,43 @@ describe('GET /', () => {
         expect(error).toBeDefined();
     }
   });
-
-//   다른 테스트 케이스 추가 가능
 });
+
+describe('GET /api/users/logout', () => {
+    it('logout user', async () => {
+      try {
+          const res = await request(app)
+              .get('/api/users/logout');
+          
+          expect(res.statusCode).toBe(200);
+          expect(res.body.result).toEqual("success");
+      } catch (err) {
+          console.log(err);
+          expect(error).toBeDefined();
+      }
+    });
+  });
+
+describe('PUT /api/users/1', () => {
+    it('update user', async () => {
+      try {
+          req.nickname = "test_update";
+          req.age = 2;
+          req.sex = "F";
+          req.img_idx = 1;
+
+          const res = await request(app)
+              .put('/api/users/1')
+              .send(req);
+          
+          expect(res.statusCode).toBe(200);
+          expect(res.body.result).toEqual("success");
+      } catch (err) {
+          console.log(err);
+          expect(error).toBeDefined();
+      }
+    });
+  });
 
 afterAll(async () => {
     await sequelize.close(); // 테스트 종료 후 데이터베이스 연결을 닫음
