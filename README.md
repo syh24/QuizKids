@@ -148,6 +148,7 @@ Quiz출제를 위해 사용자는 다음 4가지의 필수 행동을 취해야 �
 4. 사용자 기록 조회
 
 각 기능을 구현한 컴포넌트들에서 DB 조회가 필요한 이벤트가 발생할 때마다 async/await를 이용한 비동기방식으로 데이터들을 fetch하였다. fetch 시의 api는 백엔드 단에서 정의 해놓은 양식대로 호출하였고, api들은 모두 스웨거 문서에 정의돼있다. 다음 사진은 api router들이다.
+
 <img src="https://github.com/kevink1113/static_CSE4103/blob/main/img/swagger_capture.png?raw=true" width="600">
 
 # Use Case 검토 및 추가 활용 방안
