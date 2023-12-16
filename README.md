@@ -156,7 +156,7 @@ api 호출을 실패한 경우나, 프론트엔드에서 특정 예외 케이스
 | Test Step      | Expected Result | Result Image Link |
 | --- | --- | --- | 
 | 아이디 입력 시 길이 제한을 만족하지 못한 경우 | 에러 메시지 “닉네임이 너무 짧습니다” 가 출력된다. | [아이디 길이 테스트케이스](https://github.com/kevink1113/static_CSE4103/blob/main/img/testcase/length_check.png?raw=true) |
-| 퀴즈 선지에 비속어를 입력했을 경우 | “부적합” 에러 메시지가 출력되고, 퀴즈 등록을 위한 다음 단계로 넘어가지 않는다. | [비속어 테스트케이스](https://github.com/kevink1113/static_CSE4103/blob/main/img/testcase/badword_check.png?raw=true) |
+| 퀴즈 선지에 비속어를 입력했을 경우 | “부적합” 에러 메시지가 출력된다. | [비속어 테스트케이스](https://github.com/kevink1113/static_CSE4103/blob/main/img/testcase/badword_check.png?raw=true) |
 | 중복된 닉네임을 입력하였을 경우 | 에러 메시지 “이미 사용중인 닉네임입니다.” 가 출력된다. | [중복 테스트케이스](https://github.com/kevink1113/static_CSE4103/blob/main/img/testcase/dupl_check.png?raw=true) |
 | 닉네임에 특정 특수 문자를 포함한 경우 | 에러 메시지 “/ , & , * 는 사용할 수 없습니다.” 가 출력된다. | [특수문자 테스트케이스](https://github.com/kevink1113/static_CSE4103/blob/main/img/testcase/specialChar_check.png?raw=true) |
 
