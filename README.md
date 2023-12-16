@@ -198,6 +198,16 @@ api 호출을 실패한 경우나, 프론트엔드에서 특정 예외 케이스
 **11.** **RenderingGraph, RenderingMemoryGraph**
 - SystemState로부터 전달받은 Cpu, Memory 사용량을 파싱하여 차트를 렌더링한다.
 
+# Back-End Design Architecture
+![image](https://github.com/syh24/CSE4103/assets/64251594/9b934de7-57a5-4bf1-9aa9-3b5ab52d15ae)
+
+- 백엔드를 디자인할 때 MVC패턴을 사용하였습니다.
+- 프로젝트 규모가 크지 않고, 복잡한 business logic이나 query logic이 없어서 Service layer, Repository layer는 생략하였습니다.
+
+
+# DataBase Schema
+![image](https://github.com/syh24/CSE4103/assets/64251594/7ce2f3f8-b14d-4027-8010-82d7c9656f57)
+
 
 # Use Case 검토 및 추가 활용 방안
 
