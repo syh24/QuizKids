@@ -160,6 +160,45 @@ api 호출을 실패한 경우나, 프론트엔드에서 특정 예외 케이스
 | 중복된 닉네임을 입력하였을 경우 | 에러 메시지 “이미 사용중인 닉네임입니다.” 가 출력된다. | [중복 테스트케이스](https://github.com/kevink1113/static_CSE4103/blob/main/img/testcase/dupl_check.png?raw=true) |
 | 닉네임에 특정 특수 문자를 포함한 경우 | 에러 메시지 “/ , & , * 는 사용할 수 없습니다.” 가 출력된다. | [특수문자 테스트케이스](https://github.com/kevink1113/static_CSE4103/blob/main/img/testcase/specialChar_check.png?raw=true) |
 
+
+## 프론트엔드 각 컴포넌트의 역할
+
+ 프론트엔드 구현 시 각 컴포넌트 별 하나의 기능만 수행하도록 최대한 모듈화하여 구현하였다. 다음은 각 컴포넌트에 대한 설명이다.
+
+**1.** **App**
+- 로그인 전에는 FullScreenLogin 컴포넌트를 렌더링하고, 로그인 완료 시 Panel 컴포넌트를 렌더링한다.
+
+**2.** **FullScreenLogin**
+- 로그인 폼과 회원가입 폼을 렌더링한다.
+
+**3.** **Main**
+- Enact 의 TabLayout 컴포넌트를 통해 홈, 프로필, 사용자 기록등을 탭에 띄워주고 사용자가 원하는 탭을 선택할 수 있도록 한다.
+
+**4.** **Profile, ProfileSelection**
+- 프로필 이미지, 닉네임, 나이와 성별을 수정할 수 있는 화면을 렌더링한다.
+
+**5.** **Home**
+- 최신 영상, 조회수가 많은 영상 등을 DB에서 불러와 화면에 리스트 형식으로 렌더링한다.
+
+**6.** **Detail**
+- Home화면에서 특정 비디오를 선택한 경우, 해당 비디오를 전체화면으로 출력해주고 이 비디오에 대한 퀴즈를 제출할 수 있도록 한다.
+
+**7.** **QuizCreationOverlay, QuizSolveOverlay**
+- QuizCreationOverlay는 특정 비디오에 대한 퀴즈 생성 폼을 제공하고, QuizSolveOverlay는 사용자가 특정 퀴즈를 풀었을 때 생성되는 메시지를 띄워준다.
+
+**8.** **Search**
+- 전체 비디오에 대한 검색 화면을 렌더링한다.
+
+**9.** **History**
+- 로그인 한 사용자가 시청한 동영상, 퀴즈를 낸 동영상을 DB에서 불러와 리스트 형식으로 렌더링한다.
+
+**10.** **SystemState**
+- Luna System Call을 호출하여 현재 시스템의 Cpu, Memory 사용량을 fetch하고 이를 Rendering Graph, RenderingMemoryGraph 컴포넌트의 props로 넣어준다.
+
+**11.** **RenderingGraph, RenderingMemoryGraph**
+- SystemState로부터 전달받은 Cpu, Memory 사용량을 파싱하여 차트를 렌더링한다.
+
+
 # Use Case 검토 및 추가 활용 방안
 
 - 치매 노인들의 인지능력 재활  
