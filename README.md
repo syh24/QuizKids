@@ -1,7 +1,7 @@
 # 2023-2 서강대학교 커넥티드플랫폼이론과실재(CSE4103) 4조 Project
 
 # QuizKids
-![logo_motion](https://github.com/syh24/CSE4103/assets/48401272/7222a71d-77ee-46fc-bb44-d176627fee7b)
+<img src="https://github.com/syh24/CSE4103/assets/48401272/7222a71d-77ee-46fc-bb44-d176627fee7b" width="600">
 
 > QuizKids Logotype
 > * Q의 모양과 말풍선(comment) 모양으로 지식 전달 목적임을 상기  
@@ -47,33 +47,42 @@ QuizKids 앱은 일반적인 미디어플레이어와 달리 영상 중간중간
 
 일반적인 학습사이트와는 달리 사용자는 Quiz를 풀이하는 학습자임과 동시에, Quiz를 제작하는 출제자가 될 수 있도록 하여  interactive한 플랫폼을 구축하고자 한다. 
 
+<img src="https://github.com/syh24/CSE4103/assets/48401272/87c72a1d-5e1b-46c6-a691-12992d7c202a" width="700">
 
-QuizKids 어플리케이션의 전반적인 흐름도는 위와 같다. 이에 더해 프로젝트 필수 구현 사항인 미디어 이어보기 기능, 실시간 시스템 자원현황 시각화(CPU, Memory)를 구현하였다. 
+QuizKids 어플리케이션의 전반적인 흐름도는 위와 같다.  
+이에 더해 프로젝트 필수 구현 사항인 미디어 이어보기 기능, 실시간 시스템 자원현황 시각화(CPU, Memory)를 구현하였다. 
 
 ## 로그인 / 회원가입
 
 QuizKids 어플리케이션을 실행하면 로그인 또는 회원가입을 진행한다. 
-![DevTools localhost](https://github.com/syh24/CSE4103/assets/48401272/0740bd57-1fb0-4c43-9da1-5516ebc2d692)
-![localhost Full HD](https://github.com/syh24/CSE4103/assets/48401272/d0d49d32-cad3-4b7a-8763-9bef461ff36a)
+
+<img src="https://github.com/syh24/CSE4103/assets/48401272/0740bd57-1fb0-4c43-9da1-5516ebc2d692" width="500">
+
+<img src="https://github.com/syh24/CSE4103/assets/48401272/d0d49d32-cad3-4b7a-8763-9bef461ff36a" width="500">
 
 
 ## 홈
-![Full HD](https://github.com/syh24/CSE4103/assets/48401272/4c42d5a7-cb83-4144-aa32-daa4e3181031)
 
+<img src="https://github.com/syh24/CSE4103/assets/48401272/4c42d5a7-cb83-4144-aa32-daa4e3181031" width="600">
 
-동영상 썸네일과 제목들이 그리드 형태로 나열되어 있다. 좌측에 다른 화면으로 넘어갈 수 있는 ‘탭 사이드바’가 존재하며, 이를 통해 프로필, 검색, 기록, 설정, 시스템 사용량 화면으로 전환할 수 있다. 
+- 동영상 썸네일과 제목들이 그리드 형태로 나열되어 있다.
+- 좌측에 다른 화면으로 넘어갈 수 있는 ‘탭 사이드바’가 존재하며, 이를 통해 프로필, 검색, 기록, 설정, 시스템 사용량 화면으로 전환할 수 있다. 
 
-각 행에 최신 영상, 조회수 많은 영상, 로그인한 해당 사용자가 자주 보는 계정의 영상을 리스트업한다. 
+- 각 행에 최신 영상, 조회수 많은 영상, 로그인한 해당 사용자가 자주 보는 계정의 영상을 리스트업한다. 
 
-리모컨을 이용해 focus하면 각 썸네일이 영상 미리보기로 전환된다. 원하는 영상을 선택하면 차후 설명할 영상 재생: 퀴즈 풀이/출제 화면으로 진행된다. 
+- 리모컨을 이용해 focus하면 각 썸네일이 영상 미리보기로 전환된다.
+- 원하는 영상을 선택하면 차후 설명할 영상 재생: 퀴즈 풀이/출제 화면으로 진행된다. 
 
 ## 영상 재생: 퀴즈 풀이/출제
 
 ## 퀴즈 풀이
 
-사용자가 영상을 보는 중 랜덤한 위치에서 화면에 있는 오브젝트와 관련된 문제가 출제된다. 문제 셋은 영상 진입 시 다른 사용자들이 작성한 퀴즈 풀 중에 임의로 선택된다. 
-![Full HD TV (1)](https://github.com/syh24/CSE4103/assets/48401272/7852d4a0-8bd2-44fb-a8d1-feceb7f4c6d6)
-![localhost_8080_(Full HD TV) (3)](https://github.com/syh24/CSE4103/assets/48401272/17e64bcb-394c-4d6e-88e0-796a9f2067bf)
+사용자가 영상을 보는 중 랜덤한 위치에서 화면에 있는 오브젝트와 관련된 문제가 출제된다.  
+문제 셋은 영상 진입 시 다른 사용자들이 작성한 퀴즈 풀 중에 임의로 선택된다. 
+
+<img src="https://github.com/syh24/CSE4103/assets/48401272/7852d4a0-8bd2-44fb-a8d1-feceb7f4c6d6" width="500">
+
+<img src="https://github.com/syh24/CSE4103/assets/48401272/17e64bcb-394c-4d6e-88e0-796a9f2067bf" width="500">
 
 
 ## 퀴즈 출제
@@ -89,50 +98,56 @@ Quiz출제를 위해 사용자는 다음 4가지의 필수 행동을 취해야 �
 
 각각의 행동은 아래와 같이 팝업뷰 내 서로 다른 단계별 페이지에서 실행하게 된다.
 
-![Full HD TV](https://github.com/syh24/CSE4103/assets/48401272/8448283c-a71c-484a-bb6d-5675fc79e72c)
+<img src="https://github.com/syh24/CSE4103/assets/48401272/8448283c-a71c-484a-bb6d-5675fc79e72c" width="400">
+<img src="https://github.com/syh24/CSE4103/assets/48401272/8bbd711d-a8a1-442e-a193-5d2da76123a1" width="400">
+<img src="https://github.com/syh24/CSE4103/assets/48401272/196261c5-8585-4f16-bbe0-8d5449ede06c" width="400">
+<img src="https://github.com/syh24/CSE4103/assets/48401272/a8cc61c9-92aa-4f73-a6cc-5f31955cf9b6" width="400">
 
-![DevTools localhost (1)](https://github.com/syh24/CSE4103/assets/48401272/8bbd711d-a8a1-442e-a193-5d2da76123a1)
-![Full HD (1)](https://github.com/syh24/CSE4103/assets/48401272/196261c5-8585-4f16-bbe0-8d5449ede06c)
-![Full HD (2)](https://github.com/syh24/CSE4103/assets/48401272/a8cc61c9-92aa-4f73-a6cc-5f31955cf9b6)
-
-
+### 비속어 및 부적절한 입력 방지
 사용자 참여형 플랫폼의 특성상 부적절한 문제가 등록될 수 있다. 이를 방지하기 위하여 비속어 및 금칙어 필터링 기능을 적용해 하단과 같이 부적절한 단어를 감지하며, 문제 등록 전 경고 메시지로 본인의 Quiz를 점검할 수 있도록 한다. 
-![Localhost Full](https://github.com/syh24/CSE4103/assets/48401272/63dcd1e5-63a1-4116-8de6-93139fa1f2f7)
-![Full HD (3)](https://github.com/syh24/CSE4103/assets/48401272/c0d767b9-b5e7-4a73-9abe-da37ee02a574)
+
+<img src="https://github.com/syh24/CSE4103/assets/48401272/63dcd1e5-63a1-4116-8de6-93139fa1f2f7" width="400">
+<img src="https://github.com/syh24/CSE4103/assets/48401272/c0d767b9-b5e7-4a73-9abe-da37ee02a574" width="400">
 
 ## 검색
 
 - 검색어 미입력 시 추천 영상 리스트업
 - 입력 시 자동완성(추천 검색어) 선택 옵션
 
-![Full HD (4)](https://github.com/syh24/CSE4103/assets/48401272/26ef4c9a-1f09-4258-acbc-45a8202b458a)
-
-![localhost_8080_(Full HD TV) (4)](https://github.com/syh24/CSE4103/assets/48401272/428e3981-5d7e-4569-94e7-3924598eaf69)
+<img src="https://github.com/syh24/CSE4103/assets/48401272/26ef4c9a-1f09-4258-acbc-45a8202b458a" width="500">
+<img src="https://github.com/syh24/CSE4103/assets/48401272/428e3981-5d7e-4569-94e7-3924598eaf69" width="500">
 
 
 ## 프로필
 
 회원가입 시 입력한 프로필 아이콘, 닉네임, 성별, 나이 변경 및 로그아웃 기능
 
-![localhost Full HD (1)](https://github.com/syh24/CSE4103/assets/48401272/9f95fbc7-2779-49b0-a422-cf2bd11dde30)
+<img src="https://github.com/syh24/CSE4103/assets/48401272/9f95fbc7-2779-49b0-a422-cf2bd11dde30" width="600">
 
 
 ## 기록
 
 내가 본 동영상, 내 퀴즈 동영상을 리스트업하여 검토할 수 있다. 
-![DevTools Full](https://github.com/syh24/CSE4103/assets/48401272/c73e4443-b4da-42b6-bb88-0182dc2d02d3)
+
+<img src="https://github.com/syh24/CSE4103/assets/48401272/c73e4443-b4da-42b6-bb88-0182dc2d02d3" width="600">
 
 
 ## 리소스 사용량
 
 실시간 시스템 자원현황 시각화(CPU, Memory)를 구현하였다. 
-![DevTools localhost Full HD](https://github.com/syh24/CSE4103/assets/48401272/6b1e5099-d033-4a56-8270-b186f9109189)
+
+<img src="https://github.com/syh24/CSE4103/assets/48401272/6b1e5099-d033-4a56-8270-b186f9109189" width="600">
 
 
 # Use Case 검토 및 추가 활용 방안
 
-1. 치매 노인들의 인지능력 재활 : 치매 환자들에게 친숙한 과거의 이미지와 음악을 통해 기억을 자극하는 퀴즈를 제공함으로써 노인들의 인지 기능을 자극하고 회상을 도울 수 있다. 예를 들어, 일반적인 영상 대신 과거의 유명한 장소나 인물 영상을 보여주며 이와 관련된 간단한 질문으로 노인들의 인지 기능을 자극하고 회상을 도울 수 있다.
-2. 교육기관에서의 맞춤형 학습 지원 : 학교나 교육 기관에서는 이 앱을 사용하여 학생들에게 개개인별 맞춤형 학습 자료를 제공할 수 있다. 이를 위해 내부 DB에 넣을 학습용 시청각 자료와 학습용 Quiz 데이터셋 확보, 그리고 개개인 맞춤을 위한 알고리즘 개발이 선행되어야 한다. 학생들은 이렇게 개조된 앱을 통해 특정 과목이나 주제에 관한 퀴즈를 풀며 학습 내용을 복습하고 이해도를 높일 수 있다.
+- 치매 노인들의 인지능력 재활  
+
+  치매 환자들에게 친숙한 과거의 이미지와 음악을 통해 기억을 자극하는 퀴즈를 제공함으로써 노인들의 인지 기능을 자극하고 회상을 도울 수 있다. 예를 들어, 일반적인 영상 대신 과거의 유명한 장소나 인물 영상을 보여주며 이와 관련된 간단한 질문으로 노인들의 인지 기능을 자극하고 회상을 도울 수 있다.
+
+- 교육기관에서의 맞춤형 학습 지원  
+
+  학교나 교육 기관에서는 이 앱을 사용하여 학생들에게 개개인별 맞춤형 학습 자료를 제공할 수 있다. 이를 위해 내부 DB에 넣을 학습용 시청각 자료와 학습용 Quiz 데이터셋 확보, 그리고 개개인 맞춤을 위한 알고리즘 개발이 선행되어야 한다. 학생들은 이렇게 개조된 앱을 통해 특정 과목이나 주제에 관한 퀴즈를 풀며 학습 내용을 복습하고 이해도를 높일 수 있다.
 
 ### 비즈니스 모델
 
