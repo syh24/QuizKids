@@ -26,7 +26,7 @@ beforeAll(async () => {
 });
 
 describe('POST /api/users/join', () => {
-    it('should respond with JSON containing a list of users', async () => {
+    it('join user', async () => {
       try {
           //api 통신
           //supertest의 request 객체를 사용하면 실제 서버를 열지 않고도 테스트 가능
@@ -48,7 +48,7 @@ describe('POST /api/users/join', () => {
   });
 
 describe('GET /api/users', () => {
-  it('should respond with JSON containing a list of users', async () => {
+  it('get users', async () => {
     try {
         //api 통신
         //supertest의 request 객체를 사용하면 실제 서버를 열지 않고도 테스트 가능
@@ -66,6 +66,30 @@ describe('GET /api/users', () => {
     }
   });
 });
+
+describe('POST /api/users/login', () => {
+    it('login user', async () => {
+        try {
+            const login_req = {
+                nickname: req.nickname,
+                password: req.password,
+            }
+
+            const res = await request(app)
+                .post('/api/users/login')
+                .send(login_req);
+
+            let tmp_user = await User.findByPk(res.body.user_id);
+
+            expect(res.statusCode).toBe(200);
+            expect(res.body.result).toEqual("success");
+        } catch (err) {
+            console.log(err);
+            expect(error).toBeDefined();
+        }
+    });
+
+  });
 
 describe('GET /api/users/logout', () => {
     it('logout user', async () => {
