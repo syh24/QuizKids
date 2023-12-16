@@ -1,4 +1,4 @@
-# 2023-2 서강대학교 커넥티드플랫폼이론과실재(CSE4103) 4조 Project
+# 2023-2 서강대학교 커넥티드플랫폼이론과실제(CSE4103)<br/>4조 Project
 
 # QuizKids
 <img src="https://github.com/syh24/CSE4103/assets/48401272/7222a71d-77ee-46fc-bb44-d176627fee7b" width="600">
