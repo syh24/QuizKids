@@ -41,7 +41,7 @@ describe('POST /api/users/join', () => {
           expect(tmp_user.nickname).toEqual(req.nickname);
       } catch (err) {
           console.log(err);
-          expect(error).toBeDefined();
+          expect(err).toBeDefined();
       }
     });
 
@@ -62,7 +62,7 @@ describe('GET /api/users', () => {
         expect(res.body[0].img_idx).toEqual(req.img_idx);
     } catch (err) {
         console.log(err);
-        expect(error).toBeDefined();
+        expect(err).toBeDefined();
     }
   });
 });
@@ -85,7 +85,7 @@ describe('POST /api/users/login', () => {
             expect(res.body.result).toEqual("success");
         } catch (err) {
             console.log(err);
-            expect(error).toBeDefined();
+            expect(err).toBeDefined();
         }
     });
 
@@ -101,7 +101,7 @@ describe('GET /api/users/logout', () => {
           expect(res.body.result).toEqual("success");
       } catch (err) {
           console.log(err);
-          expect(error).toBeDefined();
+          expect(err).toBeDefined();
       }
     });
   });
@@ -122,7 +122,7 @@ describe('PUT /api/users/1', () => {
           expect(res.body.result).toEqual("success");
       } catch (err) {
           console.log(err);
-          expect(error).toBeDefined();
+          expect(err).toBeDefined();
       }
     });
   });

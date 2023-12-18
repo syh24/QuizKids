@@ -44,7 +44,7 @@ describe('POST /api/videos', () => {
         expect(res.body.result).toEqual("success");
       } catch (err) {
         console.log(err);
-        expect(error).toBeDefined();
+        expect(err).toBeDefined();
       }
     });
 
@@ -64,7 +64,7 @@ describe('GET /api/videos', () => {
         expect(res.body[0].url_link).toEqual(req.url_link);
     } catch (err) {
         console.log(err);
-        expect(error).toBeDefined();
+        expect(err).toBeDefined();
     }
   });
 });
