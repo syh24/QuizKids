@@ -238,14 +238,14 @@ api 호출을 실패한 경우나, 프론트엔드에서 특정 예외 케이스
     * 퀴즈 생성 API를 호출하였을 때 올바른 응답과 퀴즈가 생성되는지 테스트
  - 퀴즈 조회 API 통신 Test
     * 퀴즈 조회 API를 호출하였을 때 올바른 응답과 퀴즈 list가 return 되는지 테스트
-<img width="272" alt="image" src="https://github.com/syh24/CSE4103/assets/64251594/baba51a9-130c-4c7e-8d69-21fe0351942d">
+<img width="272" alt="image" src="https://github.com/syh24/CSE4103/assets/63981311/f31f0d1f-295c-40cc-a9c9-b9dacdfa7cd1">
 
 4. ViewHistory
  - 시청기록 생성 API 통신 Test
     * 시청기록 생성 API를 호출하였을 때 올바른 응답과 시청기록이 생성되는지 테스트
  - 시청기록 조회 API 통신 Test
     * 시청기록 조회 API를 호출하였을 때 올바른 응답과 시청기록 list가 return 되는지 테스트
-<img width="272" alt="image" src="https://github.com/syh24/CSE4103/assets/64251594/baba51a9-130c-4c7e-8d69-21fe0351942d">
+<img width="272" alt="image" src="https://github.com/syh24/CSE4103/assets/63981311/abb92ec1-e92b-46c9-9656-12ceda90f3a1">
 
 
 # Use Case 검토 및 추가 활용 방안
