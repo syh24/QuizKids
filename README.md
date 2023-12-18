@@ -3,7 +3,7 @@
 # QuizKids
 <img src="https://github.com/syh24/CSE4103/assets/48401272/7222a71d-77ee-46fc-bb44-d176627fee7b" width="600">
 
-> QuizKids Logotype
+> QuizKids Logo
 > * Q의 모양과 말풍선(comment) 모양으로 지식 전달 목적임을 상기  
 > * 안쪽은 영상 화면을 상징함과 동시에 오른쪽으로 나아가는 화살표를 통해 발전가능성을 의미  
 > * 테마 색상은 횡단보도 옐로존, 스쿨존 등 영유아를 상징하는 색으로 구성하여 어플리케이션의 방향성 상징  
@@ -13,10 +13,10 @@
 ```
 💡 Enact를 활용한 WebOS 기반의 어린이 교육 미디어플레이어
 ```
-
-최근 미디어 매체, 스마트 기기의 발전으로 영유아 시기부터 무분별한 시청각 자료에 노출되는 문제가 발생한다. 이에 발달 과정에서 주의 집중력 지속 시간 감퇴나 부적절한 정보 습득이 우려되는 바이다. 
-
-QuizKids 앱은 일반적인 미디어플레이어와 달리 영상 중간중간 화면에 나오는 오브젝트와 관련된 Quiz가 팝업되며 이를 반복적으로 풀이하고, 학습할 수 있는 수단을 제공한다. 
+> [!Note]
+> 최근 미디어 매체, 스마트 기기의 발전으로 영유아 시기부터 무분별한 시청각 자료에 노출되는 문제가 발생한다.  
+> 이에 발달 과정에서 주의 집중력 지속 시간 감퇴나 부적절한 정보 습득이 우려되는 바이다.  
+> QuizKids 앱은 일반적인 미디어플레이어와 달리 영상 중간중간 화면에 나오는 오브젝트와 관련된 Quiz가 팝업되며 이를 반복적으로 풀이하고, 학습할 수 있는 수단을 제공한다. 
 
 # 개발 계획
 
@@ -38,10 +38,12 @@ QuizKids 앱은 일반적인 미디어플레이어와 달리 영상 중간중간
 
 | 성명 | 역할 |
 | --- | --- |
-| 강상원</br>[@kevink1113](https://github.com/kevink1113)| Frontend 전반 구현: 로그인/회원가입, 홈, 퀴즈 출제/풀이 화면 및 검색 기능 구현, BE와의 async 통신, 서비스 기획 |
+| 강상원</br>[@kevink1113](https://github.com/kevink1113)| Frontend 전반 구현: 로그인/회원가입, 홈, 퀴즈 출제/풀이/비속어 검출 화면 및 검색 기능 구현, BE와의 async 통신, 서비스 기획, 로고 제작 |
 | 고동헌</br>[@Mengoe](https://github.com/mengoe)| 실시간 시스템 자원현황 시각화, 사용자 식별 기능(프로필, 사용자 정보), 서비스 기획 |
 | 서윤혁</br>[@syh24](https://github.com/syh24)| DB 전반 설계(사용자, 비디오, 퀴즈, 기록: Router, Model, etc.), API 문서 작성(Swagger), 서비스 기획 |
 | 정재훈</br>[@wandosan](https://github.com/wandosan)| DB 설계, API 문서 작성(Swagger), user input(회원가입, 로그인, etc.) 예외처리, 서비스 기획, UI 목업디자인 제작 |
+
+---
 
 # 개발 내용
 
@@ -198,6 +200,8 @@ api 호출을 실패한 경우나, 프론트엔드에서 특정 예외 케이스
 
 **11.** **RenderingGraph, RenderingMemoryGraph**
 - SystemState로부터 전달받은 Cpu, Memory 사용량을 파싱하여 차트를 렌더링한다.
+
+---
 
 # Back-End Design Architecture
 <img src= "https://github.com/syh24/CSE4103/assets/64251594/9b934de7-57a5-4bf1-9aa9-3b5ab52d15ae" width="600">
