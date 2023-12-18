@@ -41,7 +41,7 @@ QuizKids 앱은 일반적인 미디어플레이어와 달리 영상 중간중간
 | 강상원</br>[@kevink1113](https://github.com/kevink1113)| Frontend 전반 구현: 로그인/회원가입, 홈, 퀴즈 출제/풀이 화면 및 검색 기능 구현, BE와의 async 통신, 서비스 기획 |
 | 고동헌</br>[@Mengoe](https://github.com/mengoe)| 실시간 시스템 자원현황 시각화, 사용자 식별 기능(프로필, 사용자 정보), 서비스 기획 |
 | 서윤혁</br>[@syh24](https://github.com/syh24)| DB 전반 설계(사용자, 비디오, 퀴즈, 기록: Router, Model, etc.), API 문서 작성(Swagger), 서비스 기획 |
-| 정재훈</br>[@wandosan](https://github.com/wandosan)| DB 설계, API 문서 작성 및 user input(회원가입, 로그인, etc.) 예외처리 및 서비스 기획, 컬러셋 선정 |
+| 정재훈</br>[@wandosan](https://github.com/wandosan)| DB 설계, API 문서 작성(Swagger), user input(회원가입, 로그인, etc.) 예외처리, 서비스 기획, UI 목업디자인 제작 |
 
 # 개발 내용
 
@@ -231,6 +231,20 @@ api 호출을 실패한 경우나, 프론트엔드에서 특정 예외 케이스
  - 비디오 조회 API 통신 Test
     * 비디오 조회 API를 호출하였을 때 올바른 응답과 비디오 list가 return 되는지 테스트
 <img width="272" alt="image" src="https://github.com/syh24/CSE4103/assets/64251594/baba51a9-130c-4c7e-8d69-21fe0351942d">
+
+3. Quiz
+ - 퀴즈 생성 API 통신 Test
+    * 퀴즈 생성 API를 호출하였을 때 올바른 응답과 퀴즈가 생성되는지 테스트
+ - 퀴즈 조회 API 통신 Test
+    * 퀴즈 조회 API를 호출하였을 때 올바른 응답과 퀴즈 list가 return 되는지 테스트
+<img width="272" alt="image" src="https://github.com/syh24/CSE4103/assets/63981311/f31f0d1f-295c-40cc-a9c9-b9dacdfa7cd1">
+
+4. ViewHistory
+ - 시청기록 생성 API 통신 Test
+    * 시청기록 생성 API를 호출하였을 때 올바른 응답과 시청기록이 생성되는지 테스트
+ - 시청기록 조회 API 통신 Test
+    * 시청기록 조회 API를 호출하였을 때 올바른 응답과 시청기록 list가 return 되는지 테스트
+<img width="272" alt="image" src="https://github.com/syh24/CSE4103/assets/63981311/abb92ec1-e92b-46c9-9656-12ceda90f3a1">
 
 
 # Use Case 검토 및 추가 활용 방안
